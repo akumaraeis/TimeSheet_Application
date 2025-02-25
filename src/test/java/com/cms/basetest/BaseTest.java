@@ -31,6 +31,8 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 
 import com.cms.listener.Listener;
+import com.cms.pageObjects.AddTaskPage;
+import com.cms.pageObjects.AddTimesheetPage;
 import com.cms.pageObjects.LoginPage;
 import com.cms.utility.ReadConfig;
 import com.cms.utility.Utility;
@@ -44,6 +46,8 @@ public class BaseTest{
 	//    public String baseurl = rc.getApplicationURL();
 	public static  WebDriver driverL;
 	public static LoginPage lp;
+	public static AddTimesheetPage atp;
+	public static AddTaskPage att;
 	//****To Run Code in Virtual Cloud Machine.
 	public void initBrowser(String Browsername ) throws IOException
 	{
@@ -173,6 +177,8 @@ public class BaseTest{
 	{
 	
 		 lp = new LoginPage(driverR);
+		 atp = new AddTimesheetPage(driverR);
+		 att = new AddTaskPage(driverR);
 	}
 
 

@@ -40,21 +40,27 @@ public class LoginPage extends BaseTest{
 	private WebElement Google_Pd ;
 	
 //*****************************************************
-	@FindBy(xpath="//*[contains(text(),'Username')]")
-	private WebElement UserName ;
+//	@FindBy(xpath="//*[contains(text(),'Username')]")
+//	private WebElement UserName ;
 
+	@FindBy(xpath="//input[@class='form-control my-3']")
+	private WebElement UserName ;
+	
+	
 	@FindBy(xpath="//input[@type='password']")
 	private WebElement Password ;
 
 	@FindBy(xpath="//button[normalize-space()='Login']")
 	private WebElement Login ;
 	
-	@FindBy(xpath="//div[@class='px-2']")
+	@FindBy(xpath="(//*[@class=\"text-center\"])[1]")
 	private WebElement ProfileName ;
 	
-
+	@FindBy(xpath="//button[normalize-space()='Logout']")
+	private WebElement LogOut ;
 	
 	// *********Construction Declaration to initialize Data Member********	
+	
 	public LoginPage(WebDriver driverR)
 	{
 		driver2 = driverR;
@@ -85,9 +91,9 @@ public class LoginPage extends BaseTest{
 	public void SendUserName() throws InterruptedException
 	{
 		Utility.ExplicitWait(UserName);
-//		js = (JavascriptExecutor)driver2;
-//		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",UserName );
-		UserName.sendKeys("faraz");
+		js = (JavascriptExecutor)driver2;
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",UserName );
+		UserName.sendKeys("testuser");
 		Thread.sleep(2000);
 	}
 	
@@ -95,7 +101,7 @@ public class LoginPage extends BaseTest{
 	{
 		Utility.ExplicitWait(Password);
 		js = (JavascriptExecutor)driver2;
-		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",Password );
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",Password );
 		Password.sendKeys("Test@123");
 		Thread.sleep(2000); 
 	}
@@ -119,6 +125,13 @@ public class LoginPage extends BaseTest{
 		String Pname = ProfileName.getText();
 		return Pname;
 		}
+	public void ClickonLogoutBtn() throws InterruptedException
+	{
+		Utility.ExplicitWait(LogOut);
+		js = (JavascriptExecutor)driver2;
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",LogOut );
+		LogOut.click();
+	}
 
 
 

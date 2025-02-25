@@ -17,7 +17,7 @@ import org.testng.asserts.SoftAssert;
 import com.cms.basetest.BaseTest;
 import com.cms.utility.Utility;
 
-public class LoginTest extends BaseTest {
+public class AddNewTimesheetTest extends BaseTest {
 	public SoftAssert sf;
 	public JavascriptExecutor js;
 
@@ -44,25 +44,36 @@ public class LoginTest extends BaseTest {
 	{
 
 		launchUrl();
-		
+
 		Thread.sleep(2000);
-		
+
 		lp.SendUserName();
 
 		lp.SendPassword();
 
 		lp.ClickonLoginBtn();
+
+		String ActualProfileName=lp.GetProfileName();
+		String ExpectedProfileName ="Welcome Test_User | Timesheet Dashboard";
+
+		sf.assertEquals(ActualProfileName, ExpectedProfileName);
+
+		atp.ClickonAddNewTimesheet();
+
+		atp.SendClockinDate();
+
+		atp.SendClockinTime();
+
+		atp.SendClockoutDate();
+
+		atp.SendClockoutTime();
+
+		atp.SelectBreakDuration();
+
+		atp.ClickonSubmit();
 		
-		
-	   String ActualProfileName=lp.GetProfileName();
-	   String ExpectedProfileName ="Welcome Test_User | Timesheet Dashboard";
-	   
-	   sf.assertEquals(ActualProfileName, ExpectedProfileName);
-	   
-	   lp.ClickonLogoutBtn();
-	   
-	   sf.assertAll();
-		
+		sf.assertAll();
+
 	}
 	//	@AfterMethod
 	public void closeURL()
