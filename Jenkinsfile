@@ -8,45 +8,37 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/AEIS-LLC/automation-cc.git'
+                git branch: 'main', url: 'https://github.com/akumaraeis/TimeSheet_Application.git'
             }
         }
 
         stage('Setup Maven') {
             steps {
-                bat  'mvn clean install -DskipTests'
+                bat 'mvn clean install -DskipTests'
             }
         }
 
         stage('Run Tests') {
             steps {
-                bat  'mvn test'
+                bat 'mvn test'
             }
         }
 
-        stage('Publibat  TestNG Report') {
+        stage('Publish TestNG Report') {
             steps {
-                publibat TestNGResult testResultsPattern: '**/test-output/testng-results.xml'
-            }
-        }
-
-        stage('Email Notification') {
-            steps {
-                emailext subject: "Test Execution Report",
-                         body: "Test execution completed. Check Jenkins for details.",
-                         recipientProviders: [developers()]
+                publishTestNGResult testResultsPattern: '**/test-output/testng-results.xml'
             }
         }
     }
 
-   post {
+    post {
         always {
             archiveArtifacts artifacts: '**/test-output/*.html', fingerprint: true
         }
         failure {
-            mail to: 'akumar@ndtatlas.com',
+            mail to: 'team@example.com',
                  subject: "Build Failed: ${env.JOB_NAME}",
-                 body: "Check Jenkins for details."
+                 body: "Test execution failed. Check Jenkins for details."
         }
     }
 }
