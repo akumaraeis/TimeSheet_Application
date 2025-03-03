@@ -14,19 +14,19 @@ pipeline {
 
         stage('Setup Maven') {
             steps {
-                sh 'mvn clean install -DskipTests'
+                bat  'mvn clean install -DskipTests'
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'mvn test'
+                bat  'mvn test'
             }
         }
 
-        stage('Publish TestNG Report') {
+        stage('Publibat  TestNG Report') {
             steps {
-                publishTestNGResult testResultsPattern: '**/test-output/testng-results.xml'
+                publibat TestNGResult testResultsPattern: '**/test-output/testng-results.xml'
             }
         }
 
