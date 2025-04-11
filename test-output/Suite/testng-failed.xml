@@ -7,13 +7,13 @@
   <test thread-count="5" name="Test(failed)">
     <parameter name="browser" value="chrome"/>
     <classes>
-      <class name="com.cms.testcases.AddTaskTest">
+      <class name="com.cms.testcases.AddNewTimesheetTest">
         <methods>
+          <include name="openUrl"/>
           <include name="closebrowser"/>
           <include name="ValidateUserAccessPermission"/>
-          <include name="openUrl"/>
         </methods>
-      </class> <!-- com.cms.testcases.AddTaskTest -->
+      </class> <!-- com.cms.testcases.AddNewTimesheetTest -->
     </classes>
   </test> <!-- Test(failed) -->
 </suite> <!-- Failed suite [Suite] -->

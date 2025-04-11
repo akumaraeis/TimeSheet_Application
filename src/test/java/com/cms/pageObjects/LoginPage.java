@@ -43,20 +43,19 @@ public class LoginPage extends BaseTest{
 //	@FindBy(xpath="//*[contains(text(),'Username')]")
 //	private WebElement UserName ;
 
-	@FindBy(xpath="//input[@class='form-control my-3']")
+	@FindBy(xpath="//input[@placeholder='Enter Username']")
 	private WebElement UserName ;
 	
-	
-	@FindBy(xpath="//input[@type='password']")
+	@FindBy(xpath="//input[@placeholder='Enter password']")
 	private WebElement Password ;
 
-	@FindBy(xpath="//button[normalize-space()='Login']")
+	@FindBy(xpath="//button[@type='submit']")
 	private WebElement Login ;
 	
-	@FindBy(xpath="(//*[@class=\"text-center\"])[1]")
+	@FindBy(xpath="//div[@class='pt-2 px-3 fw-bold']")
 	private WebElement ProfileName ;
 	
-	@FindBy(xpath="//button[normalize-space()='Logout']")
+	@FindBy(xpath="//span[@class='ms-2']")
 	private WebElement LogOut ;
 	
 	// *********Construction Declaration to initialize Data Member********	
@@ -93,7 +92,7 @@ public class LoginPage extends BaseTest{
 		Utility.ExplicitWait(UserName);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",UserName );
-		UserName.sendKeys("testuser");
+		UserName.sendKeys("AutomationTestUser");
 		Thread.sleep(2000);
 	}
 	
@@ -125,6 +124,7 @@ public class LoginPage extends BaseTest{
 		String Pname = ProfileName.getText();
 		return Pname;
 		}
+	
 	public void ClickonLogoutBtn() throws InterruptedException
 	{
 		Utility.ExplicitWait(LogOut);

@@ -17,7 +17,7 @@ import org.testng.asserts.SoftAssert;
 import com.cms.basetest.BaseTest;
 import com.cms.utility.Utility;
 
-public class AddNewTimesheetTest extends BaseTest {
+public class EditTimesheetTest extends BaseTest {
 	public SoftAssert sf;
 	public JavascriptExecutor js;
 	public boolean isSuccessful = false;
@@ -65,35 +65,42 @@ public class AddNewTimesheetTest extends BaseTest {
 
 		while(!isSuccessful)
 		{
-
 			clockInDate = att.generateRandomDate(); // Generate a date in February
 			atp.SelectClockinDate(clockInDate);
 			Thread.sleep(2000);
-			atp.SelectClockOutDate(clockInDate);
-			Thread.sleep(2000);
-			atp.SelectBreakDuration();
-			Thread.sleep(2000);
 			atp.ClickonSubmit();
-
-			 FinalAlert = atp.GetTaskAlert();
+			Thread.sleep(2000);
+			FinalAlert = atp.GetTaskAlert();
             
 			if (FinalAlert.equals("Timesheet created successfully!")) {
 				isSuccessful = true;  // Exit the loop if successful
 			} else {
 				// Optionally, you can add a delay or retry logic here
 				Thread.sleep(1000); // Example: wait for 1 second before retrying
-			    atp.ClickonBackBtn();
-			    Thread.sleep(1000);
-			    atp.ClickonAddNewTimesheet();
+				clockInDate = att.generateRandomDate(); // Generate a date in February
+				atp.SelectClockinDate(clockInDate);
+				Thread.sleep(2000);
+				atp.ClickonSubmit();
+				Thread.sleep(2000);
 			}
 			
 		}	
+		String enteredTimesheetDate = clockInDate ; // Example input date
+		String formattedDate = att.convertDateFormat(enteredTimesheetDate);
+		
+		att.SendDateFilter(formattedDate);
+		Thread.sleep(2000);
+		att.ClickOnEdit();
+		Thread.sleep(2000);
+		atp.SelectClockOutDate(clockInDate);
+		Thread.sleep(2000);
+		atp.SelectBreakDuration();
+		Thread.sleep(2000);
+		atp.ClickonSubmit();
 		
 		String ActMsg = FinalAlert;
 		String ExpMsg ="Timesheet created successfully!";
 		sf.assertEquals(ActMsg, ExpMsg);
-
-
 		sf.assertAll();
 
 	}

@@ -2,10 +2,12 @@ package com.cms.pageObjects;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import org.openqa.selenium.By;
@@ -42,7 +44,7 @@ public class AddTimesheetPage extends BaseTest{
 //*****************************************************
 //	@FindBy(xpath="//*[contains(text(),'Username')]")
 //	private WebElement UserName ;
-
+	
 	@FindBy(xpath="//input[@class='form-control my-3']")
 	private WebElement UserName ;
 		
@@ -52,55 +54,71 @@ public class AddTimesheetPage extends BaseTest{
 	@FindBy(xpath="//button[normalize-space()='Login']")
 	private WebElement Login ;
 	
-	@FindBy(xpath="//p[@class='text-center p-2 rounded']")
+	@FindBy(xpath="//*[contains(@class,\"text-center\")]")
 	private WebElement ProfileName ;
 	
-	@FindBy(xpath="//input[@id='date']")
+	@FindBy(xpath="//div[@class='shadow border border-primary card']//div[1]//input[1]")
 	private WebElement ClockinDate ;
 	
-	@FindBy(xpath="//input[@id='logout_date']")
-	private WebElement ClockoutDate ;
 	
-	@FindBy(xpath="//input[@id='login_time']")
-	private WebElement ClockinTime ; 
+	@FindBy(xpath="//input[@value='2025-04-01']")
+	private WebElement Date ;
 	
-	@FindBy(xpath="//input[@id='logout_time']")
-	private WebElement ClockoutTime ;
+	@FindBy(xpath="//div[@class='shadow border border-primary card']//div[1]//input[2]")
+	private WebElement ClockinTime ;
 	
-	@FindBy(xpath="//div[@id='break_duration']")
+//	@FindBy(xpath="//input[@id='login_time']")
+//	private WebElement ClockinTime ; 
+//	
+//	@FindBy(xpath="//input[@id='date']")
+//	private WebElement ClockinDate2 ;
+//	
+	@FindBy(xpath="//div[@class='m-3 card-body']//div[2]//input[1]")
+	private WebElement ClockOutDate ;
+	
+	@FindBy(xpath="(//*[@class=\"border-secondary w-25 form-control form-control-sm\"])[2]")
+	private WebElement ClockOutTime ;
+	
+//	@FindBy(xpath="//input[@id='logout_date']")
+//	private WebElement ClockOutTime ;
+	
+	@FindBy(xpath="//select[@aria-label='Select break duration']")
 	private WebElement BreakDuration ;
 	
-	@FindBy(xpath="//li[normalize-space()='60 minutes']")
+	@FindBy(xpath="//option[@value='01:00:00']")
 	private WebElement BreakDuration2 ;
 	
-	@FindBy(xpath="//a[normalize-space()='Add New Timesheet']")
+	@FindBy(xpath="//a[@class='me-2 fw-bold btn btn-primary btn-sm']")
 	private WebElement AddNewTimesheet ;
 	
-	@FindBy(xpath="//input[@value='Submit']")
+	@FindBy(xpath="//a[normalize-space()='Timesheet']")
+	private WebElement Timesheet ;
+	
+	@FindBy(xpath="//span[normalize-space()='Submit']")
 	private WebElement Submit ;
 	
 	@FindBy(xpath="(//*[contains(text(),'Add Task')])[1]")
-	private WebElement Addtask ;
-	
+	private WebElement AddTask ;
+		
 	@FindBy(xpath="//div[@id='core-process']")
 	private WebElement CoreProcess ;
 	
 	@FindBy(xpath="//li[normalize-space()='Cross Functional Process']")
 	private WebElement CrossFunctional ;
 	
-	@FindBy(xpath="//div[@id='mui-component-select-sub_process']")
+	@FindBy(xpath="//select[@aria-label='Select Sub Process']")
 	private WebElement SubProcess ;
 	
-	@FindBy(xpath="//li[normalize-space()='Operations Management Process']")
-	private WebElement OperationalProcess ;
+	@FindBy(xpath="//li[normalize-space()='Technology Management Process']")
+	private WebElement Technology ;
 	
 	@FindBy(xpath="//div[@id='activity']")
 	private WebElement Activity ;
 	
 	@FindBy(xpath="//li[normalize-space()='Other']")
 	private WebElement Other ;
-	
-	@FindBy(xpath="///input[@id='other']")
+		
+	@FindBy(xpath="//input[@id='other']")
 	private WebElement TaskDescription ;
 	
 	@FindBy(xpath="//li[normalize-space()='02:00']")
@@ -109,30 +127,85 @@ public class AddTimesheetPage extends BaseTest{
 	@FindBy(xpath="//div[@id='duration']")
 	private WebElement TaskDuration ;
 	
+	@FindBy(xpath="class=\"alert alert-success")
+	private WebElement SuccessfulNotification ;
 	
-		// *********Construction Declaration to initialize Data Member********	
+	@FindBy(xpath="((//*[@class=\"mb-3\"])[6])//button")
+	private WebElement TaskSubmit ;
+	
+	@FindBy(xpath="//*[contains(text(),\"Task added\")]")
+	private WebElement taskSuccessfulMsg ;
+	
+	@FindBy(xpath="//button[normalize-space()='Select Date Range']")
+	private WebElement SelectDateRange ;
+	
+	@FindBy(xpath="//button[normalize-space()='Last Week']")
+	private WebElement Lastweek ;
+	
+	@FindBy(xpath="(//*[contains(text(),\"Edit\")])[1]")
+	private WebElement Edit ;
+	
+	@FindBy(xpath="	//li[normalize-space()='30 minutes']")
+	private WebElement EditBreakDuration ;
+	
+	@FindBy(xpath="//div[@id='1']")
+	private WebElement TaskAlert ;
+	
+	@FindBy(xpath="//span[normalize-space()='Back']")
+	private WebElement BackButton ;
+	
+	@FindBy(xpath="//div[@id='records-per-page']")
+	private WebElement RecordsPerPage ;
+	
+	@FindBy(xpath="//li[normalize-space()='100']")
+	private WebElement SelectRecordsPerPage ;
+	// *********Construction Declaration to initialize Data Member********	
+	
+	
 	public AddTimesheetPage(WebDriver driverR)
 	{
 		driver2 = driverR;
 		PageFactory.initElements(driverR, this);
 	}
 	//********time stamp Creation *******************************************
-	public static String timestamp()
 	
-	{
-		//return new SimpleDateFormat("yyyyddHHmm").format(new Date(10));
-		LocalDateTime dt=LocalDateTime.now();
-		DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-		String mydata=dt.format(df);
-		return mydata;
+    public static String generateRandomDate() {
+        Random random = new Random();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        int currentYear = LocalDate.now().getYear(); // 2025
+        int previousYear = currentYear - 1; // 2024
+        LocalDate today = LocalDate.now();
 
-	}
-	
-	public static String timestamp2()
+        int randomYear = random.nextBoolean() ? currentYear : previousYear; // Pick 2024 or 2025
+
+        int randomMonth;
+        int maxDay;
+
+        if (randomYear == currentYear) { 
+            // If selecting 2025, restrict months to January until current month
+            randomMonth = random.nextInt(today.getMonthValue()) + 1; // From Jan to Current Month (Feb)
+            maxDay = (randomMonth == today.getMonthValue()) 
+                     ? today.getDayOfMonth()  // If it's the current month, don't go beyond today
+                     : LocalDate.of(randomYear, randomMonth, 1).lengthOfMonth(); // Otherwise, full month range
+        } else { 
+            // If selecting 2024, allow full range (Jan to Dec)
+            randomMonth = random.nextInt(12) + 1; // 1 to 12
+            maxDay = LocalDate.of(randomYear, randomMonth, 1).lengthOfMonth();
+        }
+
+        // Generate a random day within the valid range
+        int randomDay = random.nextInt(maxDay) + 1;
+
+        // Construct the final valid date
+        LocalDate randomDate = LocalDate.of(randomYear, randomMonth, randomDay);
+        
+        return randomDate.format(formatter); // Format as "dd/MM/yyyy"
+    }
+	public static String timestamp()
 	{
 		//return new SimpleDateFormat("yyyyddHHmm").format(new Date(10));
 		LocalDateTime dt=LocalDateTime.now();
-		DateTimeFormatter df = DateTimeFormatter.ofPattern("hh-mm");
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("ddhhmm");
 		String mydata=dt.format(df);
 		return mydata;
 
@@ -153,8 +226,8 @@ public class AddTimesheetPage extends BaseTest{
 	{
 		Utility.ExplicitWait(UserName);
 		js = (JavascriptExecutor)driver2;
-		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",UserName );
-		UserName.sendKeys("testuser");
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",UserName );
+		UserName.sendKeys("AutomationTestUser");
 		Thread.sleep(2000);
 	}
 	
@@ -162,7 +235,7 @@ public class AddTimesheetPage extends BaseTest{
 	{
 		Utility.ExplicitWait(Password);
 		js = (JavascriptExecutor)driver2;
-		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",Password );
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",Password );
 		Password.sendKeys("Test@123");
 		Thread.sleep(2000); 
 	}
@@ -173,6 +246,14 @@ public class AddTimesheetPage extends BaseTest{
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",Login );
 		Login.click();
+	}
+	
+	public void ClickonBackBtn() throws InterruptedException
+	{
+		Utility.ExplicitWait(BackButton);
+		js = (JavascriptExecutor)driver2;
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",BackButton );
+		BackButton.click();
 	}
 
 	
@@ -186,46 +267,57 @@ public class AddTimesheetPage extends BaseTest{
 		String Pname = ProfileName.getText();
 		return Pname;
 		}
+	
+	
+	public void ClickonTimesheet() throws InterruptedException
+	{
+		Utility.ExplicitWait(Timesheet);
+		js = (JavascriptExecutor)driver2;
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",Timesheet );
+		Timesheet.click();
+	}
 
 	public void ClickonAddNewTimesheet() throws InterruptedException
 	{
 		Utility.ExplicitWait(AddNewTimesheet);
+		Thread.sleep(2000);
+		JavascriptExecutor js = (JavascriptExecutor)driver2;
+		js.executeScript("arguments[0].scrollIntoView(true);", AddNewTimesheet);
 		AddNewTimesheet.click();
 	    Thread.sleep(2000);
 	}
-
-	public void SendClockinDate() throws InterruptedException
+	
+	public String  SelectClockinDate(String Date1) throws InterruptedException
 	{
 		Utility.ExplicitWait(ClockinDate);
-//		ClockinDate.click();
-		ClockinDate.sendKeys(timestamp());
-	    Thread.sleep(1000);
-	}
 
-	public void SendClockoutDate() throws InterruptedException
-	{
-		Utility.ExplicitWait(ClockoutDate);
-//		ClockoutDate.click();
-		ClockoutDate.sendKeys(timestamp());
-	    Thread.sleep(1000);
-	}
+		ClockinDate.sendKeys(Date1);
 
-	public void SendClockinTime() throws InterruptedException
-	{
 		Utility.ExplicitWait(ClockinTime);
-//		ClockinTime.click();
-		ClockinTime.sendKeys(timestamp2());
-	    Thread.sleep(1000);
+		
+		ClockinTime.sendKeys("10:30");
+		return generateRandomDate();
+		
 	}
 
-	public void SendClockoutTime() throws InterruptedException
+
+	public void SelectClockOutDate(String Date) throws InterruptedException
 	{
-		Utility.ExplicitWait(ClockoutTime);
-//		ClockoutTime.click();
-		ClockoutTime.sendKeys("19:30");
-	    Thread.sleep(1000);
-	}
+		Utility.ExplicitWait(ClockOutDate);
+
+		ClockOutDate.sendKeys(Date);
+		
+		Utility.ExplicitWait(ClockOutTime);
 	
+		ClockOutTime.sendKeys("19:30");
+		
+//		System.out.println(getRandomDate());
+		
+	    Thread.sleep(1000);
+//	    return getRandomDate(02);
+	}
+
+
 	public void SelectBreakDuration() throws InterruptedException
 	{
 		Utility.ExplicitWait(BreakDuration);
@@ -241,52 +333,21 @@ public class AddTimesheetPage extends BaseTest{
 	    Thread.sleep(2000);
 	}
 
-	public void ClickonAddTask() throws InterruptedException
-	{
-		Utility.ExplicitWait(Submit);
-		Submit.click();
-	    Thread.sleep(2000);
-	}
-	
-	public void SelectCoreProcess() throws InterruptedException
-	{
-		Utility.ExplicitWait(CoreProcess);
-		CoreProcess.click();
-	    Thread.sleep(2000);
-	    
-	    
-	}
-
-	public void SelectSubProcess() throws InterruptedException
-	{
-		Utility.ExplicitWait(Submit);
-		Submit.click();
-	    Thread.sleep(2000);
-	    CrossFunctional.click();
-	}
-
-	public void ClickonSubProcess() throws InterruptedException
-	{
-		Utility.ExplicitWait(SubProcess);
-		SubProcess.click();
-	    Thread.sleep(2000);
-	    OperationalProcess.click();
-	}
-
-	public void ClickonActivity() throws InterruptedException
-	{
-		Utility.ExplicitWait(Activity);
-		Activity.click();
-	    Thread.sleep(2000);
-	    Other.click();
-	}
-	
 	public void SendTaskDescription() throws InterruptedException
 	{
 		Utility.ExplicitWait(TaskDescription);
 		TaskDescription.sendKeys("Test Description");
 		Thread.sleep(2000);
 	}
+	public String GetTaskAlert() throws InterruptedException
+	{
+		Utility.ExplicitWait(TaskAlert);
+		String ActualMsg2 = TaskAlert.getText();
+		System.out.println(" Message received on Timesheet"+ActualMsg2);
+		Thread.sleep(2000);
+		return ActualMsg2 ;
+	}
+
 }
 
 

@@ -2,12 +2,12 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-02-25T17:20:14 IST" name="Suite" finished-at="2025-02-25T17:21:32 IST" duration-ms="78256">
+  <suite started-at="2025-04-11T05:34:38 GMT-04:00" name="Suite" finished-at="2025-04-11T05:35:16 GMT-04:00" duration-ms="37955">
     <groups>
     </groups>
-    <test started-at="2025-02-25T17:20:14 IST" name="Test" finished-at="2025-02-25T17:21:32 IST" duration-ms="78256">
-      <class name="com.cms.testcases.AddTaskTest">
-        <test-method is-config="true" signature="openUrl(java.lang.String)[pri:0, instance:com.cms.testcases.AddTaskTest@217ed35e]" started-at="2025-02-25T17:20:14 IST" name="openUrl" finished-at="2025-02-25T17:20:21 IST" duration-ms="7085" status="PASS">
+    <test started-at="2025-04-11T05:34:38 GMT-04:00" name="Test" finished-at="2025-04-11T05:35:16 GMT-04:00" duration-ms="37955">
+      <class name="com.cms.testcases.AddNewTimesheetTest">
+        <test-method is-config="true" signature="openUrl(java.lang.String)[pri:0, instance:com.cms.testcases.AddNewTimesheetTest@217ed35e]" started-at="2025-04-11T05:34:38 GMT-04:00" name="openUrl" finished-at="2025-04-11T05:34:44 GMT-04:00" duration-ms="6495" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -18,15 +18,15 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- openUrl -->
-        <test-method signature="ValidateUserAccessPermission()[pri:1, instance:com.cms.testcases.AddTaskTest@217ed35e]" started-at="2025-02-25T17:20:21 IST" name="ValidateUserAccessPermission" finished-at="2025-02-25T17:21:29 IST" duration-ms="68264" status="PASS">
+        <test-method signature="ValidateUserAccessPermission()[pri:1, instance:com.cms.testcases.AddNewTimesheetTest@217ed35e]" started-at="2025-04-11T05:34:44 GMT-04:00" name="ValidateUserAccessPermission" finished-at="2025-04-11T05:35:14 GMT-04:00" duration-ms="29654" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- ValidateUserAccessPermission -->
-        <test-method is-config="true" signature="closebrowser()[pri:0, instance:com.cms.testcases.AddTaskTest@217ed35e]" started-at="2025-02-25T17:21:30 IST" name="closebrowser" finished-at="2025-02-25T17:21:32 IST" duration-ms="1678" status="PASS">
+        <test-method is-config="true" signature="closebrowser()[pri:0, instance:com.cms.testcases.AddNewTimesheetTest@217ed35e]" started-at="2025-04-11T05:35:15 GMT-04:00" name="closebrowser" finished-at="2025-04-11T05:35:16 GMT-04:00" duration-ms="883" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- closebrowser -->
-      </class> <!-- com.cms.testcases.AddTaskTest -->
+      </class> <!-- com.cms.testcases.AddNewTimesheetTest -->
     </test> <!-- Test -->
   </suite> <!-- Suite -->
 </testng-results>

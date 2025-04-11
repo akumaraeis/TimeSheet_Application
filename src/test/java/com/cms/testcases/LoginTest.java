@@ -55,7 +55,7 @@ public class LoginTest extends BaseTest {
 		
 		
 	   String ActualProfileName=lp.GetProfileName();
-	   String ExpectedProfileName ="Welcome Test_User | Timesheet Dashboard";
+	   String ExpectedProfileName ="Welcome, AutomationTesting!";
 	   
 	   sf.assertEquals(ActualProfileName, ExpectedProfileName);
 	   

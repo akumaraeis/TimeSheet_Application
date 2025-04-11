@@ -22,14 +22,12 @@ import com.cms.basetest.BaseTest;
 import com.cms.utility.Utility;
 
 
-public class AddTaskTest extends BaseTest {
+public class AddTaskTestScenario2 extends BaseTest {
 	public SoftAssert sf;
 	public JavascriptExecutor js;
 	public boolean isSuccessful = false;
 	public String clockInDate;
 	public String FinalAlert;
-	
-	
 	@BeforeClass
 	@Parameters("browser")
 	public void openUrl(String browser) throws IOException
@@ -72,21 +70,14 @@ public class AddTaskTest extends BaseTest {
 		{
 
 			clockInDate = att.generateRandomDate(); // Generate a date in February
-//			String clockOutDate = clockInDate; // Ensure both dates are the same
-//			att.SendClockinDate(clockInDate);
 
 			 atp.SelectClockinDate(clockInDate);
 			
-//			att.SendClockinTime();
-
-	//		att.SendClockoutDate(clockOutDate);
-
-	//		atp.SendClockoutTime();
 			Thread.sleep(2000);
-			atp.SelectClockOutDate(clockInDate);
-			Thread.sleep(2000);
-			atp.SelectBreakDuration();
-			Thread.sleep(2000);
+//			atp.SelectClockOutDate(clockInDate);
+//			Thread.sleep(2000);
+//			atp.SelectBreakDuration();
+//			Thread.sleep(2000);
 			atp.ClickonSubmit();
 
 			 FinalAlert = atp.GetTaskAlert();
@@ -96,13 +87,11 @@ public class AddTaskTest extends BaseTest {
 			} else {
 				// Optionally, you can add a delay or retry logic here
 				Thread.sleep(1000); // Example: wait for 1 second before retrying
+				
 			}
-		}	
-		
-		String ActMsg = FinalAlert;
-		String ExpMsg ="Timesheet created successfully!";
-		sf.assertEquals(ActMsg, ExpMsg);
-
+		}		
+//		att.ClickonRecordsPerPage();
+//		Thread.sleep(2000);
 		String enteredTimesheetDate = clockInDate ; // Example input date
 		String formattedDate = att.convertDateFormat(enteredTimesheetDate);
 		
@@ -176,6 +165,26 @@ public class AddTaskTest extends BaseTest {
 				sf.assertEquals(ActualSuccessfulMsg, ExpectSuccessfulMsg);
 
 				Thread.sleep(2000);
+				
+				att.ClickonHome();
+				
+				Thread.sleep(2000);
+				
+				att.ClickOnEdit();
+				
+				atp.SelectClockOutDate(clockInDate);
+				
+				Thread.sleep(2000);
+				
+				atp.SelectBreakDuration();
+				
+				Thread.sleep(2000);
+				
+				atp.ClickonSubmit();
+
+				String ActMsg = FinalAlert;
+				String ExpMsg ="Timesheet created successfully!";
+				sf.assertEquals(ActMsg, ExpMsg);
 
 				sf.assertAll();
 			}
