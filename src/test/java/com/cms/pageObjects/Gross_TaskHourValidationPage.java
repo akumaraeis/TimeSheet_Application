@@ -28,7 +28,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.cms.basetest.BaseTest;
 import com.cms.utility.Utility;
 
-public class AddTaskPage extends BaseTest{
+public class Gross_TaskHourValidationPage extends BaseTest{
 
 	public static WebDriver driver2;
 	public static JavascriptExecutor js ;
@@ -143,8 +143,11 @@ public class AddTaskPage extends BaseTest{
 	@FindBy(xpath="	//li[normalize-space()='30 minutes']")
 	private WebElement EditBreakDuration ;
 	
-	@FindBy(xpath="(//div[@role=\"alert\"])[2]")
+	@FindBy(xpath="//*[contains(@class,\"alert alert\")]")
 	private WebElement TaskAlert ;
+	
+	@FindBy(xpath="//div[@role='alert']")
+	private WebElement EditTimesheetAlert ;
 	
 	@FindBy(xpath="//*[contains(@class,'react-datepicker-wrapper')]//input")
 	private WebElement DateFilter ;
@@ -155,7 +158,7 @@ public class AddTaskPage extends BaseTest{
 	@FindBy(xpath="//span[normalize-space()='Search']")
 	private WebElement SereachDate ;
 	// *********Construction Declaration to initialize Data Member********	
-	public AddTaskPage(WebDriver driverR)
+	public Gross_TaskHourValidationPage(WebDriver driverR)
 	{
 		driver2 = driverR;
 		PageFactory.initElements(driverR, this);
@@ -469,6 +472,16 @@ public class AddTaskPage extends BaseTest{
 		return ActualMsg2 ;
 	}
 
+	
+	public String GetEditTimesheetAlertMsg() throws InterruptedException
+	{
+		Utility.ExplicitWait(EditTimesheetAlert);
+		String ActualMsg3 = EditTimesheetAlert.getText();
+		System.out.println(" Message received on Timesheet"+ActualMsg3);
+		Thread.sleep(2000);
+		return ActualMsg3 ;
+	}
+	
 	public static String convertDateFormat(String date) {
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");

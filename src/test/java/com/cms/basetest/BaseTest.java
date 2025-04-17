@@ -33,7 +33,10 @@ import org.testng.annotations.Parameters;
 import com.cms.listener.Listener;
 import com.cms.pageObjects.AddTaskPage;
 import com.cms.pageObjects.AddTimesheetPage;
+import com.cms.pageObjects.AddTimesheetPage2;
+import com.cms.pageObjects.Gross_TaskHourValidationPage;
 import com.cms.pageObjects.LoginPage;
+import com.cms.pageObjects.TimeOverlappingScenarioPage;
 import com.cms.utility.ReadConfig;
 import com.cms.utility.Utility;
 
@@ -47,7 +50,13 @@ public class BaseTest{
 	public static  WebDriver driverL;
 	public static LoginPage lp;
 	public static AddTimesheetPage atp;
+	public static AddTimesheetPage2 atp2;
 	public static AddTaskPage att;
+	public static Gross_TaskHourValidationPage gtp;
+	public static TimeOverlappingScenarioPage tol;
+	
+	
+	
 	//****To Run Code in Virtual Cloud Machine.
 	public void initBrowser(String Browsername ) throws IOException
 	{
@@ -179,6 +188,10 @@ public class BaseTest{
 		 lp = new LoginPage(driverR);
 		 atp = new AddTimesheetPage(driverR);
 		 att = new AddTaskPage(driverR);
+		 Gross_TaskHourValidationPage gtp = new Gross_TaskHourValidationPage(driverR);
+		 atp2 = new AddTimesheetPage2(driverR);
+		 tol = new TimeOverlappingScenarioPage(driverR);
+
 	}
 
 
