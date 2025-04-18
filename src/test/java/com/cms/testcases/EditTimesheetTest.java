@@ -44,7 +44,7 @@ public class EditTimesheetTest extends BaseTest {
 	}
 
 	@Test(priority=1)
-	public void ValidateUserAccessPermission() throws InterruptedException, IOException
+	public void ValidateEditTimesheetFunctionality() throws InterruptedException, IOException
 	{
 
 		launchUrl();

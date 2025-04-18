@@ -35,8 +35,13 @@ import com.cms.pageObjects.AddTaskPage;
 import com.cms.pageObjects.AddTimesheetPage;
 import com.cms.pageObjects.AddTimesheetPage2;
 import com.cms.pageObjects.Gross_TaskHourValidationPage;
+import com.cms.pageObjects.InValid_TimesheetEntryValidationPage;
 import com.cms.pageObjects.LoginPage;
+import com.cms.pageObjects.MultipleClockInScenarioPage;
+import com.cms.pageObjects.PreviousEntryClockOutScenarioPage;
 import com.cms.pageObjects.TimeOverlappingScenarioPage;
+import com.cms.pageObjects.TimesheetSlotMinimumHourValidationPage;
+import com.cms.pageObjects.TwentyFourhourValidationPage;
 import com.cms.utility.ReadConfig;
 import com.cms.utility.Utility;
 
@@ -54,8 +59,11 @@ public class BaseTest{
 	public static AddTaskPage att;
 	public static Gross_TaskHourValidationPage gtp;
 	public static TimeOverlappingScenarioPage tol;
-	
-	
+	public static MultipleClockInScenarioPage mcp;
+	public static TwentyFourhourValidationPage tvp;
+	public static InValid_TimesheetEntryValidationPage itp;
+	public static TimesheetSlotMinimumHourValidationPage tmp;
+	public static PreviousEntryClockOutScenarioPage pcp;
 	
 	//****To Run Code in Virtual Cloud Machine.
 	public void initBrowser(String Browsername ) throws IOException
@@ -188,10 +196,14 @@ public class BaseTest{
 		 lp = new LoginPage(driverR);
 		 atp = new AddTimesheetPage(driverR);
 		 att = new AddTaskPage(driverR);
-		 Gross_TaskHourValidationPage gtp = new Gross_TaskHourValidationPage(driverR);
+		 gtp = new Gross_TaskHourValidationPage(driverR);
 		 atp2 = new AddTimesheetPage2(driverR);
 		 tol = new TimeOverlappingScenarioPage(driverR);
-
+		 mcp= new MultipleClockInScenarioPage(driverR);
+		 tvp= new TwentyFourhourValidationPage(driverR);
+		 itp= new InValid_TimesheetEntryValidationPage(driverR);
+		 tmp = new TimesheetSlotMinimumHourValidationPage(driverR);
+		 pcp =new PreviousEntryClockOutScenarioPage(driverR);
 	}
 
 

@@ -48,7 +48,7 @@ public class AddTaskTest extends BaseTest {
 	}
 
 	@Test(priority=1)
-	public void ValidateUserAccessPermission() throws InterruptedException, IOException
+	public void ValidateAddTaskFunctionalityAfterClockOut() throws InterruptedException, IOException
 	{
 
 		launchUrl();

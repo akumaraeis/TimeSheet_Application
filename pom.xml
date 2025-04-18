@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -168,8 +167,19 @@
 				<version>3.0.0-M4</version>
 				<configuration>
 					<suiteXmlFiles>
-						<suiteXmlFile>src/test/resources/E2EFlowRegressionSuite_testng.xml</suiteXmlFile>
-					</suiteXmlFiles>
+						<suiteXmlFile>src/test/resources/RegressionSuiteFor_LoginTest.xml</suiteXmlFile>
+						<suiteXmlFile>src/test/resources/RegressionSuiteFor_AddTimesheet.xml</suiteXmlFile>
+						<suiteXmlFile>src/test/resources/RegressionSuiteFor_EditTimesheet.xml</suiteXmlFile>
+						<suiteXmlFile>src/test/resources/RegressionSuiteFor_InvalidTimesheetEntryValidationTest.xml</suiteXmlFile>
+						<suiteXmlFile>src/test/resources/RegressionSuiteFor_TwentyFourhourValidation.xml</suiteXmlFile>
+						<suiteXmlFile>src/test/resources/RegressionSuiteFor_MultipleClockInValidation.xml</suiteXmlFile>
+						<suiteXmlFile>src/test/resources/RegressionSuiteFor_addTaskScenarioafterClockout.xml</suiteXmlFile>
+						<suiteXmlFile>src/test/resources/RegressionSuiteFor_AddTaskScenarioBeforeClockOut.xml</suiteXmlFile>
+						<suiteXmlFile>src/test/resources/RegressionSuiteFor_ValidateTimeOverlappingScenario.xml</suiteXmlFile>
+						<suiteXmlFile>src/test/resources/RegressionSuitFor_GrossTaskHourValidation.xml</suiteXmlFile>
+						<suiteXmlFile>src/test/resources/RegressionSuiteFor_TimesheetSlotMinimumValidationTest.xml</suiteXmlFile>
+						<suiteXmlFile>src/test/resources/RegressionSuiteFor_PreviousEntryClockOutScenario.xml</suiteXmlFile>					
+                   </suiteXmlFiles>
 					<systemPropertyVariables>
 						<appURL>${url}</appURL>
 					</systemPropertyVariables>

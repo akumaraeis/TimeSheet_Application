@@ -24,6 +24,7 @@ public class TimeOverlappingScenarioTest extends BaseTest {
 	public String clockInDate ="";
 	public boolean isTaskSuccessful = false ;
 	public String FinalAlert;
+//	public String FinalAlert2;
 
 
 	@BeforeClass
@@ -44,7 +45,7 @@ public class TimeOverlappingScenarioTest extends BaseTest {
 	}
 
 	@Test(priority=1)
-	public void ValidateUserAccessPermission() throws InterruptedException, IOException
+	public void ValidateTimeOverlappingScenario() throws InterruptedException, IOException
 	{
 
 		launchUrl();

@@ -47,7 +47,7 @@ public class Gross_TaskHourValidationTest extends BaseTest {
 	}
 
 	@Test(priority=1)
-	public void ValidateUserAccessPermission() throws InterruptedException, IOException
+	public void ValidateGrossWithTashHourScenario() throws InterruptedException, IOException
 	{
 
 		launchUrl();
