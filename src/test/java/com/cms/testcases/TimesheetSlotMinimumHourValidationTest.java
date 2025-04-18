@@ -2,24 +2,23 @@ package com.cms.testcases;
 
 import java.io.IOException;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import com.cms.basetest.BaseTest;
-import com.cms.utility.Utility;
 
-public class LoginTest extends BaseTest {
+public class TimesheetSlotMinimumHourValidationTest extends BaseTest{
+
 	public SoftAssert sf;
 	public JavascriptExecutor js;
+	public boolean isSuccessful = false;
+	public String clockInDate;
+	public boolean isTaskSuccessful = false ;
+	public String FinalAlert;
 
 
 	@BeforeClass
@@ -40,29 +39,44 @@ public class LoginTest extends BaseTest {
 	}
 
 	@Test(priority=1)
-	public void ValidateLoginFunctionality() throws InterruptedException, IOException
+	public void ValidateTimesheetSlotMinimumHourScenario() throws InterruptedException, IOException
 	{
 
 		launchUrl();
-		
+
 		Thread.sleep(2000);
-		
+
 		lp.SendUserName();
 
 		lp.SendPassword();
 
 		lp.ClickonLoginBtn();
-		
-		
-	   String ActualProfileName=lp.GetProfileName();
-	   String ExpectedProfileName ="Welcome, AutomationTesting (User)";
-	   
-	   sf.assertEquals(ActualProfileName, ExpectedProfileName);
-	   
-	   lp.ClickonLogoutBtn();
-	   
-	   sf.assertAll();
-		
+
+		String ActualProfileName=lp.GetProfileName();
+		String ExpectedProfileName ="Welcome, AutomationTesting (User)";
+
+		sf.assertEquals(ActualProfileName, ExpectedProfileName);
+		tmp.ClickonAddNewTimesheet();
+
+
+			clockInDate = att.generateRandomDate(); // Generate a date in February
+			tmp.SelectClockinDate(clockInDate);
+			Thread.sleep(2000);
+			tmp.SelectClockOutDate(clockInDate);
+			Thread.sleep(2000);
+			tmp.SelectBreakDuration();
+			Thread.sleep(2000);
+			tmp.ClickonSubmit();
+
+			 FinalAlert = tmp.GetTaskAlert();
+            
+		String ActMsg = FinalAlert;
+		String ExpMsg ="Each timesheet slot must be at least 4 hours long.";
+		sf.assertEquals(ActMsg, ExpMsg);
+
+
+		sf.assertAll();
+
 	}
 	//	@AfterMethod
 	public void closeURL()
@@ -76,8 +90,4 @@ public class LoginTest extends BaseTest {
 
 		teardown();
 	}
-
 }
-
-
-

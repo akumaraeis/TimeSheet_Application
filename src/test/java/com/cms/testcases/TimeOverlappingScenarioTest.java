@@ -17,13 +17,14 @@ import org.testng.asserts.SoftAssert;
 import com.cms.basetest.BaseTest;
 import com.cms.utility.Utility;
 
-public class AddNewTimesheetTest extends BaseTest {
+public class TimeOverlappingScenarioTest extends BaseTest {
 	public SoftAssert sf;
 	public JavascriptExecutor js;
 	public boolean isSuccessful = false;
-	public String clockInDate;
+	public String clockInDate ="";
 	public boolean isTaskSuccessful = false ;
 	public String FinalAlert;
+//	public String FinalAlert2;
 
 
 	@BeforeClass
@@ -44,7 +45,7 @@ public class AddNewTimesheetTest extends BaseTest {
 	}
 
 	@Test(priority=1)
-	public void ValidateaddNewTimesheetFunctionality() throws InterruptedException, IOException
+	public void ValidateTimeOverlappingScenario() throws InterruptedException, IOException
 	{
 
 		launchUrl();
@@ -61,33 +62,56 @@ public class AddNewTimesheetTest extends BaseTest {
 		String ExpectedProfileName ="Welcome, AutomationTesting (User)";
 
 		sf.assertEquals(ActualProfileName, ExpectedProfileName);
-		atp.ClickonAddNewTimesheet();
-
+		tol.ClickonAddNewTimesheet();
+ 
+		
 		while(!isSuccessful)
 		{
+			clockInDate = att.generateRandomDate();
+			 // Generate a date in February
+			tol.SelectClockinDate(clockInDate);
+			Thread.sleep(2000);
+			tol.SelectClockOutDate(clockInDate);
+			Thread.sleep(2000);
+			tol.SelectBreakDuration();
+			Thread.sleep(2000);
+			tol.ClickonSubmit();
 
-			clockInDate = att.generateRandomDate(); // Generate a date in February
-			atp.SelectClockinDate(clockInDate);
-			Thread.sleep(2000);
-			atp.SelectClockOutDate(clockInDate);
-			Thread.sleep(2000);
-			atp.SelectBreakDuration();
-			Thread.sleep(2000);
-			atp.ClickonSubmit();
-
-			 FinalAlert = atp.GetTaskAlert();
+			 FinalAlert = tol.GetTaskAlert();
             
 			if (FinalAlert.equals("Timesheet created successfully!")) {
 				isSuccessful = true;  // Exit the loop if successful
+				
 			} else {
 				// Optionally, you can add a delay or retry logic here
 				Thread.sleep(1000); // Example: wait for 1 second before retrying
+//			    tol.ClickonBackBtn();
+//			    Thread.sleep(1000);
+//			    tol.ClickonAddNewTimesheet();
 			}
-			
-		}	
-		
-		String ActMsg = FinalAlert;
-		String ExpMsg ="Timesheet created successfully!";
+				
+		}
+//		String enteredTimesheetDate = clockInDate ; // Example input date
+//		String formattedDate = att.convertDateFormat(enteredTimesheetDate);
+//		
+//		att.SendDateFilter(formattedDate);
+//		Thread.sleep(2000);
+		tol.ClickonAddNewTimesheet();
+		Thread.sleep(2000);
+			 // Generate a date in February
+			tol.SelectClockinDate2(clockInDate);
+			Thread.sleep(2000);
+			tol.SelectClockOutDate2(clockInDate);
+			Thread.sleep(2000);
+			tol.SelectBreakDuration();
+			Thread.sleep(2000);
+			tol.ClickonSubmit();
+
+			 String FinalAlert2 = tol.GetTaskAlert();	
+	
+		String ActMsg = FinalAlert2;
+		String ExpMsg ="Time entry overlaps with an existing timesheet.";
+//		String ExpMsg ="Timesheet created successfully!";
 		sf.assertEquals(ActMsg, ExpMsg);
 
 

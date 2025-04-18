@@ -1,14 +1,17 @@
 package com.cms.pageObjects;
 
 import java.io.IOException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -24,7 +27,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.cms.basetest.BaseTest;
 import com.cms.utility.Utility;
 
-public class AddTimesheetPage extends BaseTest{
+public class MultipleClockInScenarioPage extends BaseTest{
 
 	public static WebDriver driver2;
 	public static JavascriptExecutor js ;
@@ -91,7 +94,7 @@ public class AddTimesheetPage extends BaseTest{
 	@FindBy(xpath="//a[@class='me-2 fw-bold btn btn-primary btn-sm']")
 	private WebElement AddNewTimesheet ;
 	
-	@FindBy(xpath="//a[normalize-space()='Timesheet']")
+	@FindBy(xpath="//span[normalize-space()='ADD TIMESHEET']")
 	private WebElement Timesheet ;
 	
 	@FindBy(xpath="//span[normalize-space()='Submit']")
@@ -162,7 +165,7 @@ public class AddTimesheetPage extends BaseTest{
 	// *********Construction Declaration to initialize Data Member********	
 	
 	
-	public AddTimesheetPage(WebDriver driverR)
+	public MultipleClockInScenarioPage(WebDriver driverR)
 	{
 		driver2 = driverR;
 		PageFactory.initElements(driverR, this);
@@ -290,31 +293,30 @@ public class AddTimesheetPage extends BaseTest{
 	public String  SelectClockinDate(String Date1) throws InterruptedException
 	{
 		Utility.ExplicitWait(ClockinDate);
-
 		ClockinDate.sendKeys(Date1);
-
-		Utility.ExplicitWait(ClockinTime);
-		
-		ClockinTime.sendKeys("10:30");
 		return generateRandomDate();
 		
+	}
+
+	public void  SelectClockinTime(String time) throws InterruptedException
+	{
+
+		Utility.ExplicitWait(ClockinTime);		
+		ClockinTime.sendKeys(time);
 	}
 
 
 	public void SelectClockOutDate(String Date) throws InterruptedException
 	{
 		Utility.ExplicitWait(ClockOutDate);
-
 		ClockOutDate.sendKeys(Date);
-		
-		Utility.ExplicitWait(ClockOutTime);
-	
-		ClockOutTime.sendKeys("19:30");
-		
-//		System.out.println(getRandomDate());
-		
-	    Thread.sleep(1000);
-//	    return getRandomDate(02);
+	}
+
+	public void  SelectClockoutTime(String time) throws InterruptedException
+	{
+
+		Utility.ExplicitWait(ClockOutTime);		
+		ClockOutTime.sendKeys(time);
 	}
 
 
@@ -347,7 +349,14 @@ public class AddTimesheetPage extends BaseTest{
 		Thread.sleep(2000);
 		return ActualMsg2 ;
 	}
-
+	public static String addhorsToTime(String time ,int hoursToAdd) throws InterruptedException
+	{
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+	    LocalTime localTime = LocalTime.parse(time, formatter);
+	    localTime = localTime.plusHours(hoursToAdd);
+	    return localTime.format(formatter);
+	}
+	
 }
 
 

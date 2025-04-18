@@ -24,7 +24,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.cms.basetest.BaseTest;
 import com.cms.utility.Utility;
 
-public class AddTimesheetPage extends BaseTest{
+public class TwentyFourhourValidationPage extends BaseTest{
 
 	public static WebDriver driver2;
 	public static JavascriptExecutor js ;
@@ -162,7 +162,7 @@ public class AddTimesheetPage extends BaseTest{
 	// *********Construction Declaration to initialize Data Member********	
 	
 	
-	public AddTimesheetPage(WebDriver driverR)
+	public TwentyFourhourValidationPage(WebDriver driverR)
 	{
 		driver2 = driverR;
 		PageFactory.initElements(driverR, this);
@@ -348,6 +348,13 @@ public class AddTimesheetPage extends BaseTest{
 		return ActualMsg2 ;
 	}
 
+	public String adaysTodate(String days, int daysToadd)
+	{
+		DateTimeFormatter Formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate localDate = LocalDate.parse(days, Formatter);
+		localDate = localDate.plusDays(daysToadd);		
+		return localDate.format(Formatter);
+	}
 }
 
 

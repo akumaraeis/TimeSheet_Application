@@ -17,7 +17,7 @@ import org.testng.asserts.SoftAssert;
 import com.cms.basetest.BaseTest;
 import com.cms.utility.Utility;
 
-public class AddNewTimesheetTest extends BaseTest {
+public class PreviousEntryClockOutValidationTest extends BaseTest {
 	public SoftAssert sf;
 	public JavascriptExecutor js;
 	public boolean isSuccessful = false;
@@ -61,21 +61,21 @@ public class AddNewTimesheetTest extends BaseTest {
 		String ExpectedProfileName ="Welcome, AutomationTesting (User)";
 
 		sf.assertEquals(ActualProfileName, ExpectedProfileName);
-		atp.ClickonAddNewTimesheet();
+		pcp.ClickonAddNewTimesheet();
 
 		while(!isSuccessful)
 		{
 
 			clockInDate = att.generateRandomDate(); // Generate a date in February
-			atp.SelectClockinDate(clockInDate);
+			pcp.SelectClockinDate(clockInDate);
 			Thread.sleep(2000);
-			atp.SelectClockOutDate(clockInDate);
-			Thread.sleep(2000);
-			atp.SelectBreakDuration();
-			Thread.sleep(2000);
-			atp.ClickonSubmit();
+//			pcp.SelectClockOutDate(clockInDate);
+//			Thread.sleep(2000);
+//			pcp.SelectBreakDuration();
+//			Thread.sleep(2000);
+			pcp.ClickonSubmit();
 
-			 FinalAlert = atp.GetTaskAlert();
+			 FinalAlert = pcp.GetTaskAlert();
             
 			if (FinalAlert.equals("Timesheet created successfully!")) {
 				isSuccessful = true;  // Exit the loop if successful
@@ -90,7 +90,18 @@ public class AddNewTimesheetTest extends BaseTest {
 		String ExpMsg ="Timesheet created successfully!";
 		sf.assertEquals(ActMsg, ExpMsg);
 
-
+		pcp.ClickonAddNewTimesheet();
+		Thread.sleep(2000);
+		pcp.SelectClockinDate2(clockInDate);
+		Thread.sleep(2000);
+		pcp.SelectClockOutDate(clockInDate);
+		Thread.sleep(2000);
+		pcp.SelectBreakDuration();
+		Thread.sleep(2000);
+		pcp.ClickonSubmit();
+		String ActMsg2 = pcp.GetTaskAlert();
+		String ExpMsg2 ="You must clock out from your previous timesheet before creating a new one.";
+		sf.assertEquals(ActMsg2, ExpMsg2);
 		sf.assertAll();
 
 	}

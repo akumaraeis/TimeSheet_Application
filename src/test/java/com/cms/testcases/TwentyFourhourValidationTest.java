@@ -17,9 +17,13 @@ import org.testng.asserts.SoftAssert;
 import com.cms.basetest.BaseTest;
 import com.cms.utility.Utility;
 
-public class LoginTest extends BaseTest {
+public class TwentyFourhourValidationTest extends BaseTest {
 	public SoftAssert sf;
 	public JavascriptExecutor js;
+	public boolean isSuccessful = false;
+	public String clockInDate;
+	public boolean isTaskSuccessful = false ;
+	public String FinalAlert;
 
 
 	@BeforeClass
@@ -40,29 +44,45 @@ public class LoginTest extends BaseTest {
 	}
 
 	@Test(priority=1)
-	public void ValidateLoginFunctionality() throws InterruptedException, IOException
+	public void ValidateTwentyFourhourScenario() throws InterruptedException, IOException
 	{
 
 		launchUrl();
-		
+
 		Thread.sleep(2000);
-		
+
 		lp.SendUserName();
 
 		lp.SendPassword();
 
 		lp.ClickonLoginBtn();
+
+		String ActualProfileName=lp.GetProfileName();
+		String ExpectedProfileName ="Welcome, AutomationTesting (User)";
+
+		sf.assertEquals(ActualProfileName, ExpectedProfileName);
+		atp.ClickonAddNewTimesheet();
+
+			clockInDate = att.generateRandomDate(); // Generate a date in February
+			atp.SelectClockinDate(clockInDate);
+			Thread.sleep(2000);
+			String clockOutDate= tvp.adaysTodate(clockInDate, 1);
+			atp.SelectClockOutDate(clockOutDate);
+			Thread.sleep(2000);
+			atp.SelectBreakDuration();
+			Thread.sleep(2000);
+			atp.ClickonSubmit();
+
+			 FinalAlert = atp.GetTaskAlert();
+
 		
-		
-	   String ActualProfileName=lp.GetProfileName();
-	   String ExpectedProfileName ="Welcome, AutomationTesting (User)";
-	   
-	   sf.assertEquals(ActualProfileName, ExpectedProfileName);
-	   
-	   lp.ClickonLogoutBtn();
-	   
-	   sf.assertAll();
-		
+		String ActMsg = FinalAlert;
+		String ExpMsg ="A timesheet entry cannot exceed 24 hours.";
+		sf.assertEquals(ActMsg, ExpMsg);
+
+
+		sf.assertAll();
+
 	}
 	//	@AfterMethod
 	public void closeURL()

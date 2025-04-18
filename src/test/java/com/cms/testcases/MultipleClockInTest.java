@@ -17,11 +17,11 @@ import org.testng.asserts.SoftAssert;
 import com.cms.basetest.BaseTest;
 import com.cms.utility.Utility;
 
-public class AddNewTimesheetTest extends BaseTest {
+public class MultipleClockInTest extends BaseTest {
 	public SoftAssert sf;
 	public JavascriptExecutor js;
-	public boolean isSuccessful = false;
-	public String clockInDate;
+	public boolean isSuccessful ;
+	public String clockInDate ;
 	public boolean isTaskSuccessful = false ;
 	public String FinalAlert;
 
@@ -44,7 +44,7 @@ public class AddNewTimesheetTest extends BaseTest {
 	}
 
 	@Test(priority=1)
-	public void ValidateaddNewTimesheetFunctionality() throws InterruptedException, IOException
+	public void ValidateMultipleClockInScenario() throws InterruptedException, IOException
 	{
 
 		launchUrl();
@@ -61,33 +61,53 @@ public class AddNewTimesheetTest extends BaseTest {
 		String ExpectedProfileName ="Welcome, AutomationTesting (User)";
 
 		sf.assertEquals(ActualProfileName, ExpectedProfileName);
-		atp.ClickonAddNewTimesheet();
-
+//		mcp.ClickonAddNewTimesheet();
+		String clockinTime="10:30";
+		clockInDate = att.generateRandomDate();
+		
+		for (int i =1;i<=4;i++)
+		{			
+			 isSuccessful = false; 
+			mcp.ClickonTimesheet();
+			System.out.println("Times after clicking on Timesheet :=>"+i);
 		while(!isSuccessful)
 		{
-
-			clockInDate = att.generateRandomDate(); // Generate a date in February
-			atp.SelectClockinDate(clockInDate);
+			
+			mcp.SelectClockinDate(clockInDate);			
 			Thread.sleep(2000);
-			atp.SelectClockOutDate(clockInDate);
+			mcp.SelectClockinTime(clockinTime);
 			Thread.sleep(2000);
-			atp.SelectBreakDuration();
+			mcp.SelectClockOutDate(clockInDate);
 			Thread.sleep(2000);
-			atp.ClickonSubmit();
-
-			 FinalAlert = atp.GetTaskAlert();
+			String clockoutTime = mcp.addhorsToTime(clockinTime, 4);
+			mcp.SelectClockoutTime(clockoutTime);
+			Thread.sleep(2000);
+			mcp.SelectBreakDuration();
+			Thread.sleep(2000);
+			mcp.ClickonSubmit();
+			FinalAlert = mcp.GetTaskAlert();
             
 			if (FinalAlert.equals("Timesheet created successfully!")) {
-				isSuccessful = true;  // Exit the loop if successful
-			} else {
+				isSuccessful = true;
+				clockinTime=clockoutTime;
+				Thread.sleep(2000);
+				
+				// Exit the loop if successful
+			}
+		     else if (FinalAlert.equals("You have reached the maximum of 3 slots for today.")) {
+		            System.out.println("Validation message appeared correctly after 3 timesheets: " + FinalAlert);
+		            sf.assertEquals(FinalAlert, "You have reached the maximum of 3 slots for today.");
+		            break; // Stop the loop
+		        } else {
 				// Optionally, you can add a delay or retry logic here
 				Thread.sleep(1000); // Example: wait for 1 second before retrying
+				clockInDate = att.generateRandomDate();
 			}
 			
 		}	
-		
+		}
 		String ActMsg = FinalAlert;
-		String ExpMsg ="Timesheet created successfully!";
+		String ExpMsg ="You have reached the maximum of 3 slots for today.";
 		sf.assertEquals(ActMsg, ExpMsg);
 
 

@@ -22,14 +22,13 @@ import com.cms.basetest.BaseTest;
 import com.cms.utility.Utility;
 
 
-public class AddTaskTest extends BaseTest {
+public class Gross_TaskHourValidationTest extends BaseTest {
 	public SoftAssert sf;
 	public JavascriptExecutor js;
 	public boolean isSuccessful = false;
 	public String clockInDate;
 	public String FinalAlert;
-	
-	
+	public String finalSuccessfulDate;
 	@BeforeClass
 	@Parameters("browser")
 	public void openUrl(String browser) throws IOException
@@ -48,7 +47,7 @@ public class AddTaskTest extends BaseTest {
 	}
 
 	@Test(priority=1)
-	public void ValidateAddTaskFunctionalityAfterClockOut() throws InterruptedException, IOException
+	public void ValidateGrossWithTashHourScenario() throws InterruptedException, IOException
 	{
 
 		launchUrl();
@@ -66,7 +65,7 @@ public class AddTaskTest extends BaseTest {
 
 		sf.assertEquals(ActualProfileName, ExpectedProfileName);
 
-		atp.ClickonAddNewTimesheet();
+		atp2.ClickonAddNewTimesheet();
 
 		while(!isSuccessful)
 		{
@@ -91,9 +90,13 @@ public class AddTaskTest extends BaseTest {
 
 			 FinalAlert = atp.GetTaskAlert();
 			
-			if (FinalAlert.equals("Timesheet created successfully!")) {
-				isSuccessful = true;  // Exit the loop if successful
-			} else {
+			 if (FinalAlert != null && FinalAlert.trim().contains("Timesheet created successfully")) {
+				    isSuccessful = true;
+				    finalSuccessfulDate = clockInDate;
+				    System.out.println("Timesheet created. Breaking loop.");
+				    Thread.sleep(3000); // Give UI some time to settle before continuing
+				}
+			 else {
 				// Optionally, you can add a delay or retry logic here
 				Thread.sleep(1000); // Example: wait for 1 second before retrying
 			}
@@ -103,7 +106,7 @@ public class AddTaskTest extends BaseTest {
 		String ExpMsg ="Timesheet created successfully!";
 		sf.assertEquals(ActMsg, ExpMsg);
 
-		String enteredTimesheetDate = clockInDate ; // Example input date
+		String enteredTimesheetDate = finalSuccessfulDate ; // Example input date
 		String formattedDate = att.convertDateFormat(enteredTimesheetDate);
 		
 		att.SendDateFilter(formattedDate);
@@ -157,30 +160,50 @@ public class AddTaskTest extends BaseTest {
 		    System.out.println("❌ No matching entry found with 'ADD TASK' for date: " + formattedDate);
 		}
 
-//				att.SelectCoreProcess();
+//				atp2.SelectCoreProcess();
 
-				att.SelectSubProcess();
+				atp2.SelectSubProcess();
 
-				att.ClickonActivity();
+				atp2.ClickonActivity();
 
-				att.SendTaskDescription();
+				atp2.SendTaskDescription();
 
-				att.SendTaskDuration();
+				atp2.SendTaskDuration();
 
-				att.ClickonTaskSubmit();
+				atp2.ClickonTaskSubmit();
 
-				String ActualSuccessfulMsg = att.GetTaskSuccessfulNotification();
+				String ActualSuccessfulMsg = atp2.GetTaskSuccessfulNotification();
 
 				String ExpectSuccessfulMsg = "Task created successfully!";
 
 				sf.assertEquals(ActualSuccessfulMsg, ExpectSuccessfulMsg);
 
 				Thread.sleep(2000);
+				
+				atp2.ClickonHome();
+				
+				Thread.sleep(2000);
+				
+				atp2.ClickOnEdit();
+				
+				atp2.SelectClockOutDate(clockInDate);
+				
+				Thread.sleep(2000);
+				
+				atp2.SelectBreakDuration();
+				
+				Thread.sleep(2000);
+				
+				atp2.ClickonSubmit();
+
+                String ActualTimesheetMsg = atp2.GetTaskAlert();
+                String ExpectTimesheetMsg = "Total hours worked (3 Hrs 0 Mins) cannot be less than the total duration of tasks (4 Hrs 0 Mins).";
+				sf.assertEquals(ActualTimesheetMsg, ExpectTimesheetMsg);
 
 				sf.assertAll();
 			}
 		
-		//		att.ClickonAddTask();
+		//		atp2.ClickonAddTask();
 
 
 	
