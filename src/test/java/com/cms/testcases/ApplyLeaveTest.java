@@ -17,7 +17,7 @@ import org.testng.asserts.SoftAssert;
 import com.cms.basetest.BaseTest;
 import com.cms.utility.Utility;
 
-public class AddNewTimesheetTest extends BaseTest {
+public class ApplyLeaveTest extends BaseTest {
 	public SoftAssert sf;
 	public JavascriptExecutor js;
 	public boolean isSuccessful = false;
@@ -56,13 +56,61 @@ public class AddNewTimesheetTest extends BaseTest {
 		lp.SendPassword();
 
 		lp.ClickonLoginBtn();
+		
+		Thread.sleep(2000);
 
 //		String ActualProfileName=lp.GetProfileName();
 //		String ExpectedProfileName ="Welcome, AutomationTesting (User)";
 //
 //		sf.assertEquals(ActualProfileName, ExpectedProfileName);
-		atp.ClickonAttendance();
+		alp.ClickonApplyLeave();
+		
+		Thread.sleep(2000);
+		
+		alp.ClickonApplyLeaveBtn();
+		
+		Thread.sleep(2000);
+		
+		alp.SelectLeaveType();
+		
+		Thread.sleep(2000);
+		
+		alp.SendComment();
+		
+		alp.ClickonSubmitBtn();
+		
+		Thread.sleep(2000);
+		
+		WebElement Toaster = driverR.findElement(By.xpath("//*[contains(@class,'Toastify__toast Toastify')]"));
+		String Toaster_Msg = Toaster.getText();
+		System.out.println("Message Received on Submitting Apply Leave:->"+Toaster_Msg);
+		
+		alp.ClickonUserList();
 
+		// old Timesheet for dummy purpose
+	/*	
+		driverR.findElement(By.xpath("//a[normalize-space()='Add Timesheet']"));
+		
+		driverR.findElement(By.xpath("//tbody/tr[1]/td[8]/button[1]"));
+		
+		driverR.findElement(By.xpath("//tbody/tr[1]/td[8]/button[1]"));
+		
+		driverR.findElement(By.xpath("//tbody/tr[1]/td[8]/button[1]"));
+		
+		driverR.findElement(By.xpath("//tbody/tr[1]/td[8]/button[1]"));
+		
+		driverR.findElement(By.xpath("//tbody/tr[1]/td[8]/button[2]"));
+		
+		driverR.findElement(By.xpath("//tbody/tr[1]/td[8]/button[2]"));
+		
+		driverR.findElement(By.xpath("//button[normalize-space()='Last Week']"));
+		
+		driverR.findElement(By.xpath("//button[normalize-space()='Last Month']"));
+		
+		driverR.findElement(By.xpath("//tbody/tr[1]/td[8]/button[2]"));
+		
+		// old Timesheet for dummy purpose
+		/*
 		while(!isSuccessful)
 		{
 
@@ -89,7 +137,7 @@ public class AddNewTimesheetTest extends BaseTest {
 		String ActMsg = FinalAlert;
 		String ExpMsg ="Timesheet created successfully!";
 		sf.assertEquals(ActMsg, ExpMsg);
-
+*/
 
 		sf.assertAll();
 

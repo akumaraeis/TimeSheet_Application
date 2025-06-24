@@ -66,27 +66,18 @@ import com.cms.utility.Utility;
 		@FindBy(xpath="//*[contains(@class,\"text-center\")]")
 		private WebElement ProfileName ;
 		
-		@FindBy(xpath="//div[@class='shadow border border-primary card']//div[1]//input[1]")
-		private WebElement ClockinDate ;
+		@FindBy(xpath="(//div[@class=\"mb-3 w-75 input-group\"]//input)[1]")
+		private WebElement ClockinDate ;	
 		
-		
-		@FindBy(xpath="//input[@value='2025-04-01']")
-		private WebElement Date ;
-		
-		@FindBy(xpath="//div[@class='shadow border border-primary card']//div[1]//input[2]")
+		@FindBy(xpath="(//div[@class=\"mb-3 w-75 input-group\"]//input)[2]")
 		private WebElement ClockinTime ;
-		
-//		@FindBy(xpath="//input[@id='login_time']")
-//		private WebElement ClockinTime ; 
-	//	
-//		@FindBy(xpath="//input[@id='date']")
-//		private WebElement ClockinDate2 ;
-	//	
-		@FindBy(xpath="//div[@class='m-3 card-body']//div[2]//input[1]")
+			
+		@FindBy(xpath="(//div[@class=\"mb-3 w-75 input-group\"]//input)[3]")
 		private WebElement ClockOutDate ;
 		
-		@FindBy(xpath="(//*[@class=\"border-secondary w-25 form-control form-control-sm\"])[2]")
+		@FindBy(xpath="(//div[@class=\"mb-3 w-75 input-group\"]//input)[4]")
 		private WebElement ClockOutTime ;
+
 		
 //		@FindBy(xpath="//input[@id='logout_date']")
 //		private WebElement ClockOutTime ;

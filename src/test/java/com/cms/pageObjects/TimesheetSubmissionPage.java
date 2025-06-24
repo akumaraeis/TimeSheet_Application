@@ -24,7 +24,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.cms.basetest.BaseTest;
 import com.cms.utility.Utility;
 
-public class PreviousEntryClockOutScenarioPage extends BaseTest{
+public class TimesheetSubmissionPage extends BaseTest{
 
 	public static WebDriver driver2;
 	public static JavascriptExecutor js ;
@@ -54,22 +54,19 @@ public class PreviousEntryClockOutScenarioPage extends BaseTest{
 	@FindBy(xpath="//button[normalize-space()='Login']")
 	private WebElement Login ;
 	
-	@FindBy(xpath="//*[contains(@class,\"text-center\")]")
-	private WebElement ProfileName ;
-	
-	@FindBy(xpath="(//div[@class=\"mb-3 w-75 input-group\"]//input)[1]")
-	private WebElement ClockinDate ;	
-	
-	@FindBy(xpath="(//div[@class=\"mb-3 w-75 input-group\"]//input)[2]")
+	@FindBy(xpath="(//*[text() ='Time In'])[2]")
 	private WebElement ClockinTime ;
 		
 	@FindBy(xpath="(//div[@class=\"mb-3 w-75 input-group\"]//input)[3]")
 	private WebElement ClockOutDate ;
 	
-	@FindBy(xpath="(//div[@class=\"mb-3 w-75 input-group\"]//input)[4]")
+	@FindBy(xpath="(//*[text() ='Time Out'])[2]")
 	private WebElement ClockOutTime ;
 
-
+	
+//	@FindBy(xpath="//input[@id='logout_date']")
+//	private WebElement ClockOutTime ;
+	
 	@FindBy(xpath="//select[@aria-label='Select break duration']")
 	private WebElement BreakDuration ;
 	
@@ -147,10 +144,19 @@ public class PreviousEntryClockOutScenarioPage extends BaseTest{
 	
 	@FindBy(xpath="//li[normalize-space()='100']")
 	private WebElement SelectRecordsPerPage ;
+	
+	@FindBy(xpath="//a[normalize-space()='Attendance']")
+	private WebElement Attendance ;
+	
+	@FindBy(xpath="//*[contains(text(),'Timesheet Submission')]")
+	private WebElement TimesheetSubmission ;
+	
+	@FindBy(xpath="//button[normalize-space()='Actions']")
+	private WebElement Actions ;
 	// *********Construction Declaration to initialize Data Member********	
 	
 	
-	public PreviousEntryClockOutScenarioPage(WebDriver driverR)
+	public TimesheetSubmissionPage(WebDriver driverR)
 	{
 		driver2 = driverR;
 		PageFactory.initElements(driverR, this);
@@ -215,7 +221,7 @@ public class PreviousEntryClockOutScenarioPage extends BaseTest{
 		Utility.ExplicitWait(UserName);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",UserName );
-		UserName.sendKeys("AutomationTestUser");
+		UserName.sendKeys("Test_User");
 		Thread.sleep(2000);
 	}
 	
@@ -245,17 +251,17 @@ public class PreviousEntryClockOutScenarioPage extends BaseTest{
 	}
 
 	
-	public String GetProfileName() throws InterruptedException
-	{
-		Utility.ExplicitWait(ProfileName);
-		js = (JavascriptExecutor)driver2;
-		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",ProfileName );
-		Thread.sleep(2000);
-		
-		String Pname = ProfileName.getText();
-		return Pname;
-		}
-	
+//	public String GetProfileName() throws InterruptedException
+//	{
+//		Utility.ExplicitWait(ProfileName);
+//		js = (JavascriptExecutor)driver2;
+//		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",ProfileName );
+//		Thread.sleep(2000);
+//		
+//		String Pname = ProfileName.getText();
+//		return Pname;
+//		}
+//	
 	
 	public void ClickonTimesheet() throws InterruptedException
 	{
@@ -275,47 +281,52 @@ public class PreviousEntryClockOutScenarioPage extends BaseTest{
 	    Thread.sleep(2000);
 	}
 	
+	public void ClickonTimesheetSubmission() throws InterruptedException
+	{
+		Utility.ExplicitWait(TimesheetSubmission);
+		Thread.sleep(2000);
+		JavascriptExecutor js = (JavascriptExecutor)driver2;
+		js.executeScript("arguments[0].scrollIntoView(true);", TimesheetSubmission);
+		TimesheetSubmission.click();
+	    Thread.sleep(2000);
+	}
+	
+	public void ClickonActionsButton() throws InterruptedException
+	{
+		Utility.ExplicitWait(Actions);
+		Actions.click();
+	    Thread.sleep(2000);
+	}
 	public String  SelectClockinDate(String Date1) throws InterruptedException
 	{
-		Utility.ExplicitWait(ClockinDate);
-
-		ClockinDate.sendKeys(Date1);
+//		Utility.ExplicitWait(ClockinDate);
+//
+//		ClockinDate.sendKeys(Date1);
 
 		Utility.ExplicitWait(ClockinTime);
 		
-		ClockinTime.sendKeys("10:30");
+		ClockinTime.click();
 		return generateRandomDate();
 		
 	}
 
-	public String  SelectClockinDate2(String Date1) throws InterruptedException
-	{
-		Utility.ExplicitWait(ClockinDate);
-
-		ClockinDate.sendKeys(Date1);
-
-		Utility.ExplicitWait(ClockinTime);
-		
-		ClockinTime.sendKeys("12:30");
-		return generateRandomDate();
-		
-	}
 
 	public void SelectClockOutDate(String Date) throws InterruptedException
 	{
-		Utility.ExplicitWait(ClockOutDate);
-
-		ClockOutDate.sendKeys(Date);
-		
+//		Utility.ExplicitWait(ClockOutDate);
+//
+//		ClockOutDate.sendKeys(Date);
+//		
 		Utility.ExplicitWait(ClockOutTime);
 	
-		ClockOutTime.sendKeys("19:30");
+		ClockOutTime.click();
 		
 //		System.out.println(getRandomDate());
 		
 	    Thread.sleep(1000);
 //	    return getRandomDate(02);
 	}
+
 
 
 	public void SelectBreakDuration() throws InterruptedException

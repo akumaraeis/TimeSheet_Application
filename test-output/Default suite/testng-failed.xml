@@ -3,13 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.cms.testcases.AddNewTimesheetTest">
+      <class name="com.cms.testcases.TimesheetSubmissionTest">
         <methods>
-          <include name="openUrl"/>
           <include name="closebrowser"/>
-          <include name="ValidateUserAccessPermission"/>
+          <include name="ValidateClockIn"/>
+          <include name="openUrl"/>
         </methods>
-      </class> <!-- com.cms.testcases.AddNewTimesheetTest -->
+      </class> <!-- com.cms.testcases.TimesheetSubmissionTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

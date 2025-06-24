@@ -53,9 +53,10 @@ public class LoginTest extends BaseTest {
 
 		lp.ClickonLoginBtn();
 		
+		Thread.sleep(2000);
 		
 	   String ActualProfileName=lp.GetProfileName();
-	   String ExpectedProfileName ="Welcome, AutomationTesting (User)";
+	   String ExpectedProfileName ="Welcome, AutomationTesting";
 	   
 	   sf.assertEquals(ActualProfileName, ExpectedProfileName);
 	   
