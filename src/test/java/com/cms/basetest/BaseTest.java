@@ -34,6 +34,7 @@ import com.cms.listener.Listener;
 import com.cms.pageObjects.AddTaskPage;
 import com.cms.pageObjects.AddTimesheetPage;
 import com.cms.pageObjects.AddTimesheetPage2;
+import com.cms.pageObjects.ApplyLeavePage;
 import com.cms.pageObjects.Gross_TaskHourValidationPage;
 import com.cms.pageObjects.InValid_TimesheetEntryValidationPage;
 import com.cms.pageObjects.LoginPage;
@@ -41,6 +42,7 @@ import com.cms.pageObjects.MultipleClockInScenarioPage;
 import com.cms.pageObjects.PreviousEntryClockOutScenarioPage;
 import com.cms.pageObjects.TimeOverlappingScenarioPage;
 import com.cms.pageObjects.TimesheetSlotMinimumHourValidationPage;
+import com.cms.pageObjects.TimesheetSubmissionPage;
 import com.cms.pageObjects.TwentyFourhourValidationPage;
 import com.cms.utility.ReadConfig;
 import com.cms.utility.Utility;
@@ -64,6 +66,8 @@ public class BaseTest{
 	public static InValid_TimesheetEntryValidationPage itp;
 	public static TimesheetSlotMinimumHourValidationPage tmp;
 	public static PreviousEntryClockOutScenarioPage pcp;
+	public static TimesheetSubmissionPage tsp;
+	public static ApplyLeavePage alp;
 	
 	//****To Run Code in Virtual Cloud Machine.
 	public void initBrowser(String Browsername ) throws IOException
@@ -146,7 +150,7 @@ public class BaseTest{
 		//	driverR.get(getFile("baseurl"));
 
 		//	driverR.get("https://contactcenter.intelledash.com/");
-		driverR.get("http://localhost:3000/login");
+		driverR.get("https://test1.ndtatlas.com/login");
 //		driverR.get("https://timesheet.ndtatlas.com/");
 //		driverR.get("https://contactcenter.intelledash.com/?token=07DphO7pAhaC7jcUkQBsiVaK4aZv8h3f");
 			Thread.sleep(1000);	
@@ -204,6 +208,8 @@ public class BaseTest{
 		 itp= new InValid_TimesheetEntryValidationPage(driverR);
 		 tmp = new TimesheetSlotMinimumHourValidationPage(driverR);
 		 pcp =new PreviousEntryClockOutScenarioPage(driverR);
+		 tsp =new TimesheetSubmissionPage(driverR);
+		 alp =new ApplyLeavePage(driverR);
 	}
 
 

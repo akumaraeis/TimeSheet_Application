@@ -90,13 +90,13 @@ public class MultipleClockInTest extends BaseTest {
 			if (FinalAlert.equals("Timesheet created successfully!")) {
 				isSuccessful = true;
 				clockinTime=clockoutTime;
-				Thread.sleep(2000);
+				Thread.sleep(1000);
 				
 				// Exit the loop if successful
 			}
 		     else if (FinalAlert.equals("You have reached the maximum of 3 slots for today.")) {
-		            System.out.println("Validation message appeared correctly after 3 timesheets: " + FinalAlert);
-		            sf.assertEquals(FinalAlert, "You have reached the maximum of 3 slots for today.");
+	//	            System.out.println("Validation message appeared correctly after 3 timesheets: " + FinalAlert);
+	//	            sf.assertEquals(FinalAlert, "You have reached the maximum of 3 slots for today.");
 		            break; // Stop the loop
 		        } else {
 				// Optionally, you can add a delay or retry logic here
@@ -109,8 +109,6 @@ public class MultipleClockInTest extends BaseTest {
 		String ActMsg = FinalAlert;
 		String ExpMsg ="You have reached the maximum of 3 slots for today.";
 		sf.assertEquals(ActMsg, ExpMsg);
-
-
 		sf.assertAll();
 
 	}

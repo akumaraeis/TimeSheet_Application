@@ -92,7 +92,7 @@ public class LoginPage extends BaseTest{
 		Utility.ExplicitWait(UserName);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",UserName );
-		UserName.sendKeys("AutomationTestUser");
+		UserName.sendKeys("Test_User5");
 		Thread.sleep(2000);
 	}
 	

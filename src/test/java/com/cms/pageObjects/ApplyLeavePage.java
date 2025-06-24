@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Set;
 
@@ -24,7 +25,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.cms.basetest.BaseTest;
 import com.cms.utility.Utility;
 
-public class PreviousEntryClockOutScenarioPage extends BaseTest{
+public class ApplyLeavePage extends BaseTest{
 
 	public static WebDriver driver2;
 	public static JavascriptExecutor js ;
@@ -45,13 +46,13 @@ public class PreviousEntryClockOutScenarioPage extends BaseTest{
 //	@FindBy(xpath="//*[contains(text(),'Username')]")
 //	private WebElement UserName ;
 	
-	@FindBy(xpath="//input[@class='form-control my-3']")
+	@FindBy(xpath="//input[@placeholder='Enter Username']")
 	private WebElement UserName ;
 		
-	@FindBy(xpath="//input[@type='password']")
+	@FindBy(xpath="//input[@placeholder='Enter password']")
 	private WebElement Password ;
 
-	@FindBy(xpath="//button[normalize-space()='Login']")
+	@FindBy(xpath="//button[@type='submit']")
 	private WebElement Login ;
 	
 	@FindBy(xpath="//*[contains(@class,\"text-center\")]")
@@ -60,16 +61,19 @@ public class PreviousEntryClockOutScenarioPage extends BaseTest{
 	@FindBy(xpath="(//div[@class=\"mb-3 w-75 input-group\"]//input)[1]")
 	private WebElement ClockinDate ;	
 	
-	@FindBy(xpath="(//div[@class=\"mb-3 w-75 input-group\"]//input)[2]")
+	@FindBy(xpath="(//*[text() ='Time In'])[2]")
 	private WebElement ClockinTime ;
 		
 	@FindBy(xpath="(//div[@class=\"mb-3 w-75 input-group\"]//input)[3]")
 	private WebElement ClockOutDate ;
 	
-	@FindBy(xpath="(//div[@class=\"mb-3 w-75 input-group\"]//input)[4]")
+	@FindBy(xpath="(//*[text() ='Time Out'])[2]")
 	private WebElement ClockOutTime ;
 
-
+	
+//	@FindBy(xpath="//input[@id='logout_date']")
+//	private WebElement ClockOutTime ;
+	
 	@FindBy(xpath="//select[@aria-label='Select break duration']")
 	private WebElement BreakDuration ;
 	
@@ -139,18 +143,38 @@ public class PreviousEntryClockOutScenarioPage extends BaseTest{
 	@FindBy(xpath="(//div[@role=\"alert\"])[2]")
 	private WebElement TaskAlert ;
 	
-	@FindBy(xpath="//span[normalize-space()='Back']")
+	@FindBy(xpath="//button[normalize-space()='Submit']")
 	private WebElement BackButton ;
+	
+	@FindBy(xpath="//button[normalize-space()='Submit']")
+	private WebElement SubmitButton ;
 	
 	@FindBy(xpath="//div[@id='records-per-page']")
 	private WebElement RecordsPerPage ;
 	
 	@FindBy(xpath="//li[normalize-space()='100']")
 	private WebElement SelectRecordsPerPage ;
+	
+	@FindBy(xpath="//*[text()='Apply Leave']")
+	private WebElement ApplyLeave ;
+	
+	@FindBy(xpath="//div[3]//div[1]//div[5]//button[1]")
+	private WebElement ApplyLeaveBtn ;
+	
+	@FindBy(xpath="//select[@aria-label='Select Activity']")
+	private WebElement LeaveType ;
+	
+	@FindBy(xpath="//textarea[@placeholder='Enter comment']")
+	private WebElement Comment ;
+	
+	@FindBy(xpath="//a[contains(@class,'border-end rounded-start rounded-pill text-end mb-2 bg-gradient bg-opacity-25 nav-link active')]")
+	private WebElement User_List ;
+	
+	
 	// *********Construction Declaration to initialize Data Member********	
 	
 	
-	public PreviousEntryClockOutScenarioPage(WebDriver driverR)
+	public ApplyLeavePage(WebDriver driverR)
 	{
 		driver2 = driverR;
 		PageFactory.initElements(driverR, this);
@@ -209,6 +233,13 @@ public class PreviousEntryClockOutScenarioPage extends BaseTest{
 	    Thread.sleep(5000);
 	}
 	
+	public void ClickonUserList() throws InterruptedException
+	{
+//		WebElement SecureSite = driver2.findElement(By.xpath("//*[contains(text(),\"Continue to site\")]"));
+		Utility.ExplicitWait(User_List);
+		User_List.click();
+	    Thread.sleep(5000);
+	}
 
 	public void SendUserName() throws InterruptedException
 	{
@@ -235,7 +266,7 @@ public class PreviousEntryClockOutScenarioPage extends BaseTest{
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",Login );
 		Login.click();
 	}
-	
+
 	public void ClickonBackBtn() throws InterruptedException
 	{
 		Utility.ExplicitWait(BackButton);
@@ -265,6 +296,56 @@ public class PreviousEntryClockOutScenarioPage extends BaseTest{
 		Timesheet.click();
 	}
 
+	public void  ClickonApplyLeave() throws InterruptedException
+	{
+		Utility.ExplicitWait(ApplyLeave);
+		js = (JavascriptExecutor)driver2;
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",ApplyLeave );
+		ApplyLeave.click();
+	}
+	
+	public void ClickonApplyLeaveBtn() throws InterruptedException
+	{
+//		Utility.ExplicitWait(ApplyLeaveBtn);
+		int index = 6;
+		boolean clicked = false;
+
+		while (true) {
+		    try {
+		        // Build dynamic XPath with current index
+		        String xpath = "(//*[contains(text(),'Apply Leave')])[" + index + "]";
+		        WebElement button = driver2.findElement(By.xpath(xpath));
+
+		        // Check if button is displayed and enabled
+		        if (button.isDisplayed() && button.isEnabled()) {
+		            button.click();
+		            System.out.println("Clicked on Apply Leave button at index: " + index);
+		            clicked = true;
+		            break;
+		        } else {
+		            System.out.println("Button at index " + index + " is disabled, checking next...");
+		            index++;
+		        }
+
+		    } catch (NoSuchElementException e) {
+		        System.out.println("No more 'Apply Leave' buttons found after index " + index);
+		        break;
+		    }
+		}
+
+		if (!clicked) {
+		    System.out.println("No enabled 'Apply Leave' button found starting from index 6.");
+		}
+	}
+	
+	
+	public void ClickonSubmitBtn() throws InterruptedException
+	{
+		Utility.ExplicitWait(SubmitButton);
+		js = (JavascriptExecutor)driver2;
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",SubmitButton );
+		SubmitButton.click();
+	}
 	public void ClickonAddNewTimesheet() throws InterruptedException
 	{
 		Utility.ExplicitWait(AddNewTimesheet);
@@ -277,39 +358,27 @@ public class PreviousEntryClockOutScenarioPage extends BaseTest{
 	
 	public String  SelectClockinDate(String Date1) throws InterruptedException
 	{
-		Utility.ExplicitWait(ClockinDate);
-
-		ClockinDate.sendKeys(Date1);
+//		Utility.ExplicitWait(ClockinDate);
+//
+//		ClockinDate.sendKeys(Date1);
 
 		Utility.ExplicitWait(ClockinTime);
 		
-		ClockinTime.sendKeys("10:30");
+		ClockinTime.click();
 		return generateRandomDate();
 		
 	}
 
-	public String  SelectClockinDate2(String Date1) throws InterruptedException
-	{
-		Utility.ExplicitWait(ClockinDate);
-
-		ClockinDate.sendKeys(Date1);
-
-		Utility.ExplicitWait(ClockinTime);
-		
-		ClockinTime.sendKeys("12:30");
-		return generateRandomDate();
-		
-	}
 
 	public void SelectClockOutDate(String Date) throws InterruptedException
 	{
-		Utility.ExplicitWait(ClockOutDate);
-
-		ClockOutDate.sendKeys(Date);
-		
+//		Utility.ExplicitWait(ClockOutDate);
+//
+//		ClockOutDate.sendKeys(Date);
+//		
 		Utility.ExplicitWait(ClockOutTime);
 	
-		ClockOutTime.sendKeys("19:30");
+		ClockOutTime.click();
 		
 //		System.out.println(getRandomDate());
 		
@@ -325,6 +394,45 @@ public class PreviousEntryClockOutScenarioPage extends BaseTest{
 		Thread.sleep(2000);
 		BreakDuration2.click();
 	}
+	
+	public void SelectLeaveType() throws InterruptedException
+	{
+		Utility.ExplicitWait(LeaveType);
+		Select s4 = new Select(LeaveType);
+		List<WebElement> options = s4.getOptions();
+
+		boolean fullDayFound = false;
+		boolean halfDayFound = false;
+
+		for (WebElement option : options) {
+		    String text = option.getText().trim(); // remove extra spaces
+		    if (text.equals("Full Day - Casual Leave")) {
+		        s4.selectByVisibleText("Full Day - Casual Leave");
+		        System.out.println("Selected: Full Day - Casual Leave");
+		        fullDayFound = true;
+		        break;
+		    } else if (text.equals("Half Day - Casual Leave")) {
+		        halfDayFound = true;
+		    }
+		}
+
+		if (!fullDayFound && halfDayFound) {
+		    s4.selectByVisibleText("Half Day - Casual Leave");
+		    System.out.println("Selected: Half Day - Casual Leave");
+		} else if (!fullDayFound && !halfDayFound) {
+		    System.out.println("Neither 'Full Day - Casual Leave' nor 'Half Day - Casual Leave' found.");
+		}
+	}
+	
+	public void SendComment() throws InterruptedException
+	{
+		Utility.ExplicitWait(Comment);
+		js = (JavascriptExecutor)driver2;
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",Comment );
+		Comment.sendKeys("TestComment");
+		Thread.sleep(2000); 
+	}
+
 	
 	public void ClickonSubmit() throws InterruptedException
 	{

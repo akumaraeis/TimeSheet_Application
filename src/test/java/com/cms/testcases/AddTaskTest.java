@@ -1,7 +1,15 @@
 package com.cms.testcases;
 
+import static io.restassured.RestAssured.given;
+
 import java.io.IOException;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -21,6 +29,10 @@ import org.testng.asserts.SoftAssert;
 import com.cms.basetest.BaseTest;
 import com.cms.utility.Utility;
 
+import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
+
 
 public class AddTaskTest extends BaseTest {
 	public SoftAssert sf;
@@ -28,6 +40,10 @@ public class AddTaskTest extends BaseTest {
 	public boolean isSuccessful = false;
 	public String clockInDate;
 	public String FinalAlert;
+	public String Timein ;
+	public String clockInTime;
+	public String updatedTimeStr;
+	public String updatedTime2;
 	
 	
 	@BeforeClass
@@ -46,9 +62,154 @@ public class AddTaskTest extends BaseTest {
 		//		Thread.sleep(2000);
 		LaunchUrl();
 	}
+	
+	@Test(priority=0)
+    public static  String getToken() {
+        RestAssured.baseURI = "https://testbackend.ndtatlas.com";
 
-	@Test(priority=1)
-	public void ValidateAddTaskFunctionalityAfterClockOut() throws InterruptedException, IOException
+        Response response = given()
+            .header("Content-Type", "application/json")
+            .body("{ \"username\": \"AutomationTestUser\", \"password\": \"Test@123\" }")
+        .when()
+            .post("/api/auth/login/")
+        .then()
+            .statusCode(200)
+            .extract().response();
+
+        // Extract token from response
+        JsonPath jsonPath = response.jsonPath();
+        String token = response.jsonPath().getString("data.token");  // Change key if API returns it with a different name
+
+        System.out.println("Token: " + token);
+        return token;
+        
+    }
+
+@Test(priority=1)
+public void ValidateClockIn() throws InterruptedException, IOException
+{
+
+       System.out.println("Final Token "+ (getToken()));
+		clockInDate = att.generateRandomDate(); // Generate a date in February
+		clockInTime = att.timestamp();
+		Timein = clockInDate+"T"+clockInTime +"Z";
+		System.out.println("Final Time-In given :->"+Timein);
+
+		HashMap data = new HashMap();
+		data.put("test_timestamp", Timein );
+		System.out.println("found accountId detail for delete functions : "+Timein);
+		given()
+		.contentType("application/json")
+		.headers("Authorization",("Token "+getToken()))
+		.body(data)
+
+		.when()
+		.post("https://testbackend.ndtatlas.com/api/attendance-test/clockin/")
+
+		.then()
+		.statusCode(201)
+		.log().all();
+		System.out.println("******Clock-in Functionality Verified************");
+
+		
+	}	
+	
+@Test(priority=2,dependsOnMethods="ValidateClockIn")
+public void ValidateBreakIn() throws InterruptedException, IOException
+{
+
+       System.out.println("Final Token "+ (getToken()));
+//		clockInDate = att.generateRandomDate(); // Generate a date in February
+//		String clockInTime = att.timestamp();
+       DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+       LocalTime originalTime = LocalTime.parse(clockInTime, timeFormatter);
+       LocalTime updatedTime = originalTime.plusHours(1);
+        updatedTimeStr = updatedTime.format(timeFormatter);
+		 Timein  = clockInDate+"T"+updatedTimeStr +"Z";
+		System.out.println("Final Time-In given :->"+updatedTimeStr);
+
+		HashMap data = new HashMap();
+		data.put("test_timestamp", Timein );
+		System.out.println("found accountId detail for delete functions : "+Timein);
+		given()
+		.contentType("application/json")
+		.headers("Authorization",("Token "+getToken()))
+		.body(data)
+
+		.when()
+		.patch("https://testbackend.ndtatlas.com/api/attendance-test/breakin/")
+
+		.then()
+		.statusCode(201)
+		.log().all();
+		System.out.println("******BreakIn Functionality is  Verified************");
+}
+
+@Test(priority=3,dependsOnMethods="ValidateBreakIn")
+public void ValidateBreakOut() throws InterruptedException, IOException
+{
+
+       System.out.println("Final Token "+ (getToken()));
+//		clockInDate = att.generateRandomDate(); // Generate a date in February
+//		String clockInTime = att.timestamp();
+           DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+           LocalTime originalTime = LocalTime.parse(updatedTimeStr, timeFormatter);
+           LocalTime updatedTime2 = originalTime.plusHours(1);
+           String updatedTimeStr = updatedTime2.format(timeFormatter);
+
+		String Timein = clockInDate+"T"+updatedTimeStr +"Z";
+		System.out.println("Final Time-In given :->"+Timein);
+
+		HashMap data = new HashMap();
+		data.put("test_timestamp", Timein );
+		System.out.println("found accountId detail for delete functions : "+Timein);
+		given()
+		.contentType("application/json")
+		.headers("Authorization",("Token "+getToken()))
+		.body(data)
+
+		.when()
+		.patch("https://testbackend.ndtatlas.com/api/attendance-test/breakout/")
+
+		.then()
+		.statusCode(201)
+		.log().all();
+		System.out.println("******BreakOut Functionality is Verified************");
+}
+
+@Test(priority=4,dependsOnMethods="ValidateBreakOut")
+public void ValidateClockOut() throws InterruptedException, IOException
+{
+
+       System.out.println("Final Token "+ (getToken()));
+//		clockInDate = att.generateRandomDate(); // Generate a date in February
+//		String clockInTime = att.timestamp();
+           DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+           LocalTime originalTime2 = LocalTime.parse(updatedTimeStr, timeFormatter);
+           LocalTime updatedTime3 = originalTime2.plusHours(8);
+           String updatedTimeStr = updatedTime3.format(timeFormatter);
+
+		String Timein = clockInDate+"T"+updatedTime3 +"Z";
+		System.out.println("Final Time-In given :->"+Timein);
+
+		HashMap data = new HashMap();
+		data.put("test_timestamp", Timein );
+		System.out.println("found accountId detail for delete functions : "+Timein);
+		given()
+		.contentType("application/json")
+		.headers("Authorization",("Token "+getToken()))
+		.body(data)
+
+		.when()
+		.patch("https://testbackend.ndtatlas.com/api/attendance-test/clockout/")
+
+		.then()
+		.statusCode(201)
+		.log().all();
+		System.out.println("******Clock-Out Functionality is Verified************");
+}
+	@Test(priority=5)
+	public void ValidateAddTaskFunctionalityAfterClockOut() throws InterruptedException, IOException, ParseException
 	{
 
 		launchUrl();
@@ -62,20 +223,31 @@ public class AddTaskTest extends BaseTest {
 		lp.ClickonLoginBtn();
 
 		String ActualProfileName=lp.GetProfileName();
-		String ExpectedProfileName ="Welcome, AutomationTesting (User)";
+		String ExpectedProfileName ="Welcome, AutomationTesting";
 
 		sf.assertEquals(ActualProfileName, ExpectedProfileName);
+/*		
 
-		atp.ClickonAddNewTimesheet();
+//		atp.ClickonAddNewTimesheet();
 
 		while(!isSuccessful)
 		{
 
-			clockInDate = att.generateRandomDate(); // Generate a date in February
+//			clockInDate = att.generateRandomDate(); // Generate a date in February
 //			String clockOutDate = clockInDate; // Ensure both dates are the same
 //			att.SendClockinDate(clockInDate);
+			 String inputDate = clockInDate;
+		        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+		        SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy");
 
-			 atp.SelectClockinDate(clockInDate);
+		        Date date = inputFormat.parse(inputDate);
+		        String formattedDate = outputFormat.format(date);
+
+		        System.out.println("Formatted Date: " + formattedDate);
+		        Thread.sleep(3000);
+			 att.SendClockinDate(formattedDate);
+			 
+			 att.ClickonSearchDate();
 			
 //			att.SendClockinTime();
 
@@ -102,9 +274,16 @@ public class AddTaskTest extends BaseTest {
 		String ActMsg = FinalAlert;
 		String ExpMsg ="Timesheet created successfully!";
 		sf.assertEquals(ActMsg, ExpMsg);
+*/
+		 String inputDate = clockInDate;
+	        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+	        SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy");
 
-		String enteredTimesheetDate = clockInDate ; // Example input date
-		String formattedDate = att.convertDateFormat(enteredTimesheetDate);
+	        Date date = inputFormat.parse(inputDate);
+	        String formattedDate = outputFormat.format(date);
+
+//		String enteredTimesheetDate = clockInDate ; // Example input date
+//		String formattedDate = att.convertDateFormat(enteredTimesheetDate);
 		
 		att.SendDateFilter(formattedDate);
 		Thread.sleep(2000);

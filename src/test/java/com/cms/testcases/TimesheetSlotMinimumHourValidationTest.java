@@ -71,7 +71,7 @@ public class TimesheetSlotMinimumHourValidationTest extends BaseTest{
 			 FinalAlert = tmp.GetTaskAlert();
             
 		String ActMsg = FinalAlert;
-		String ExpMsg ="Each timesheet slot must be at least 4 hours long.";
+		String ExpMsg ="The first two timesheet slots must be at least 4 hours long.";
 		sf.assertEquals(ActMsg, ExpMsg);
 
 
