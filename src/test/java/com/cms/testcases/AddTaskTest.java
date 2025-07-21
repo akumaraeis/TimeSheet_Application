@@ -65,7 +65,7 @@ public class AddTaskTest extends BaseTest {
 	
 	@Test(priority=0)
     public static  String getToken() {
-        RestAssured.baseURI = "https://testbackend.ndtatlas.com";
+        RestAssured.baseURI = "https://tsbackend.ndtatlas.com";
 
         Response response = given()
             .header("Content-Type", "application/json")
@@ -91,7 +91,8 @@ public void ValidateClockIn() throws InterruptedException, IOException
 
        System.out.println("Final Token "+ (getToken()));
 		clockInDate = att.generateRandomDate(); // Generate a date in February
-		clockInTime = att.timestamp();
+        clockInTime = "05:00:00";
+//		clockInTime = att.timestamp();
 		Timein = clockInDate+"T"+clockInTime +"Z";
 		System.out.println("Final Time-In given :->"+Timein);
 
@@ -104,7 +105,7 @@ public void ValidateClockIn() throws InterruptedException, IOException
 		.body(data)
 
 		.when()
-		.post("https://testbackend.ndtatlas.com/api/attendance-test/clockin/")
+		.post("https://tsbackend.ndtatlas.com/api/attendance-test/clockin/")
 
 		.then()
 		.statusCode(201)
@@ -137,7 +138,7 @@ public void ValidateBreakIn() throws InterruptedException, IOException
 		.body(data)
 
 		.when()
-		.patch("https://testbackend.ndtatlas.com/api/attendance-test/breakin/")
+		.patch("https://tsbackend.ndtatlas.com/api/attendance-test/breakin/")
 
 		.then()
 		.statusCode(201)
@@ -169,7 +170,7 @@ public void ValidateBreakOut() throws InterruptedException, IOException
 		.body(data)
 
 		.when()
-		.patch("https://testbackend.ndtatlas.com/api/attendance-test/breakout/")
+		.patch("https://tsbackend.ndtatlas.com/api/attendance-test/breakout/")
 
 		.then()
 		.statusCode(201)
@@ -201,7 +202,7 @@ public void ValidateClockOut() throws InterruptedException, IOException
 		.body(data)
 
 		.when()
-		.patch("https://testbackend.ndtatlas.com/api/attendance-test/clockout/")
+		.patch("https://tsbackend.ndtatlas.com/api/attendance-test/clockout/")
 
 		.then()
 		.statusCode(201)
@@ -275,7 +276,7 @@ public void ValidateClockOut() throws InterruptedException, IOException
 		String ExpMsg ="Timesheet created successfully!";
 		sf.assertEquals(ActMsg, ExpMsg);
 */
-		 String inputDate = clockInDate;
+		    String inputDate = clockInDate;
 	        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
 	        SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy");
 

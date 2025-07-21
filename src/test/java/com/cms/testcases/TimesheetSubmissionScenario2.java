@@ -1,6 +1,8 @@
+
 package com.cms.testcases;
 
 import static io.restassured.RestAssured.given;
+import static org.testng.Assert.ARRAY_MISMATCH_TEMPLATE;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -35,7 +37,7 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import java.util.List;
 
-public class TimesheetSubmissionTest extends BaseTest {
+public class TimesheetSubmissionScenario2 extends BaseTest {
 	public SoftAssert sf;
 	public JavascriptExecutor js;
 	public boolean isSuccessful = false;
@@ -101,7 +103,7 @@ public class TimesheetSubmissionTest extends BaseTest {
 		System.out.println("Total week blocks found: " + allWeeks.size());
 		totalWeeks = allWeeks.size();
 
-		for (int index = 2; index <= totalWeeks; index++) {
+		for (int index = 7; index <= totalWeeks; index++) {
 		    String weekXPath = "(//div[contains(@class,'p-1 shadow mb-2 bg-gradient border-2')])[" + index + "]";
 		    WebElement weekElement = driverR.findElement(By.xpath(weekXPath));
 		    js = (JavascriptExecutor) driverR;
@@ -135,14 +137,14 @@ public class TimesheetSubmissionTest extends BaseTest {
 
 		        // Submit attendance (from 3rd day onwards)
 		        DateTimeFormatter outputFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		        String baseTime = "04:30:00";
+		        String baseTime = "05:00:00";
 		        for (LocalDate date = startDate.plusDays(2); !date.isAfter(endDate); date = date.plusDays(1)) {
 		            String dateStr = date.format(outputFormatter2);
 		            System.out.println("🗓️ Submitting entries for: " + dateStr);
 		            sendAttendanceData(token, dateStr + "T" + baseTime + "Z", "clockin");
 		            sendAttendanceData2(token, dateStr + "T" + addHours(baseTime, 1) + "Z", "breakin");
 		            sendAttendanceData2(token, dateStr + "T" + addHours(baseTime, 2) + "Z", "breakout");
-		            sendAttendanceData2(token, dateStr + "T" + addHours(baseTime, 9) + "Z", "clockout");
+//		            sendAttendanceData2(token, dateStr + "T" + addHours(baseTime, 9) + "Z", "clockout");
 		            Thread.sleep(2000);
 		        }
 
@@ -168,6 +170,7 @@ public class TimesheetSubmissionTest extends BaseTest {
 		                Utility.safeClick(driverR, js, addTaskBtn);
 
 		                att.SelectSubProcess();
+//		                Utility.safeClick(driverR, js, addTaskBtn);
 		                att.ClickonActivity();
 		                att.SendTaskDescription();
 		                att.SendTaskDuration();
@@ -219,11 +222,19 @@ public class TimesheetSubmissionTest extends BaseTest {
 		                break; // STOP the main loop
 		            }
 
+		          String ActualMsg = driverR.findElement(By.xpath("Toastify__toast Toastify__toast-theme--colored Toastify__toast--error")).getText(); 
+		          String ExpMsg = "Please clock out every timesheet for the selected week.";
+		            
 		        } catch (Exception e) {
 		            System.out.println("⚠️ Error during final submission: " + e.getMessage());
 		        }
 		    }
 		}
+		
+	  String ActualMsg=driverR.findElement(By.xpath("//*[contains(text(),'Please clock out every timesheet for the selected week.')]")).getText();
+	  System.out.println("Notification Successful Message :->"+ActualMsg);
+	  String ExpMsg ="Please clock out every timesheet for the selected week.";
+	  sf.assertEquals(ActualMsg, ExpMsg);
 	}
 
 		/*

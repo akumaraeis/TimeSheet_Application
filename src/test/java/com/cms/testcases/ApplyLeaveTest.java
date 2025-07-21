@@ -44,7 +44,7 @@ public class ApplyLeaveTest extends BaseTest {
 	}
 
 	@Test(priority=1)
-	public void ValidateaddNewTimesheetFunctionality() throws InterruptedException, IOException
+	public void ValidateapplyLeaveFunctionality() throws InterruptedException, IOException
 	{
 
 		launchUrl();

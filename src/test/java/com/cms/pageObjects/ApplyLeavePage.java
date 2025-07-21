@@ -346,15 +346,15 @@ public class ApplyLeavePage extends BaseTest{
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",SubmitButton );
 		SubmitButton.click();
 	}
-	public void ClickonAddNewTimesheet() throws InterruptedException
-	{
-		Utility.ExplicitWait(AddNewTimesheet);
-		Thread.sleep(2000);
-		JavascriptExecutor js = (JavascriptExecutor)driver2;
-		js.executeScript("arguments[0].scrollIntoView(true);", AddNewTimesheet);
-		AddNewTimesheet.click();
-	    Thread.sleep(2000);
-	}
+//	public void ClickonAddNewTimesheet() throws InterruptedException
+//	{
+//		Utility.ExplicitWait(AddNewTimesheet);
+//		Thread.sleep(2000);
+//		JavascriptExecutor js = (JavascriptExecutor)driver2;
+//		js.executeScript("arguments[0].scrollIntoView(true);", AddNewTimesheet);
+//		AddNewTimesheet.click();
+//	    Thread.sleep(2000);
+//	}
 	
 	public String  SelectClockinDate(String Date1) throws InterruptedException
 	{
