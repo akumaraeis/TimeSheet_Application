@@ -11,6 +11,7 @@ import java.util.Date;
 import javax.imageio.ImageIO;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -180,6 +181,48 @@ public class Utility extends BaseTest {
          "setTimeout(function() { document.body.removeChild(callout); }, 1000);";
 	        ((JavascriptExecutor) driverR).executeScript(script2);
 	    }
-	}
+	
+public static void safeClick(WebDriver driverR, JavascriptExecutor js, WebElement element) {
+    WebDriverWait wait = new WebDriverWait(driverR, Duration.ofSeconds(10));
+    try {
+        // Scroll element into center view
+//    	JavascriptExecutor js1 = (JavascriptExecutor)driverR;
+        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
+        // Wait until it is clickable
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+        
+        try {
+            element.click();  // normal click
+        } catch (ElementClickInterceptedException e) {
+            System.out.println("Click intercepted, using JS fallback.");
+            js.executeScript("arguments[0].click();", element);  // fallback click
+        }
+    } catch (Exception e) {
+        System.out.println("safeClick failed: " + e.getMessage());
+    }
+}
+public static WebElement waitForElementToBeClickable(WebDriver driver, By locator, int timeoutSeconds) {
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+    return wait.until(ExpectedConditions.elementToBeClickable(locator));
+}
+
+public static WebElement waitForElementToBeClickable(WebDriver driver, WebElement element, int timeoutSeconds) {
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+    return wait.until(ExpectedConditions.elementToBeClickable(element));
+}
+
+public static void scrollIntoView(WebDriver driver, JavascriptExecutor js, WebElement element) {
+    js.executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});", element);
+}
+
+public static void waitForSeconds(double seconds) {
+    try {
+        Thread.sleep((long) (seconds * 1000));
+    } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+    }
+}
+
+}
 
 

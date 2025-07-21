@@ -59,7 +59,7 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 	
 	@Test(priority=0)
 	    public static  String getToken() {
-	        RestAssured.baseURI = "https://testbackend.ndtatlas.com";
+	        RestAssured.baseURI = "https://tsbackend.ndtatlas.com";
 
 	        Response response = given()
 	            .header("Content-Type", "application/json")
@@ -85,7 +85,8 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 
            System.out.println("Final Token "+ (getToken()));
 			clockInDate = att.generateRandomDate(); // Generate a date in February
-			clockInTime = att.timestamp();
+//			clockInTime = att.timestamp();
+			clockInTime = "05:00:00";
 			Timein = clockInDate+"T"+clockInTime +"Z";
 			System.out.println("Final Time-In given :->"+Timein);
 
@@ -98,7 +99,7 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 			.body(data)
 
 			.when()
-			.post("https://testbackend.ndtatlas.com/api/attendance-test/clockin/")
+			.post("https://tsbackend.ndtatlas.com/api/attendance-test/clockin/")
 
 			.then()
 			.statusCode(201)
@@ -131,7 +132,7 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 			.body(data)
 
 			.when()
-			.patch("https://testbackend.ndtatlas.com/api/attendance-test/breakin/")
+			.patch("https://tsbackend.ndtatlas.com/api/attendance-test/breakin/")
 
 			.then()
 			.statusCode(201)
@@ -163,7 +164,7 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 			.body(data)
 
 			.when()
-			.patch("https://testbackend.ndtatlas.com/api/attendance-test/breakout/")
+			.patch("https://tsbackend.ndtatlas.com/api/attendance-test/breakout/")
 
 			.then()
 			.statusCode(201)
@@ -195,7 +196,7 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 			.body(data)
 
 			.when()
-			.patch("https://testbackend.ndtatlas.com/api/attendance-test/clockout/")
+			.patch("https://tsbackend.ndtatlas.com/api/attendance-test/clockout/")
 
 			.then()
 			.statusCode(201)

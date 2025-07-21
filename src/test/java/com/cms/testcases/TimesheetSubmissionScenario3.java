@@ -1,6 +1,8 @@
+
 package com.cms.testcases;
 
 import static io.restassured.RestAssured.given;
+import static org.testng.Assert.ARRAY_MISMATCH_TEMPLATE;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -35,7 +37,7 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import java.util.List;
 
-public class TimesheetSubmissionTest extends BaseTest {
+public class TimesheetSubmissionScenario3 extends BaseTest {
 	public SoftAssert sf;
 	public JavascriptExecutor js;
 	public boolean isSuccessful = false;
@@ -101,7 +103,7 @@ public class TimesheetSubmissionTest extends BaseTest {
 		System.out.println("Total week blocks found: " + allWeeks.size());
 		totalWeeks = allWeeks.size();
 
-		for (int index = 2; index <= totalWeeks; index++) {
+		for (int index = 3; index <= totalWeeks; index++) {
 		    String weekXPath = "(//div[contains(@class,'p-1 shadow mb-2 bg-gradient border-2')])[" + index + "]";
 		    WebElement weekElement = driverR.findElement(By.xpath(weekXPath));
 		    js = (JavascriptExecutor) driverR;
@@ -135,7 +137,7 @@ public class TimesheetSubmissionTest extends BaseTest {
 
 		        // Submit attendance (from 3rd day onwards)
 		        DateTimeFormatter outputFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		        String baseTime = "04:30:00";
+		        String baseTime = "05:00:00";
 		        for (LocalDate date = startDate.plusDays(2); !date.isAfter(endDate); date = date.plusDays(1)) {
 		            String dateStr = date.format(outputFormatter2);
 		            System.out.println("🗓️ Submitting entries for: " + dateStr);
@@ -153,35 +155,36 @@ public class TimesheetSubmissionTest extends BaseTest {
 		        Utility.scrollIntoView(driverR, js, refreshedWeek);
 		        Utility.safeClick(driverR, js, refreshedWeek);
 
-		        List<WebElement> taskButtons = driverR.findElements(By.xpath("//*[contains(text(),'Add Task')]"));
-		        System.out.println("Total Add Task buttons: " + taskButtons.size());
+//		        List<WebElement> taskButtons = driverR.findElements(By.xpath("//*[contains(text(),'Add Task')]"));
+//		        System.out.println("Total Add Task buttons: " + taskButtons.size());
 
-		        for (int i = 1; i <= taskButtons.size(); i++) {
-		            try {
-		                WebElement MinimizeBtn = driverR.findElement(By.xpath("(//*[contains(@class,'accordion-button')])[" + i + "]"));
-		                Utility.scrollIntoView(driverR, js, MinimizeBtn);
-		                MinimizeBtn.click();
-
-		                WebElement addTaskBtn = driverR.findElement(By.xpath("(//*[contains(text(),'Add Task')])[1]"));
-		                Utility.scrollIntoView(driverR, js, addTaskBtn);
-		                wait.until(ExpectedConditions.elementToBeClickable(addTaskBtn));
-		                Utility.safeClick(driverR, js, addTaskBtn);
-
-		                att.SelectSubProcess();
-		                att.ClickonActivity();
-		                att.SendTaskDescription();
-		                att.SendTaskDuration();
-		                att.ClickonTaskSubmit();
-		                Thread.sleep(1000);
-
-		                WebElement MinimizeBtn2 = driverR.findElement(By.xpath("(//*[contains(@class,'accordion-button')])[1]"));
-		                Utility.scrollIntoView(driverR, js, MinimizeBtn2);
-		                MinimizeBtn2.click();
-		                Utility.waitForSeconds(2);
-		            } catch (ElementClickInterceptedException e) {
-		                System.out.println("Add Task Click Intercepted: Retrying via JS click.");
-		                js.executeScript("arguments[0].click();", driverR.findElement(By.xpath("(//*[contains(text(),'Add Task')])[1]")));
-		            }
+//		        for (int i = 1; i <= taskButtons.size(); i++) {
+//		            try {
+//		                WebElement MinimizeBtn = driverR.findElement(By.xpath("(//*[contains(@class,'accordion-button')])[" + i + "]"));
+//		                Utility.scrollIntoView(driverR, js, MinimizeBtn);
+//		                MinimizeBtn.click();
+//
+//		                WebElement addTaskBtn = driverR.findElement(By.xpath("(//*[contains(text(),'Add Task')])[1]"));
+//		                Utility.scrollIntoView(driverR, js, addTaskBtn);
+//		                wait.until(ExpectedConditions.elementToBeClickable(addTaskBtn));
+//		                Utility.safeClick(driverR, js, addTaskBtn);
+//
+//		                att.SelectSubProcess();
+////		                Utility.safeClick(driverR, js, addTaskBtn);
+//		                att.ClickonActivity();
+//		                att.SendTaskDescription();
+//		                att.SendTaskDuration();
+//		                att.ClickonTaskSubmit();
+//		                Thread.sleep(1000);
+//
+//		                WebElement MinimizeBtn2 = driverR.findElement(By.xpath("(//*[contains(@class,'accordion-button')])[1]"));
+//		                Utility.scrollIntoView(driverR, js, MinimizeBtn2);
+//		                MinimizeBtn2.click();
+//		                Utility.waitForSeconds(2);
+//		            } catch (ElementClickInterceptedException e) {
+//		                System.out.println("Add Task Click Intercepted: Retrying via JS click.");
+//		                js.executeScript("arguments[0].click();", driverR.findElement(By.xpath("(//*[contains(text(),'Add Task')])[1]")));
+//		            }
 		        }
 
 		        // Submit timesheet
@@ -210,21 +213,36 @@ public class TimesheetSubmissionTest extends BaseTest {
 		            Utility.scrollIntoView(driverR, js, finalWeek);
 		            Utility.safeClick(driverR, js, finalWeek);
 
-		            WebElement finalStatus = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(@class,'bg-warning rounded text-black')]")));
-		            String newStatus = finalStatus.getText().replace("\u00A0", " ").trim();
-		            System.out.println("🟢 Post-Submission Status: '" + newStatus + "'");
+//		            WebElement finalStatus = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(@class,'bg-warning rounded text-black')]")));
+//		            String newStatus = finalStatus.getText().replace("\u00A0", " ").trim();
+//		            System.out.println("🟢 Post-Submission Status: '" + newStatus + "'");
+		            
+		  		  String ActualMsg=driverR.findElement(By.xpath("//*[contains(text(),'Some timesheet entries have no tasks logged. Please add at least one task per entry.')]")).getText();
+				  System.out.println("Notification Successful Message :->"+ActualMsg);
+				  
+				  String ExpMsg ="Some timesheet entries have no tasks logged. Please add at least one task per entry.";
+				  sf.assertEquals(ActualMsg, ExpMsg);
 
-		            if (newStatus.equalsIgnoreCase("SUBMITTED")) {
-		                System.out.println("✅ Submission confirmed. Stopping further processing.");
+		            if (ActualMsg.equalsIgnoreCase("Some timesheet entries have no tasks logged. Please add at least one task per entry.")) {
+		                System.out.println("The Negative Scenario For Timesheet Submission Verified when clock-out is Not Done.");
 		                break; // STOP the main loop
 		            }
 
+//		          String ActualMsg = driverR.findElement(By.xpath("Toastify__toast Toastify__toast-theme--colored Toastify__toast--error")).getText(); 
+//		          String ExpMsg = "Please clock out every timesheet for the selected week.";
+//		            
 		        } catch (Exception e) {
 		            System.out.println("⚠️ Error during final submission: " + e.getMessage());
 		        }
 		    }
+//		  String ActualMsg=driverR.findElement(By.xpath("//*[contains(text(),'Please clock out every timesheet for the selected week.')]")).getText();
+//		  System.out.println("Notification Successful Message :->"+ActualMsg);
+//		  String ExpMsg ="Please clock out every timesheet for the selected week.";
+//		  sf.assertEquals(ActualMsg, ExpMsg);
+//
 		}
-	}
+		
+//	}
 
 		/*
 		List<WebElement> allWeeks = driverR.findElements(By.xpath("//div[contains(@class,'p-1 shadow mb-2 bg-gradient border-2')]"));

@@ -7,7 +7,7 @@
   <test thread-count="5" name="Test">
 	    <parameter name="browser" value="chrome"/>
 	     <classes>
-	          <class name="com.cms.testcases.AddTaskTest"/>
+	          <class name="com.cms.testcases.AddTaskTestScenario2"/>
     </classes>
    </test> <!-- Test -->
 </suite> <!-- Suite -->

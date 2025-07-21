@@ -128,7 +128,7 @@ public class AddTaskPage extends BaseTest{
 	@FindBy(xpath="//div[@id='1']")
 	private WebElement SuccessfulNotification ;
 	
-	@FindBy(xpath="//span[normalize-space()='Submit']")
+	@FindBy(xpath="//button[normalize-space()='Submit']")
 	private WebElement TaskSubmit ;
 	
 	@FindBy(xpath="//div[@id='1']")
@@ -307,7 +307,7 @@ public class AddTaskPage extends BaseTest{
 	{
 		Utility.ExplicitWait(Submit);
 		js = (JavascriptExecutor)driver2;
-		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",UserName );
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",Submit );
 
 		Submit.click();
 	    Thread.sleep(2000);
@@ -346,8 +346,9 @@ public class AddTaskPage extends BaseTest{
 		Utility.ExplicitWait(SubProcess);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",SubProcess );
+//		Utility.safeClick(driver2, js, SubProcess);
 		Select S8 = new Select(SubProcess);
-		S8.selectByVisibleText("Integrator's Processes: Quality & Compliance");
+		S8.selectByVisibleText("ALIMS SOFTWARE DEVELOPMENT (D): QA & TESTING (Q)");
 	    Thread.sleep(2000);
 	}
 
@@ -378,7 +379,7 @@ public class AddTaskPage extends BaseTest{
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",TaskDuration );
 		TaskDuration.click();		
 		Select S9 = new Select(TaskDuration);
-		S9.selectByVisibleText("02:00");
+		S9.selectByVisibleText("08:00");
 		Thread.sleep(2000);
 		
 	}
@@ -504,7 +505,8 @@ public class AddTaskPage extends BaseTest{
 		Thread.sleep(2000);
 		DateFilter.sendKeys(Date);
 		Thread.sleep(2000);
-		SereachDate.click();
+		Utility.safeClick(driver2, js, SereachDate);
+//		SereachDate.click();
 	}
 	
 	public void ClickOnEdit()

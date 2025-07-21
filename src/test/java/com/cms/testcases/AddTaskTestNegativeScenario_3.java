@@ -34,7 +34,7 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 
-public class AddTaskTestScenario2 extends BaseTest {
+public class AddTaskTestNegativeScenario_3 extends BaseTest {
 	public SoftAssert sf;
 	public JavascriptExecutor js;
 	public boolean isSuccessful = false;
@@ -178,38 +178,37 @@ public void ValidateBreakOut() throws InterruptedException, IOException
 		System.out.println("******BreakOut Functionality is Verified************");
 }
 
-////@Test(priority=4,dependsOnMethods="ValidateBreakOut")
-//public void ValidateClockOut() throws InterruptedException, IOException
-//{
-//
-//       System.out.println("Final Token "+ (getToken()));
-////		clockInDate = att.generateRandomDate(); // Generate a date in February
-////		String clockInTime = att.timestamp();
-//           DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-//           LocalTime originalTime2 = LocalTime.parse(updatedTimeStr, timeFormatter);
-//           LocalTime updatedTime3 = originalTime2.plusHours(8);
-//           String updatedTimeStr = updatedTime3.format(timeFormatter);
-//
-//		String Timein = clockInDate+"T"+updatedTime3 +"Z";
-//		System.out.println("Final Time-In given :->"+Timein);
-//
-//		HashMap data = new HashMap();
-//		data.put("test_timestamp", Timein );
-//		System.out.println("found accountId detail for delete functions : "+Timein);
-//		given()
-//		.contentType("application/json")
-//		.headers("Authorization",("Token "+getToken()))
-//		.body(data)
-//
-//		.when()
-//		.patch("https://tsbackend.ndtatlas.com/api/attendance-test/clockout/")
-//
-//		.then()
-//		.statusCode(201)
-//		.log().all();
-//		System.out.println("******Clock-Out Functionality is Verified************");
-//}
+@Test(priority=4,dependsOnMethods="ValidateBreakOut")
+public void ValidateClockOut() throws InterruptedException, IOException
+{
 
+       System.out.println("Final Token "+ (getToken()));
+//		clockInDate = att.generateRandomDate(); // Generate a date in February
+//		String clockInTime = att.timestamp();
+           DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+           LocalTime originalTime2 = LocalTime.parse(updatedTimeStr, timeFormatter);
+           LocalTime updatedTime3 = originalTime2.plusHours(6);
+           String updatedTimeStr = updatedTime3.format(timeFormatter);
+
+		String Timein = clockInDate+"T"+updatedTime3 +"Z";
+		System.out.println("Final Time-In given :->"+Timein);
+
+		HashMap data = new HashMap();
+		data.put("test_timestamp", Timein );
+		System.out.println("found accountId detail for delete functions : "+Timein);
+		given()
+		.contentType("application/json")
+		.headers("Authorization",("Token "+getToken()))
+		.body(data)
+
+		.when()
+		.patch("https://tsbackend.ndtatlas.com/api/attendance-test/clockout/")
+
+		.then()
+		.statusCode(201)
+		.log().all();
+		System.out.println("******Clock-Out Functionality is Verified************");
+}
 	@Test(priority=5)
 	public void ValidateAddTaskFunctionalityAfterClockOut() throws InterruptedException, IOException, ParseException
 	{
@@ -363,37 +362,7 @@ public void ValidateBreakOut() throws InterruptedException, IOException
 		
 		//		att.ClickonAddTask();
 
-	@Test(priority=6,dependsOnMethods="ValidateBreakOut")
-	public void ValidateClockOut() throws InterruptedException, IOException
-	{
 
-	       System.out.println("Final Token "+ (getToken()));
-//			clockInDate = att.generateRandomDate(); // Generate a date in February
-//			String clockInTime = att.timestamp();
-	           DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-	           LocalTime originalTime2 = LocalTime.parse(updatedTimeStr, timeFormatter);
-	           LocalTime updatedTime3 = originalTime2.plusHours(8);
-	           String updatedTimeStr = updatedTime3.format(timeFormatter);
-
-			String Timein = clockInDate+"T"+updatedTime3 +"Z";
-			System.out.println("Final Time-In given :->"+Timein);
-
-			HashMap data = new HashMap();
-			data.put("test_timestamp", Timein );
-			System.out.println("found accountId detail for delete functions : "+Timein);
-			given()
-			.contentType("application/json")
-			.headers("Authorization",("Token "+getToken()))
-			.body(data)
-
-			.when()
-			.patch("https://tsbackend.ndtatlas.com/api/attendance-test/clockout/")
-
-			.then()
-			.statusCode(201)
-			.log().all();
-			System.out.println("******Clock-Out Functionality is Verified************");
-	}
 	
 
 
