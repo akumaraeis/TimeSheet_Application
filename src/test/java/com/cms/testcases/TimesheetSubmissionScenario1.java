@@ -35,7 +35,7 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import java.util.List;
 
-public class TimesheetSubmissionScenario2 extends BaseTest {
+public class TimesheetSubmissionScenario1 extends BaseTest {
 	public SoftAssert sf;
 	public JavascriptExecutor js;
 	public boolean isSuccessful = false;
@@ -68,7 +68,7 @@ public class TimesheetSubmissionScenario2 extends BaseTest {
 		//		Thread.sleep(2000);
 		LaunchUrl();
 	}
-
+	
 	@Test(priority=1)
 	public void DeleteTestUserRecord() throws InterruptedException, IOException
 	{
@@ -87,8 +87,10 @@ public class TimesheetSubmissionScenario2 extends BaseTest {
 //        Utility.waitForSeconds(1);
 
 	}
+
+
 	@Test(priority=2)
-	public void ValidateaddNewTimesheetFunctionalityWithClockOutScenario() throws InterruptedException, IOException
+	public void ValidateaddNewTimesheetFunctionality() throws InterruptedException, IOException
 	{
 
 		launchUrl();
@@ -113,14 +115,11 @@ public class TimesheetSubmissionScenario2 extends BaseTest {
 		DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-
-
 		List<WebElement> allWeeks = driverR.findElements(By.xpath("//div[contains(@class,'p-1 shadow mb-2 bg-gradient border-2')]"));
 		System.out.println("Total week blocks found: " + allWeeks.size());
 		totalWeeks = allWeeks.size();
         // API login
 		
-
 		for (int index = 2; index <= totalWeeks; index++) {
 		    String weekXPath = "(//div[contains(@class,'p-1 shadow mb-2 bg-gradient border-2')])[" + index + "]";
 		    WebElement weekElement = driverR.findElement(By.xpath(weekXPath));
@@ -141,25 +140,33 @@ public class TimesheetSubmissionScenario2 extends BaseTest {
 		        LocalDate startDate = LocalDate.parse(startText, inputFormatter2);
 		        LocalDate endDate = LocalDate.parse(endText, inputFormatter2);
 		        System.out.println("Parsed Start Date: " + startDate + " | End Date: " + endDate);
-
-	        DateTimeFormatter outputFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		            String baseTime = "04:30:00";
-		            LocalDate date = startDate.plusDays(2);
+/*
+		        // API login
+		        RestAssured.baseURI = "https://tsbackend.ndtatlas.com";
+		        Response loginResponse = RestAssured.given()
+		                .header("Content-Type", "application/json")
+		                .body("{ \"username\": \"AutomationTestUser\", \"password\": \"Test@123\" }")
+		                .when().post("/api/auth/login/")
+		                .then().statusCode(200)
+		                .extract().response();
+		        String token = loginResponse.jsonPath().getString("data.token");
+		        System.out.println("🔐 Token fetched: " + token);
+//		        Utility.waitForSeconds(2);
+		        DeleteAutomationTestUserRecords(token);
+		        Utility.waitForSeconds(1);
+		        driverR.navigate().refresh();
+		        Utility.waitForSeconds(2);		        
+		        // Submit attendance (from 3rd day onwards) 
+*/
+		        DateTimeFormatter outputFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		        String baseTime = "04:30:00";
+		        for (LocalDate date = startDate.plusDays(2); !date.isAfter(endDate); date = date.plusDays(1)) {
 		            String dateStr = date.format(outputFormatter2);
 		            System.out.println("🗓️ Submitting entries for: " + dateStr);
 		            sendAttendanceData(token, dateStr + "T" + baseTime + "Z", "clockin");
 		            sendAttendanceData2(token, dateStr + "T" + addHours(baseTime, 1) + "Z", "breakin");
 		            sendAttendanceData2(token, dateStr + "T" + addHours(baseTime, 2) + "Z", "breakout");
-//		            sendAttendanceData2(token, dateStr + "T" + addHours(baseTime, 9) + "Z", "clockout");
-		            Thread.sleep(2000);
-		        
-		        for (LocalDate date2 = startDate.plusDays(3); !date2.isAfter(endDate); date2 = date2.plusDays(1)) {
-		            String dateStr2 = date2.format(outputFormatter2);
-		            System.out.println("🗓️ Submitting entries for: " + dateStr2);
-		            sendAttendanceData(token,  dateStr2 + "T" + baseTime + "Z", "clockin");
-		            sendAttendanceData2(token, dateStr2 + "T" + addHours(baseTime, 1) + "Z", "breakin");
-		            sendAttendanceData2(token, dateStr2 + "T" + addHours(baseTime, 2) + "Z", "breakout");
-		            sendAttendanceData2(token, dateStr2 + "T" + addHours(baseTime, 9) + "Z", "clockout");
+		            sendAttendanceData2(token, dateStr + "T" + addHours(baseTime, 9) + "Z", "clockout");
 		            Thread.sleep(2000);
 		        }
 
@@ -198,6 +205,7 @@ public class TimesheetSubmissionScenario2 extends BaseTest {
 						sf.assertEquals(ActualSuccessfulMsg, ExpectSuccessfulMsg);
 
 
+
 		                WebElement MinimizeBtn2 = driverR.findElement(By.xpath("(//*[contains(@class,'accordion-button')])[1]"));
 		                Utility.scrollIntoView(driverR, js, MinimizeBtn2);
 		                MinimizeBtn2.click();
@@ -228,12 +236,12 @@ public class TimesheetSubmissionScenario2 extends BaseTest {
 		            Utility.safeClick(driverR, js, confirmSubmit);
 		            Utility.waitForSeconds(2);
 		            System.out.println("✅ Timesheet submitted for week " + index);
-		           
-		            WebElement ConfirmAlert = driverR.findElement(By.xpath("//*[contains(text(),'Please clock out every timesheet for the selected week.')]"));
-                    Utility.highlightElement(ConfirmAlert);
-		            String ActualTimesheetSuccesful = ConfirmAlert.getText();
+		            
+		            WebElement confirmMsg = driverR.findElement(By.xpath("//*[contains(text(),'Timesheet submitted successfully!')]"));
+		            Utility.highlightElement(confirmMsg);
+		            String ActualTimesheetSuccesful = confirmMsg.getText();
 		            System.out.println("Timesheet submission Succesful Message :-> " + ActualTimesheetSuccesful);
-		            String ExpectTimesheetSuccesful ="Please clock out every timesheet for the selected week.";
+		            String ExpectTimesheetSuccesful ="Timesheet submitted successfully!";
 		            sf.assertEquals(ActualTimesheetSuccesful, ExpectTimesheetSuccesful);
 		            // Check final status after submission
 		            driverR.navigate().refresh();
@@ -244,20 +252,23 @@ public class TimesheetSubmissionScenario2 extends BaseTest {
 		            
 		            
 
-//		            WebElement finalStatus = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(@class,'bg-warning rounded text-black')]")));
-//		            String newStatus = finalStatus.getText().replace("\u00A0", " ").trim();
-//		            System.out.println("🟢 Post-Submission Status: '" + newStatus + "'");
+		            WebElement finalStatus = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(@class,'bg-warning rounded text-black')]")));
+		            String newStatus = finalStatus.getText().replace("\u00A0", " ").trim();
+		            System.out.println("🟢 Post-Submission Status: '" + newStatus + "'");
 
-		            if (ActualTimesheetSuccesful.equalsIgnoreCase("Please clock out every timesheet for the selected week.")) {
-		                System.out.println("if clock out is Missing for timesheet for the selected week.then breaks the loop");
+		            if (newStatus.equalsIgnoreCase("SUBMITTED")) {
+		                System.out.println("✅ Submission confirmed. Stopping further processing.");
 		                break; // STOP the main loop
 		            }
 
 		        } catch (Exception e) {
 		            System.out.println("⚠️ Error during final submission: " + e.getMessage());
+		           
 		        }
+		        
 		    }
 		}
+		
 		sf.assertAll();
 	}
 

@@ -307,7 +307,7 @@ public class ApplyLeavePage extends BaseTest{
 	public void ClickonApplyLeaveBtn() throws InterruptedException
 	{
 //		Utility.ExplicitWait(ApplyLeaveBtn);
-		int index = 6;
+		int index = 8;
 		boolean clicked = false;
 
 		while (true) {
@@ -394,7 +394,6 @@ public class ApplyLeavePage extends BaseTest{
 		Thread.sleep(2000);
 		BreakDuration2.click();
 	}
-	
 	public void SelectLeaveType() throws InterruptedException
 	{
 		Utility.ExplicitWait(LeaveType);
@@ -417,7 +416,37 @@ public class ApplyLeavePage extends BaseTest{
 		}
 
 		if (!fullDayFound && halfDayFound) {
-		    s4.selectByVisibleText("Half Day - Casual Leave");
+		    s4.selectByVisibleText("Full Day - Casual Leave");
+		    System.out.println("Selected: Half Day - Casual Leave");
+		} else if (!fullDayFound && !halfDayFound) {
+		    System.out.println("Neither 'Full Day - Casual Leave' nor 'Half Day - Casual Leave' found.");
+		}
+	}
+	
+	
+	public void SelectLeaveType2() throws InterruptedException
+	{
+		Utility.ExplicitWait(LeaveType);
+		Select s4 = new Select(LeaveType);
+		List<WebElement> options = s4.getOptions();
+
+		boolean fullDayFound = false;
+		boolean halfDayFound = false;
+
+		for (WebElement option : options) {
+		    String text = option.getText().trim(); // remove extra spaces
+		    if (text.equals("Full Day - Casual Leave")) {
+		        s4.selectByVisibleText("Half Day - Casual Leave");
+		        System.out.println("Selected: Half Day - Casual Leave");
+		        fullDayFound = true;
+		        break;
+		    } else if (text.equals("Full Day - Casual Leave")) {
+		        halfDayFound = true;
+		    }
+		}
+
+		if (!fullDayFound && halfDayFound) {
+		    s4.selectByVisibleText("Full Day - Casual Leave");
 		    System.out.println("Selected: Half Day - Casual Leave");
 		} else if (!fullDayFound && !halfDayFound) {
 		    System.out.println("Neither 'Full Day - Casual Leave' nor 'Half Day - Casual Leave' found.");

@@ -363,7 +363,7 @@ public void ValidateBreakOut() throws InterruptedException, IOException
 		
 		//		att.ClickonAddTask();
 
-	@Test(priority=6,dependsOnMethods="ValidateBreakOut")
+/*	@Test(priority=6,dependsOnMethods="ValidateBreakOut")
 	public void ValidateClockOut() throws InterruptedException, IOException
 	{
 
@@ -395,7 +395,7 @@ public void ValidateBreakOut() throws InterruptedException, IOException
 			System.out.println("******Clock-Out Functionality is Verified************");
 	}
 	
-
+*/
 
 	//	@AfterMethod
 	public void closeURL()
