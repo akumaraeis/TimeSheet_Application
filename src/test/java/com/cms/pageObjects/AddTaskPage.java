@@ -158,6 +158,24 @@ public class AddTaskPage extends BaseTest{
 	@FindBy(xpath="//span[normalize-space()='Search']")
 	private WebElement SereachDate ;
 	
+	@FindBy(xpath="//*[contains(text(),'Attendance')]")
+	private WebElement Attendance ;
+	
+	@FindBy(xpath="(//*[contains(text(),'Time In')])[2]")
+	private WebElement TimeIn ;
+	
+	@FindBy(xpath="(//*[contains(text(),'Lunch/Break Time In')])[2]")
+	private WebElement BreakIn ;
+	
+	@FindBy(xpath="(//*[contains(text(),'Lunch/Break Time Out')])[2]")
+	private WebElement BreakOut ;
+	
+	@FindBy(xpath="(//*[contains(text(),'Time Out')])[4]")
+	private WebElement TimeOut ;
+	
+	@FindBy(xpath="//button[normalize-space()='Confirm']")
+	private WebElement ConfirmationBtn ;
+	
 	// *********Construction Declaration to initialize Data Member********	
 	public AddTaskPage(WebDriver driverR)
 	{
@@ -384,6 +402,29 @@ public class AddTaskPage extends BaseTest{
 		
 	}
 	
+	public void SendTaskDuration2() throws InterruptedException
+	{
+		Utility.ExplicitWait(TaskDuration);
+		js = (JavascriptExecutor)driver2;
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",TaskDuration );
+		TaskDuration.click();		
+		Select S9 = new Select(TaskDuration);
+		S9.selectByVisibleText("09:00");
+		Thread.sleep(2000);
+		
+	}
+
+	public void SendTaskDuration3() throws InterruptedException
+	{
+		Utility.ExplicitWait(TaskDuration);
+		js = (JavascriptExecutor)driver2;
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",TaskDuration );
+		TaskDuration.click();		
+		Select S9 = new Select(TaskDuration);
+		S9.selectByVisibleText("06:00");
+		Thread.sleep(2000);
+		
+	}
 	public String GetSuccessfulNotification() throws InterruptedException
 	{
 		Utility.ExplicitWait(SuccessfulNotification);
@@ -464,6 +505,49 @@ public class AddTaskPage extends BaseTest{
 	    Lastweek.click();;
 	}
 	
+	public void ClickonAttendance() throws InterruptedException
+	{
+//		js = (JavascriptExecutor)driver2;
+//		Utility.safeClick(driver2, js, Attendance);
+		Utility.ExplicitWait(Attendance);
+		Attendance.click();
+	}
+//	ConfirmationBtn
+	
+	public void ClickonConfirmationBtn() throws InterruptedException
+	{
+//		js = (JavascriptExecutor)driver2;
+//		Utility.safeClick(driver2, js, Attendance);
+		Utility.ExplicitWait(ConfirmationBtn);
+		Utility.safeClick(driver2, js, ConfirmationBtn);
+//		Attendance.click();
+	}
+	public void ClickonTimeIn() throws InterruptedException
+	{
+		js = (JavascriptExecutor)driver2;
+		Utility.safeClick(driver2, js, TimeIn);
+//		TimeIn.click();
+	}
+	
+	public void ClickonBreakIn() throws InterruptedException
+	{
+		js = (JavascriptExecutor)driver2;
+		Utility.safeClick(driver2, js, BreakIn);
+//		BreakIn.click();
+	}
+	
+	public void ClickonBreakOut() throws InterruptedException
+	{
+		js = (JavascriptExecutor)driver2;
+		Utility.safeClick(driver2, js, BreakOut);
+//		BreakOut.click();
+	}
+	public void ClickonTimeOut() throws InterruptedException
+	{
+		js = (JavascriptExecutor)driver2;
+		Utility.safeClick(driver2, js, TimeOut);
+//		TimeOut.click();
+	}
 	public void EditBreakDuration() throws InterruptedException
 	{
 	    Utility.ExplicitWait(BreakDuration);
@@ -497,9 +581,13 @@ public class AddTaskPage extends BaseTest{
 		Utility.ExplicitWait(DateFilter);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')", DateFilter);
-		js.executeScript("arguments[0].scrollIntoView()",DateFilter );
 		Thread.sleep(2000);
-		DateFilter.click();
+		js.executeScript("arguments[0].scrollIntoView()",DateFilter);
+		Thread.sleep(2000);
+		Utility.safeClick(driver2, js, DateFilter);
+	//	DateFilter.click();
+		Thread.sleep(2000);
+		js.executeScript("arguments[0].scrollIntoView()",DateFilter );
 		DateFilter.sendKeys(Keys.chord(Keys.CONTROL,"a"));
 		DateFilter.sendKeys(Keys.DELETE);
 		Thread.sleep(2000);

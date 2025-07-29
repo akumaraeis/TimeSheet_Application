@@ -89,7 +89,7 @@ public class BaseTest{
 		case "chrome" :
 			ChromeOptions chromeOptions = new ChromeOptions();
 			chromeOptions.addArguments("start-maximized");
-//			chromeOptions.addArguments("--incognito");
+			chromeOptions.addArguments("--incognito");
 //			chromeOptions.addArguments("--disable-notifications");
 //			chromeOptions.addArguments("--disable-blink-features=AutomationControlled");
 

@@ -3,9 +3,13 @@ package com.cms.testcases;
 import static io.restassured.RestAssured.given;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -38,7 +42,7 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 	public String updatedTimeStr;
 	public String updatedTime2;
 	
-/*	@BeforeClass
+	@BeforeClass
 	@Parameters("browser")
 	public void openUrl(String browser) throws IOException
 	{
@@ -54,9 +58,7 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 		//		Thread.sleep(2000);
 		LaunchUrl();
 	}
-*/
 
-	
 	@Test(priority=0)
 	    public static  String getToken() {
 	        RestAssured.baseURI = "https://tsbackend.ndtatlas.com";
@@ -78,6 +80,26 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 	        return token;
 	        
 	    }
+	@Test(priority=1)
+	public void DeleteTestUserRecord() throws InterruptedException, IOException
+	{
+
+        RestAssured.baseURI = "https://tsbackend.ndtatlas.com";
+        Response loginResponse = RestAssured.given()
+                .header("Content-Type", "application/json")
+                .body("{ \"username\": \"AutomationTestUser\", \"password\": \"Test@123\" }")
+                .when().post("/api/auth/login/")
+                .then().statusCode(200)
+                .extract().response();
+        String token = loginResponse.jsonPath().getString("data.token");
+        System.out.println("🔐 Token fetched: " + token);
+//        Utility.waitForSeconds(2);
+        DeleteAutomationTestUserRecords(token);
+//        Utility.waitForSeconds(1);
+//        driverR.navigate().refresh();
+//        Utility.waitForSeconds(1);		        
+		
+	}
 	
 	@Test(priority=1)
 	public void ValidateClockIn() throws InterruptedException, IOException
@@ -203,16 +225,89 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 			.log().all();
 			System.out.println("******Clock-Out Functionality is Verified************");
 	}
-//		String ActMsg = FinalAlert;
-//		String ExpMsg ="Timesheet created successfully!";
-//		sf.assertEquals(ActMsg, ExpMsg);
-//
-//
-//		sf.assertAll();
-
-//	}
 	
-/*	
+	@Test(priority =5 ,dependsOnMethods="ValidateClockIn")
+	public void ValidateAddedTimesheetEntry() throws InterruptedException, IOException, ParseException
+	{
+
+		launchUrl();
+
+		Thread.sleep(2000);
+
+		lp.SendUserName();
+
+		lp.SendPassword();
+
+		lp.ClickonLoginBtn();
+
+		String ActualProfileName=lp.GetProfileName();
+		String ExpectedProfileName ="Welcome, AutomationTesting";
+
+		sf.assertEquals(ActualProfileName, ExpectedProfileName);
+
+		    String inputDate = clockInDate;
+	        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+	        SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+	        Date date = inputFormat.parse(inputDate);
+	        String formattedDate = outputFormat.format(date);
+
+//		String enteredTimesheetDate = clockInDate ; // Example input date
+//		String formattedDate = att.convertDateFormat(enteredTimesheetDate);
+		
+		att.SendDateFilter(formattedDate);
+		Thread.sleep(2000);
+		
+
+		List<WebElement> timesheetRows = driverR.findElements(By.xpath("//*[@class='shadow table table-light table-sm table-striped table-bordered table-hover']//tbody//tr"));
+
+		
+		boolean entryFound = false;
+
+		for (WebElement row : timesheetRows) {
+		    try {
+		        // 1. Get the 3rd column (assuming that's where date lives)
+		        WebElement dateTimeColumn = row.findElement(By.xpath(".//td[3]"));
+		        String rowDateTime = dateTimeColumn.getText().trim();
+		        String ActualClockinDate = rowDateTime ;
+		        System.out.println("Checking row with date: " + rowDateTime);
+		        String ExpectClockinDate = formattedDate;
+		        sf.assertEquals(ActualClockinDate, ExpectClockinDate);
+		        
+		        // 2. Match the date
+		        if (rowDateTime.startsWith(formattedDate)) {
+		            System.out.println("✅ Matching Entry Found: " + rowDateTime);
+		        }
+		        else
+		        {
+		        	System.out.println("✅ Matching Entry Not Found: " + rowDateTime);
+		        }
+		    }
+		    catch(Exception e)
+		    {
+		    	System.out.println("Exception detail"+ e.getMessage());
+		    	sf.assertAll();
+		    }
+		} 
+	}
+	
+	public void DeleteAutomationTestUserRecords(String token) {
+//	    HashMap<String, String> data = new HashMap<>();
+//	    data.put("test_timestamp", timestamp);
+
+//	    System.out.println("→ Sending to " + endpoint + ": " + timestamp);
+
+	    given()
+	        .contentType("application/json")
+	        .header("Authorization", "Token " + token)
+//	        .body(data)
+	        .when()
+	        .post("https://tsbackend.ndtatlas.com/api/utils/remove-automation-test-data/")
+	        .then()
+	        .statusCode(200)
+	        .log().all();
+	}
+
 	//	@AfterMethod
 	public void closeURL()
 	{
@@ -222,11 +317,10 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 	@AfterClass
 	public void closebrowser()
 	{
-
 		teardown();
 	}
 
-*/
+	
 }
 
 

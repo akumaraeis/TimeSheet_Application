@@ -201,14 +201,14 @@ public static void safeClick(WebDriver driverR, JavascriptExecutor js, WebElemen
         System.out.println("safeClick failed: " + e.getMessage());
     }
 }
-public static WebElement waitForElementToBeClickable(WebDriver driver, By locator, int timeoutSeconds) {
+public static WebElement ExpectTimesheetSuccesful(WebDriver driver, By locator, int timeoutSeconds) {
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
     return wait.until(ExpectedConditions.elementToBeClickable(locator));
 }
 
-public static WebElement waitForElementToBeClickable(WebDriver driver, WebElement element, int timeoutSeconds) {
+public static WebElement waitForElementToBeClickable(WebDriver driver, By locator, int timeoutSeconds) {
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
-    return wait.until(ExpectedConditions.elementToBeClickable(element));
+    return wait.until(ExpectedConditions.elementToBeClickable(locator));
 }
 
 public static void scrollIntoView(WebDriver driver, JavascriptExecutor js, WebElement element) {
@@ -221,6 +221,13 @@ public static void waitForSeconds(double seconds) {
     } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
     }
+}
+
+public static void highlightElement(WebElement Element)
+{
+	JavascriptExecutor js = (JavascriptExecutor)driverR;
+	js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",Element );
+
 }
 
 }

@@ -84,8 +84,30 @@ public class AddTaskTest extends BaseTest {
         return token;
         
     }
+	
+	@Test(priority=1)
+	public void DeleteTestUserRecord() throws InterruptedException, IOException
+	{
 
-@Test(priority=1)
+        RestAssured.baseURI = "https://tsbackend.ndtatlas.com";
+        Response loginResponse = RestAssured.given()
+                .header("Content-Type", "application/json")
+                .body("{ \"username\": \"AutomationTestUser\", \"password\": \"Test@123\" }")
+                .when().post("/api/auth/login/")
+                .then().statusCode(200)
+                .extract().response();
+        String token = loginResponse.jsonPath().getString("data.token");
+        System.out.println("🔐 Token fetched: " + token);
+//        Utility.waitForSeconds(2);
+        DeleteAutomationTestUserRecords(token);
+//        Utility.waitForSeconds(1);
+//        driverR.navigate().refresh();
+//        Utility.waitForSeconds(1);		        
+		
+	}
+
+
+@Test(priority=2)
 public void ValidateClockIn() throws InterruptedException, IOException
 {
 
@@ -115,7 +137,7 @@ public void ValidateClockIn() throws InterruptedException, IOException
 		
 	}	
 	
-@Test(priority=2,dependsOnMethods="ValidateClockIn")
+@Test(priority=3,dependsOnMethods="ValidateClockIn")
 public void ValidateBreakIn() throws InterruptedException, IOException
 {
 
@@ -146,7 +168,7 @@ public void ValidateBreakIn() throws InterruptedException, IOException
 		System.out.println("******BreakIn Functionality is  Verified************");
 }
 
-@Test(priority=3,dependsOnMethods="ValidateBreakIn")
+@Test(priority=4,dependsOnMethods="ValidateBreakIn")
 public void ValidateBreakOut() throws InterruptedException, IOException
 {
 
@@ -178,7 +200,7 @@ public void ValidateBreakOut() throws InterruptedException, IOException
 		System.out.println("******BreakOut Functionality is Verified************");
 }
 
-@Test(priority=4,dependsOnMethods="ValidateBreakOut")
+@Test(priority=5,dependsOnMethods="ValidateBreakOut")
 public void ValidateClockOut() throws InterruptedException, IOException
 {
 
@@ -209,7 +231,7 @@ public void ValidateClockOut() throws InterruptedException, IOException
 		.log().all();
 		System.out.println("******Clock-Out Functionality is Verified************");
 }
-	@Test(priority=5)
+	@Test(priority=6)
 	public void ValidateAddTaskFunctionalityAfterClockOut() throws InterruptedException, IOException, ParseException
 	{
 
@@ -227,55 +249,7 @@ public void ValidateClockOut() throws InterruptedException, IOException
 		String ExpectedProfileName ="Welcome, AutomationTesting";
 
 		sf.assertEquals(ActualProfileName, ExpectedProfileName);
-/*		
 
-//		atp.ClickonAddNewTimesheet();
-
-		while(!isSuccessful)
-		{
-
-//			clockInDate = att.generateRandomDate(); // Generate a date in February
-//			String clockOutDate = clockInDate; // Ensure both dates are the same
-//			att.SendClockinDate(clockInDate);
-			 String inputDate = clockInDate;
-		        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-		        SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy");
-
-		        Date date = inputFormat.parse(inputDate);
-		        String formattedDate = outputFormat.format(date);
-
-		        System.out.println("Formatted Date: " + formattedDate);
-		        Thread.sleep(3000);
-			 att.SendClockinDate(formattedDate);
-			 
-			 att.ClickonSearchDate();
-			
-//			att.SendClockinTime();
-
-	//		att.SendClockoutDate(clockOutDate);
-
-	//		atp.SendClockoutTime();
-			Thread.sleep(2000);
-			atp.SelectClockOutDate(clockInDate);
-			Thread.sleep(2000);
-			atp.SelectBreakDuration();
-			Thread.sleep(2000);
-			atp.ClickonSubmit();
-
-			 FinalAlert = atp.GetTaskAlert();
-			
-			if (FinalAlert.equals("Timesheet created successfully!")) {
-				isSuccessful = true;  // Exit the loop if successful
-			} else {
-				// Optionally, you can add a delay or retry logic here
-				Thread.sleep(1000); // Example: wait for 1 second before retrying
-			}
-		}	
-		
-		String ActMsg = FinalAlert;
-		String ExpMsg ="Timesheet created successfully!";
-		sf.assertEquals(ActMsg, ExpMsg);
-*/
 		    String inputDate = clockInDate;
 	        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
 	        SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -363,7 +337,23 @@ public void ValidateClockOut() throws InterruptedException, IOException
 		//		att.ClickonAddTask();
 
 
-	
+	public void DeleteAutomationTestUserRecords(String token) {
+//	    HashMap<String, String> data = new HashMap<>();
+//	    data.put("test_timestamp", timestamp);
+
+//	    System.out.println("→ Sending to " + endpoint + ": " + timestamp);
+
+	    given()
+	        .contentType("application/json")
+	        .header("Authorization", "Token " + token)
+//	        .body(data)
+	        .when()
+	        .post("https://tsbackend.ndtatlas.com/api/utils/remove-automation-test-data/")
+	        .then()
+	        .statusCode(200)
+	        .log().all();
+	}
+
 
 
 	//	@AfterMethod

@@ -96,12 +96,29 @@ public class LoginPage extends BaseTest{
 		Thread.sleep(2000);
 	}
 	
+	public void SendInvalidUserName() throws InterruptedException
+	{
+		Utility.ExplicitWait(UserName);
+		js = (JavascriptExecutor)driver2;
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",UserName );
+		UserName.sendKeys("InvalidCredential");
+		Thread.sleep(2000);
+	}
 	public void SendPassword() throws InterruptedException
 	{
 		Utility.ExplicitWait(Password);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",Password );
 		Password.sendKeys("Test@123");
+		Thread.sleep(2000); 
+	}
+
+	public void SendInvalidPassword() throws InterruptedException
+	{
+		Utility.ExplicitWait(Password);
+		js = (JavascriptExecutor)driver2;
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",Password );
+		Password.sendKeys("Test@1234");
 		Thread.sleep(2000); 
 	}
 

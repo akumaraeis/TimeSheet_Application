@@ -284,11 +284,11 @@ public class TimesheetSubmissionPage extends BaseTest{
 	public void ClickonTimesheetSubmission() throws InterruptedException
 	{
 		Utility.ExplicitWait(TimesheetSubmission);
-		Thread.sleep(2000);
+//		Thread.sleep(1000);
 		JavascriptExecutor js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].scrollIntoView(true);", TimesheetSubmission);
 		TimesheetSubmission.click();
-	    Thread.sleep(2000);
+//	    Thread.sleep(1000);
 	}
 	
 	public void ClickonActionsButton() throws InterruptedException

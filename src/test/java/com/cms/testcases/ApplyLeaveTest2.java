@@ -22,7 +22,7 @@ import com.cms.utility.Utility;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 
-public class ApplyLeaveTest extends BaseTest {
+public class ApplyLeaveTest2 extends BaseTest {
 	public SoftAssert sf;
 	public JavascriptExecutor js;
 	public boolean isSuccessful = false;
@@ -99,7 +99,7 @@ public class ApplyLeaveTest extends BaseTest {
 		
 		Thread.sleep(2000);
 		
-		alp.SelectLeaveType();
+		alp.SelectLeaveType2();
 		
 		Thread.sleep(2000);
 		
