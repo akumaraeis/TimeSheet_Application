@@ -338,6 +338,39 @@ public class ApplyLeavePage extends BaseTest{
 		}
 	}
 	
+	public void ClickonApplyLeaveBtn2(String FindDate) throws InterruptedException
+	{
+//		Utility.ExplicitWait(ApplyLeaveBtn);
+		int index = 8;
+		boolean clicked = false;
+
+		while (true) {
+		    try {
+		        // Build dynamic XPath with current index
+		        String xpath = "(//*[contains(text(),'Apply Leave')])[" + index + "]";
+		        WebElement button = driver2.findElement(By.xpath(xpath));
+
+		        // Check if button is displayed and enabled
+		        if (button.isDisplayed() && button.isEnabled()) {
+		            button.click();
+		            System.out.println("Clicked on Apply Leave button at index: " + index);
+		            clicked = true;
+		            break;
+		        } else {
+		            System.out.println("Button at index " + index + " is disabled, checking next...");
+		            index++;
+		        }
+
+		    } catch (NoSuchElementException e) {
+		        System.out.println("No more 'Apply Leave' buttons found after index " + index);
+		        break;
+		    }
+		}
+
+		if (!clicked) {
+		    System.out.println("No enabled 'Apply Leave' button found starting from index 6.");
+		}
+	}
 	
 	public void ClickonSubmitBtn() throws InterruptedException
 	{
@@ -411,12 +444,13 @@ public class ApplyLeavePage extends BaseTest{
 		        fullDayFound = true;
 		        break;
 		    } else if (text.equals("Half Day - Casual Leave")) {
-		        halfDayFound = true;
+		       
+		    	halfDayFound = true;
 		    }
 		}
 
 		if (!fullDayFound && halfDayFound) {
-		    s4.selectByVisibleText("Full Day - Casual Leave");
+		    s4.selectByVisibleText("Half Day - Casual Leave");
 		    System.out.println("Selected: Half Day - Casual Leave");
 		} else if (!fullDayFound && !halfDayFound) {
 		    System.out.println("Neither 'Full Day - Casual Leave' nor 'Half Day - Casual Leave' found.");
@@ -435,22 +469,23 @@ public class ApplyLeavePage extends BaseTest{
 
 		for (WebElement option : options) {
 		    String text = option.getText().trim(); // remove extra spaces
-		    if (text.equals("Full Day - Casual Leave")) {
+		    if (text.equals("Half Day - Casual Leave")) {
 		        s4.selectByVisibleText("Half Day - Casual Leave");
 		        System.out.println("Selected: Half Day - Casual Leave");
-		        fullDayFound = true;
+		        halfDayFound = true;
 		        break;
 		    } else if (text.equals("Full Day - Casual Leave")) {
-		        halfDayFound = true;
+		       
+		    	fullDayFound = true;
 		    }
 		}
 
-		if (!fullDayFound && halfDayFound) {
-		    s4.selectByVisibleText("Full Day - Casual Leave");
-		    System.out.println("Selected: Half Day - Casual Leave");
-		} else if (!fullDayFound && !halfDayFound) {
-		    System.out.println("Neither 'Full Day - Casual Leave' nor 'Half Day - Casual Leave' found.");
-		}
+//		if (!fullDayFound && halfDayFound) {
+//		    s4.selectByVisibleText("Full Day - Casual Leave");
+//		    System.out.println("Selected: Half Day - Casual Leave");
+//		} else if (!fullDayFound && !halfDayFound) {
+//		    System.out.println("Neither 'Full Day - Casual Leave' nor 'Half Day - Casual Leave' found.");
+//		}
 	}
 	
 	public void SendComment() throws InterruptedException
