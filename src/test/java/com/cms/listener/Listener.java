@@ -7,6 +7,7 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.aventstack.extentreports.reporter.configuration.Theme;
 import com.cms.utility.Utility;
 
 import org.openqa.selenium.OutputType;
@@ -20,6 +21,7 @@ import java.util.Date;
 
 public class Listener implements ITestListener {
 
+/*
 	ExtentSparkReporter sparkReporter;
 	ExtentReports extent;
 	ExtentTest test;
@@ -74,3 +76,76 @@ public class Listener implements ITestListener {
 	// Utility method to capture screenshots
 
 }
+
+	*/
+	
+	    private ExtentSparkReporter sparkReporter;
+	    private ExtentReports extent;
+	    private ExtentTest test;
+
+	    @Override
+	    public void onStart(ITestContext context) {
+	        String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+	        String reportName = "ExtentReport-" + timestamp + ".html";
+	        String reportPath = System.getProperty("user.dir") + "/ExtentReport/" + reportName;
+
+	        sparkReporter = new ExtentSparkReporter(reportPath);
+	        sparkReporter.config().setDocumentTitle("Automation Test Report");
+	        sparkReporter.config().setReportName("Regression Suite");
+	        sparkReporter.config().setTheme(Theme.STANDARD);
+
+	        extent = new ExtentReports();
+	        extent.attachReporter(sparkReporter);
+
+	        extent.setSystemInfo("OS", "Windows 11 Pro");
+	        extent.setSystemInfo("Browser", "Chrome");
+	        extent.setSystemInfo("Environment", "QA");
+	        extent.setSystemInfo("User", "Amit Kumar");
+	    }
+
+	    @Override
+	    public void onTestStart(ITestResult result) {
+	        String fullTestName = result.getTestClass().getName() + " : " + result.getMethod().getMethodName();
+	        test = extent.createTest(fullTestName);
+	        test.log(Status.INFO, "Test Started: " + fullTestName);
+	    }
+
+	    @Override
+	    public void onTestSuccess(ITestResult result) {
+	        test.log(Status.PASS, "✅ Test Passed");
+
+	        String screenshotPath = Utility.captureScreenshot(result.getMethod().getMethodName(), "PASS");
+			if (screenshotPath != null) {
+			    test.addScreenCaptureFromPath(screenshotPath);
+			}
+	    }
+
+	    @Override
+	    public void onTestFailure(ITestResult result) {
+	        test.log(Status.FAIL, "❌ Test Failed: " + result.getThrowable());
+
+	        String screenshotPath = Utility.captureScreenshot(result.getMethod().getMethodName(), "FAIL");
+			if (screenshotPath != null) {
+			    test.addScreenCaptureFromPath(screenshotPath);
+			}
+	    }
+
+	    @Override
+	    public void onTestSkipped(ITestResult result) {
+	        test.log(Status.SKIP, "⚠ Test Skipped: " + result.getThrowable());
+
+	        String screenshotPath = Utility.captureScreenshot(result.getMethod().getMethodName(), "SKIP");
+			if (screenshotPath != null) {
+			    test.addScreenCaptureFromPath(screenshotPath);
+			}
+	    }
+
+	    @Override
+	    public void onFinish(ITestContext context) {
+	        extent.flush();
+	    }
+	}
+
+	
+	
+	

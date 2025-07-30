@@ -7,13 +7,14 @@
   <test thread-count="5" name="Test(failed)">
     <parameter name="browser" value="chrome"/>
     <classes>
-      <class name="com.cms.testcases.TimesheetSubmissionScenario5">
+      <class name="com.cms.testcases.TimesheetSubmissionScenario1">
         <methods>
-          <include name="ValidateaddNewTimesheetFunctionality"/>
           <include name="closebrowser"/>
           <include name="openUrl"/>
+          <include name="DeleteTestUserRecord"/>
+          <include name="ValidateaddNewTimesheetFunctionality"/>
         </methods>
-      </class> <!-- com.cms.testcases.TimesheetSubmissionScenario5 -->
+      </class> <!-- com.cms.testcases.TimesheetSubmissionScenario1 -->
     </classes>
   </test> <!-- Test(failed) -->
 </suite> <!-- Failed suite [Suite] -->

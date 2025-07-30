@@ -10,6 +10,7 @@ import java.util.Date;
 
 import javax.imageio.ImageIO;
 
+import org.apache.logging.log4j.core.util.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
@@ -51,7 +52,22 @@ public class Utility extends BaseTest {
 	        return destination; // Return path for reporting
 	    }
 	
-    
+
+	
+//	  public static String captureScreenshot(String methodName, String status) throws IOException {
+//	        TakesScreenshot ts = (TakesScreenshot) Base.driverR; // or pass WebDriver as parameter
+//	        File src = ts.getScreenshotAs(OutputType.FILE);
+//
+//	        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+//	        String screenshotDir = System.getProperty("user.dir") + "/Screenshots/" + status + "/";
+//	        new File(screenshotDir).mkdirs(); // Create directory if it doesn't exist
+//
+//	        String filePath = screenshotDir + methodName + "_" + timestamp + ".png";
+//	        File dest = new File(filePath);
+//	        FileUtils.copyFile(src, dest);
+//	        return filePath;
+//	    }
+//	
     public static String getToken() {
        String token ="Bearer "+"Z4uzBKvHpTJlh5QCf9SDzQyHJoKQJpb6";
 //         String token ="Bearer "+"07DphO7pAhaC7jcUkQBsiVaK4aZv8h3f";
