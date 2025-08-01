@@ -95,6 +95,7 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 
 		launchUrl();
 
+		
 		Thread.sleep(2000);
 
 		lp.SendUserName();
@@ -176,6 +177,7 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 		        WebElement refreshedWeek = Utility.waitForElementToBeClickable(driverR, By.xpath(weekXPath), 10);
 		        Utility.scrollIntoView(driverR, js, refreshedWeek);
 		        Utility.safeClick(driverR, js, refreshedWeek);
+		   
 
 		        List<WebElement> taskButtons = driverR.findElements(By.xpath("//*[contains(text(),'Add Task')]"));
 		        System.out.println("Total Add Task buttons: " + taskButtons.size());
@@ -185,7 +187,7 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 		                WebElement MinimizeBtn = driverR.findElement(By.xpath("(//*[contains(@class,'accordion-button')])[" + i + "]"));
 		                Utility.scrollIntoView(driverR, js, MinimizeBtn);
 		                MinimizeBtn.click();
-
+	//	                Utility.waitForSeconds(1);
 		                WebElement addTaskBtn = driverR.findElement(By.xpath("(//*[contains(text(),'Add Task')])[1]"));
 		                Utility.scrollIntoView(driverR, js, addTaskBtn);
 		                wait.until(ExpectedConditions.elementToBeClickable(addTaskBtn));

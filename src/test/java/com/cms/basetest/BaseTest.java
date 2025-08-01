@@ -35,6 +35,7 @@ import com.cms.pageObjects.AddTaskPage;
 import com.cms.pageObjects.AddTimesheetPage;
 import com.cms.pageObjects.AddTimesheetPage2;
 import com.cms.pageObjects.ApplyLeavePage;
+import com.cms.pageObjects.DashboardPage;
 import com.cms.pageObjects.Gross_TaskHourValidationPage;
 import com.cms.pageObjects.InValid_TimesheetEntryValidationPage;
 import com.cms.pageObjects.LoginPage;
@@ -68,6 +69,7 @@ public class BaseTest{
 	public static PreviousEntryClockOutScenarioPage pcp;
 	public static TimesheetSubmissionPage tsp;
 	public static ApplyLeavePage alp;
+	public static DashboardPage tdp;
 	
 	//****To Run Code in Virtual Cloud Machine.
 	public void initBrowser(String Browsername ) throws IOException
@@ -161,6 +163,13 @@ public class BaseTest{
 
 	}
 
+	public void launchLocalUrl() throws IOException, InterruptedException
+	{
+		driverR.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));		
+		driverR.get("http://192.168.1.10:8086/login");
+		Thread.sleep(1000);	
+	}
+
 	public static String getFile(String filename) throws IOException
 	{
 		Properties prop = new Properties();
@@ -210,6 +219,7 @@ public class BaseTest{
 		 pcp =new PreviousEntryClockOutScenarioPage(driverR);
 		 tsp =new TimesheetSubmissionPage(driverR);
 		 alp =new ApplyLeavePage(driverR);
+		 tdp = new DashboardPage(driverR);
 	}
 
 
