@@ -42,7 +42,7 @@ public class TimesheetSlotMinimumHourValidationTest extends BaseTest{
 	public void ValidateTimesheetSlotMinimumHourScenario() throws InterruptedException, IOException
 	{
 
-		launchUrl();
+		launchLocalUrl();
 
 		Thread.sleep(2000);
 

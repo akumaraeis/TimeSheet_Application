@@ -77,7 +77,7 @@ public class NewTimesheetSubmission extends BaseTest {
 	@Test(priority=1)
 	public void ValidateaddNewTimesheetFunctionality() throws InterruptedException, IOException {
 	  
-		launchUrl();
+		launchLocalUrl();
 
 		Thread.sleep(2000);
 

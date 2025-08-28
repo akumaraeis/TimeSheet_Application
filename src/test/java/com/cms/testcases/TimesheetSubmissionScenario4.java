@@ -91,7 +91,7 @@ public class TimesheetSubmissionScenario4 extends BaseTest {
 	public void ValidateaddNewTimesheetFunctionality() throws InterruptedException, IOException
 	{
 
-		launchUrl();
+		launchLocalUrl();
 
 		Thread.sleep(2000);
 
@@ -133,7 +133,7 @@ public class TimesheetSubmissionScenario4 extends BaseTest {
 		    String status = statusElement.getText().replace("\u00A0", " ").trim();
 		    System.out.println("Week " + index + " Status: '" + status + "'");
 
-		    if (status.equalsIgnoreCase("Not_Submitted")) {
+		    if (status.equalsIgnoreCase("NOT SUBMITTED")) {
 		        String startText = driverR.findElement(By.xpath("(" + weekXPath + "/div/div/span)[1]")).getText().trim();
 		        String endText = driverR.findElement(By.xpath("(" + weekXPath + "/div/div/span)[3]")).getText().trim();
 
@@ -302,7 +302,7 @@ public class TimesheetSubmissionScenario4 extends BaseTest {
 		        .header("Authorization", "Token " + token)
 		        .body(data)
 		        .when()
-		        .post("https://tsbackend.ndtatlas.com/api/attendance-test/" + endpoint + "/")
+		        .post("http://192.168.1.10:8085/api/attendance-test/" + endpoint + "/")
 		        .then()
 		        .statusCode(201)
 		        .log().all();
@@ -318,7 +318,7 @@ public class TimesheetSubmissionScenario4 extends BaseTest {
 		        .header("Authorization", "Token " + token)
 		        .body(data)
 		        .when()
-		        .patch("https://tsbackend.ndtatlas.com/api/attendance-test/" + endpoint + "/")
+		        .patch("http://192.168.1.10:8085/api/attendance-test/" + endpoint + "/")
 		        .then()
 		        .statusCode(201)
 		        .log().all();
@@ -334,7 +334,7 @@ public class TimesheetSubmissionScenario4 extends BaseTest {
 		        .header("Authorization", "Token " + token)
 //		        .body(data)
 		        .when()
-		        .post("https://tsbackend.ndtatlas.com/api/utils/remove-automation-test-data/")
+		        .post("http://192.168.1.10:8085/api/utils/remove-automation-test-data/")
 		        .then()
 		        .statusCode(200)
 		        .log().all();

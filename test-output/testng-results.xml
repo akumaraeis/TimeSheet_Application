@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="5" passed="5" failed="0" skipped="0">
+<testng-results ignored="0" total="3" passed="3" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-07-30T14:54:16 IST" name="Suite" finished-at="2025-07-30T14:55:12 IST" duration-ms="56029">
+  <suite started-at="2025-08-28T03:43:04 GMT-04:00" name="Suite" finished-at="2025-08-28T03:44:15 GMT-04:00" duration-ms="70644">
     <groups>
     </groups>
-    <test started-at="2025-07-30T14:54:16 IST" name="Test" finished-at="2025-07-30T14:55:12 IST" duration-ms="56029">
-      <class name="com.cms.testcases.AddTaskTestNegativeScenario_3">
-        <test-method is-config="true" signature="openUrl(java.lang.String)[pri:0, instance:com.cms.testcases.AddTaskTestNegativeScenario_3@f5958c9]" started-at="2025-07-30T14:54:16 IST" name="openUrl" finished-at="2025-07-30T14:54:21 IST" duration-ms="5151" status="PASS">
+    <test started-at="2025-08-28T03:43:04 GMT-04:00" name="Test" finished-at="2025-08-28T03:44:15 GMT-04:00" duration-ms="70644">
+      <class name="com.cms.testcases.ApprovalRegularizationTest">
+        <test-method is-config="true" signature="openUrl(java.lang.String)[pri:0, instance:com.cms.testcases.ApprovalRegularizationTest@f5958c9]" started-at="2025-08-28T03:43:05 GMT-04:00" name="openUrl" finished-at="2025-08-28T03:43:10 GMT-04:00" duration-ms="5164" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -18,31 +18,47 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- openUrl -->
-        <test-method signature="ValidateClockIn()[pri:1, instance:com.cms.testcases.AddTaskTestNegativeScenario_3@f5958c9]" started-at="2025-07-30T14:54:21 IST" name="ValidateClockIn" finished-at="2025-07-30T14:54:25 IST" duration-ms="3505" status="PASS">
+        <test-method is-config="true" signature="LaunchUrl()[pri:0, instance:com.cms.testcases.ApprovalRegularizationTest@f5958c9]" started-at="2025-08-28T03:43:10 GMT-04:00" name="LaunchUrl" finished-at="2025-08-28T03:43:11 GMT-04:00" duration-ms="1136" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- ValidateClockIn -->
-        <test-method signature="ValidateBreakIn()[pri:2, instance:com.cms.testcases.AddTaskTestNegativeScenario_3@f5958c9]" started-at="2025-07-30T14:54:25 IST" name="ValidateBreakIn" finished-at="2025-07-30T14:54:26 IST" depends-on-methods="com.cms.testcases.AddTaskTestNegativeScenario_3.ValidateClockIn" duration-ms="1342" status="PASS">
+        </test-method> <!-- LaunchUrl -->
+        <test-method signature="DeleteTestUserRecord()[pri:1, instance:com.cms.testcases.ApprovalRegularizationTest@f5958c9]" started-at="2025-08-28T03:43:11 GMT-04:00" name="DeleteTestUserRecord" finished-at="2025-08-28T03:43:13 GMT-04:00" duration-ms="2153" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- ValidateBreakIn -->
-        <test-method signature="ValidateBreakOut()[pri:3, instance:com.cms.testcases.AddTaskTestNegativeScenario_3@f5958c9]" started-at="2025-07-30T14:54:27 IST" name="ValidateBreakOut" finished-at="2025-07-30T14:54:28 IST" depends-on-methods="com.cms.testcases.AddTaskTestNegativeScenario_3.ValidateBreakIn" duration-ms="1251" status="PASS">
+        </test-method> <!-- DeleteTestUserRecord -->
+        <test-method is-config="true" signature="closeURL()[pri:0, instance:com.cms.testcases.ApprovalRegularizationTest@f5958c9]" started-at="2025-08-28T03:43:13 GMT-04:00" name="closeURL" finished-at="2025-08-28T03:43:13 GMT-04:00" duration-ms="116" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- ValidateBreakOut -->
-        <test-method signature="ValidateClockOut()[pri:4, instance:com.cms.testcases.AddTaskTestNegativeScenario_3@f5958c9]" started-at="2025-07-30T14:54:28 IST" name="ValidateClockOut" finished-at="2025-07-30T14:54:30 IST" depends-on-methods="com.cms.testcases.AddTaskTestNegativeScenario_3.ValidateBreakOut" duration-ms="1316" status="PASS">
+        </test-method> <!-- closeURL -->
+        <test-method is-config="true" signature="LaunchUrl()[pri:0, instance:com.cms.testcases.ApprovalRegularizationTest@f5958c9]" started-at="2025-08-28T03:43:13 GMT-04:00" name="LaunchUrl" finished-at="2025-08-28T03:43:15 GMT-04:00" duration-ms="1079" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- ValidateClockOut -->
-        <test-method signature="ValidateAddTaskFunctionalityAfterClockOut()[pri:5, instance:com.cms.testcases.AddTaskTestNegativeScenario_3@f5958c9]" started-at="2025-07-30T14:54:30 IST" name="ValidateAddTaskFunctionalityAfterClockOut" finished-at="2025-07-30T14:55:11 IST" duration-ms="40807" status="PASS">
+        </test-method> <!-- LaunchUrl -->
+        <test-method signature="ValidateRegularizationFunctionality()[pri:1, instance:com.cms.testcases.ApprovalRegularizationTest@f5958c9]" started-at="2025-08-28T03:43:15 GMT-04:00" name="ValidateRegularizationFunctionality" finished-at="2025-08-28T03:43:53 GMT-04:00" duration-ms="38284" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- ValidateAddTaskFunctionalityAfterClockOut -->
-        <test-method is-config="true" signature="closebrowser()[pri:0, instance:com.cms.testcases.AddTaskTestNegativeScenario_3@f5958c9]" started-at="2025-07-30T14:55:11 IST" name="closebrowser" finished-at="2025-07-30T14:55:12 IST" duration-ms="786" status="PASS">
+        </test-method> <!-- ValidateRegularizationFunctionality -->
+        <test-method is-config="true" signature="closeURL()[pri:0, instance:com.cms.testcases.ApprovalRegularizationTest@f5958c9]" started-at="2025-08-28T03:43:53 GMT-04:00" name="closeURL" finished-at="2025-08-28T03:43:53 GMT-04:00" duration-ms="121" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeURL -->
+        <test-method is-config="true" signature="LaunchUrl()[pri:0, instance:com.cms.testcases.ApprovalRegularizationTest@f5958c9]" started-at="2025-08-28T03:43:53 GMT-04:00" name="LaunchUrl" finished-at="2025-08-28T03:43:54 GMT-04:00" duration-ms="1096" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LaunchUrl -->
+        <test-method signature="ValidateApproveRegularizationFunctionality()[pri:2, instance:com.cms.testcases.ApprovalRegularizationTest@f5958c9]" started-at="2025-08-28T03:43:54 GMT-04:00" name="ValidateApproveRegularizationFunctionality" finished-at="2025-08-28T03:44:14 GMT-04:00" duration-ms="19465" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- ValidateApproveRegularizationFunctionality -->
+        <test-method is-config="true" signature="closeURL()[pri:0, instance:com.cms.testcases.ApprovalRegularizationTest@f5958c9]" started-at="2025-08-28T03:44:14 GMT-04:00" name="closeURL" finished-at="2025-08-28T03:44:14 GMT-04:00" duration-ms="126" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeURL -->
+        <test-method is-config="true" signature="closebrowser()[pri:0, instance:com.cms.testcases.ApprovalRegularizationTest@f5958c9]" started-at="2025-08-28T03:44:14 GMT-04:00" name="closebrowser" finished-at="2025-08-28T03:44:15 GMT-04:00" duration-ms="808" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- closebrowser -->
-      </class> <!-- com.cms.testcases.AddTaskTestNegativeScenario_3 -->
+      </class> <!-- com.cms.testcases.ApprovalRegularizationTest -->
     </test> <!-- Test -->
   </suite> <!-- Suite -->
 </testng-results>

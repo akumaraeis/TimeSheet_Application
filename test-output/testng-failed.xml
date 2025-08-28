@@ -7,14 +7,17 @@
   <test thread-count="5" name="Test(failed)">
     <parameter name="browser" value="chrome"/>
     <classes>
-      <class name="com.cms.testcases.TimesheetSubmissionScenario1">
+      <class name="com.cms.testcases.AddTaskTest">
         <methods>
+          <include name="ValidateBreakIn"/>
           <include name="closebrowser"/>
+          <include name="ValidateBreakOut"/>
+          <include name="ValidateClockOut"/>
+          <include name="ValidateAddTaskFunctionalityAfterClockOut"/>
+          <include name="ValidateClockIn"/>
           <include name="openUrl"/>
-          <include name="DeleteTestUserRecord"/>
-          <include name="ValidateaddNewTimesheetFunctionality"/>
         </methods>
-      </class> <!-- com.cms.testcases.TimesheetSubmissionScenario1 -->
+      </class> <!-- com.cms.testcases.AddTaskTest -->
     </classes>
   </test> <!-- Test(failed) -->
 </suite> <!-- Failed suite [Suite] -->

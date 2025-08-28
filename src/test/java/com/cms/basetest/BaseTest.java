@@ -35,16 +35,19 @@ import com.cms.pageObjects.AddTaskPage;
 import com.cms.pageObjects.AddTimesheetPage;
 import com.cms.pageObjects.AddTimesheetPage2;
 import com.cms.pageObjects.ApplyLeavePage;
+import com.cms.pageObjects.ChangePasswordPage;
+import com.cms.pageObjects.DashboardPage;
 import com.cms.pageObjects.Gross_TaskHourValidationPage;
 import com.cms.pageObjects.InValid_TimesheetEntryValidationPage;
 import com.cms.pageObjects.LoginPage;
 import com.cms.pageObjects.MultipleClockInScenarioPage;
 import com.cms.pageObjects.PreviousEntryClockOutScenarioPage;
+import com.cms.pageObjects.RegularizationPage;
 import com.cms.pageObjects.TimeOverlappingScenarioPage;
 import com.cms.pageObjects.TimesheetSlotMinimumHourValidationPage;
 import com.cms.pageObjects.TimesheetSubmissionPage;
 import com.cms.pageObjects.TwentyFourhourValidationPage;
-import com.cms.utility.ReadConfig;
+
 import com.cms.utility.Utility;
 
 
@@ -68,6 +71,9 @@ public class BaseTest{
 	public static PreviousEntryClockOutScenarioPage pcp;
 	public static TimesheetSubmissionPage tsp;
 	public static ApplyLeavePage alp;
+	public static DashboardPage tdp;
+	public static ChangePasswordPage tcp;
+	public static RegularizationPage trp;
 	
 	//****To Run Code in Virtual Cloud Machine.
 	public void initBrowser(String Browsername ) throws IOException
@@ -161,6 +167,13 @@ public class BaseTest{
 
 	}
 
+	public void launchLocalUrl() throws IOException, InterruptedException
+	{
+		driverR.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));		
+		driverR.get("http://192.168.1.10:8086/login");
+		Thread.sleep(1000);	
+	}
+
 	public static String getFile(String filename) throws IOException
 	{
 		Properties prop = new Properties();
@@ -210,6 +223,9 @@ public class BaseTest{
 		 pcp =new PreviousEntryClockOutScenarioPage(driverR);
 		 tsp =new TimesheetSubmissionPage(driverR);
 		 alp =new ApplyLeavePage(driverR);
+		 tdp = new DashboardPage(driverR);
+		 tcp = new ChangePasswordPage(driverR);
+		 trp = new RegularizationPage(driverR);
 	}
 
 

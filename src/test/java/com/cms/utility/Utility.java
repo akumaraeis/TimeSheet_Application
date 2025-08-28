@@ -90,133 +90,175 @@ public class Utility extends BaseTest {
         ArrayList<String> tabs = new ArrayList<>(driverR.getWindowHandles());
         driverR.switchTo().window(tabs.get(index));
     }
-//	public static void ExplicitWait(WebElement ele)
-//	{
-//		WebDriverWait wait = new WebDriverWait(driverR,Duration.ofSeconds(50));
-//		wait.until(ExpectedConditions.visibilityOf(ele));
-//		
-//	}
-	
-//	  public static void ExplicitClickWait(WebElement ele) {
-//	        WebDriverWait wait = new WebDriverWait(driverR, Duration.ofSeconds(10));
-//	        wait.until(ExpectedConditions.refreshed(ExpectedConditions.elementToBeClickable(ele)));
-//	        loginButton.click();
-//	    }
-	  
-//	public static void ExplicitWait2(WebElement ele)
-//{
-//	WebDriverWait wait = new WebDriverWait(driverR,Duration.ofSeconds(50));
-//	wait.until(ExpectedConditions.elementToBeClickable(ele));
-//}
 
 	 public static void showTooltip(String message) {
-	        String script = "var tooltip = document.createElement('div');" +
-	                        "tooltip.innerHTML = '" + message + "';" +
-	                        "tooltip.style.position = 'fixed';" +
-	                        "tooltip.style.top = '80px';" +
-	                        "tooltip.style.left = '50%';" +
-	                        "tooltip.style.padding = '25px';" +
-	                        "tooltip.style.backgroundColor = 'green';" +
-	                        "tooltip.style.color = 'white';" +
-	                        "tooltip.style.border = '1px solid black';" +
-	                        "tooltip.style.zIndex = '10000';" +
-	                        "document.body.appendChild(tooltip);" +
-	                        "setTimeout(function() { document.body.removeChild(tooltip); }, 2000);";
-
+		 String script = "var tooltip = document.createElement('div');" +
+				    "tooltip.innerHTML = '" + message + "';" +
+				    "tooltip.style.position = 'fixed';" +
+				    "tooltip.style.top = '100px';" +
+				    "tooltip.style.left = '50%';" +
+				    "tooltip.style.padding = '20px 40px';" +
+				    "tooltip.style.backgroundColor = '#FFD700';" + // 🔹 Bright golden yellow
+				    "tooltip.style.color = '#1a1a1a';" +           // 🔹 Dark text for contrast
+				    "tooltip.style.fontSize = '24px';" +           // Larger text
+				    "tooltip.style.fontWeight = 'bold';" +
+				    "tooltip.style.borderRadius = '12px';" +
+				    "tooltip.style.boxShadow = '0px 6px 15px rgba(0,0,0,0.3)';" +
+				    "tooltip.style.zIndex = '10000';" +
+				    "tooltip.style.transform = 'translateX(-50%)';" +
+				    "tooltip.style.fontFamily = 'Arial, sans-serif';" +
+				    "document.body.appendChild(tooltip);" +
+				    "setTimeout(function() { document.body.removeChild(tooltip); }, 2000);";
 	        ((JavascriptExecutor) driverR).executeScript(script);
 	    }
+	 
+	 public static void showTooltipWithElementPoint(String message ,WebElement element) {
+		 ((JavascriptExecutor) driverR).executeScript(
+				    "var rect = arguments[0].getBoundingClientRect();" +  // get element position
+				    "var tooltip = document.createElement('div');" +
+				    "tooltip.innerHTML = '" + message + "';" +
+				    "tooltip.style.position = 'absolute';" +
+				    "tooltip.style.top = (rect.top - 60 + window.scrollY) + 'px';" +  // above element
+				    "tooltip.style.left = (rect.left + rect.width/2) + 'px';" +       // center align
+				    "tooltip.style.transform = 'translateX(-50%)';" +
+				    "tooltip.style.padding = '12px 20px';" +
+				    "tooltip.style.backgroundColor = '#FFD700';" +  // golden yellow
+				    "tooltip.style.color = '#1a1a1a';" +
+				    "tooltip.style.fontSize = '18px';" +
+				    "tooltip.style.fontWeight = 'bold';" +
+				    "tooltip.style.borderRadius = '8px';" +
+				    "tooltip.style.boxShadow = '0px 6px 15px rgba(0,0,0,0.3)';" +
+				    "tooltip.style.zIndex = '10000';" +
+				    "tooltip.style.fontFamily = 'Arial, sans-serif';" +
+				    "tooltip.style.textAlign = 'center';" +
+
+				    // Create arrow (triangle)
+				    "var arrow = document.createElement('div');" +
+				    "arrow.style.position = 'absolute';" +
+				    "arrow.style.top = (rect.top - 20 + window.scrollY) + 'px';" +
+				    "arrow.style.left = (rect.left + rect.width/2 - 10) + 'px';" +
+				    "arrow.style.width = 0;" +
+				    "arrow.style.height = 0;" +
+				    "arrow.style.borderLeft = '10px solid transparent';" +
+				    "arrow.style.borderRight = '10px solid transparent';" +
+				    "arrow.style.borderTop = '10px solid #FFD700';" +  // matches tooltip bg
+				    "arrow.style.zIndex = '10000';" +
+
+				    "document.body.appendChild(tooltip);" +
+				    "document.body.appendChild(arrow);" +
+				    "setTimeout(function() { " +
+				    "   document.body.removeChild(tooltip);" +
+				    "   document.body.removeChild(arrow);" +
+				    "}, 10000);",
+				    element);
+	    }
+	 public static void showCallout2(String message, WebElement element) {
+		    String script =
+		        "var rect = arguments[0].getBoundingClientRect();" +
+		        "var callout = document.createElement('div');" +
+		        "callout.innerHTML = '" + message + "';" +
+		        "callout.style.position = 'absolute';" +
+		        "callout.style.left = (rect.left + rect.width/2 + window.scrollX) + 'px';" +
+		        "callout.style.top = (rect.bottom + 12 + window.scrollY) + 'px';" +  // ✅ below element
+		        "callout.style.transform = 'translateX(-50%)';" +
+		        "callout.style.padding = '12px 20px';" +
+		        "callout.style.backgroundColor = 'green';" +
+		        "callout.style.color = 'white';" +
+		        "callout.style.fontSize = '16px';" +
+		        "callout.style.fontWeight = 'bold';" +
+		        "callout.style.borderRadius = '8px';" +
+		        "callout.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';" +
+		        "callout.style.zIndex = '10000';" +
+		        "callout.style.fontFamily = 'Arial, sans-serif';" +
+		        "callout.style.textAlign = 'center';" +
+
+		        // ✅ Create arrow pointing UP
+		        "var arrow = document.createElement('div');" +
+		        "arrow.style.position = 'absolute';" +
+		        "arrow.style.top = '-12px';" + // place arrow on top of callout
+		        "arrow.style.left = '50%';" +
+		        "arrow.style.transform = 'translateX(-50%)';" +
+		        "arrow.style.width = '0';" +
+		        "arrow.style.height = '0';" +
+		        "arrow.style.borderLeft = '10px solid transparent';" +
+		        "arrow.style.borderRight = '10px solid transparent';" +
+		        "arrow.style.borderBottom = '12px solid green';" +  // ✅ arrow points UP to element
+		        "callout.appendChild(arrow);" +
+
+		        "document.body.appendChild(callout);" +
+		        "setTimeout(function() { document.body.removeChild(callout); }, 1000);"; // 5 sec
+
+		    ((JavascriptExecutor) driverR).executeScript(script, element);
+		}
 	 public static void showCallout(String message , WebElement element) {
-		  int x = element.getLocation().getX();
-	        int y = element.getLocation().getY();
+		 int x = element.getLocation().getX();
+		 int y = element.getLocation().getY();
 
-	        // Adjust position for the callout
-	        int calloutX = x;
-	        int calloutY = y-60;  // Place the callout above the element
+		 // Adjust position for the callout (above the element)
+		 int calloutX = x - 20;
+		 int calloutY = y - 60;
 
-/*	        String script2 = "var callout = document.createElement('div');" +
-                 "callout.innerHTML = '" + message + "';" +
-                 "callout.style.position = 'absolute';" +
-                 "callout.style.left = '" + calloutX + "px';" +
-                 "callout.style.top = '" + calloutY + "px';" +
-                 "callout.style.padding = '10px';" +
-                 "callout.style.backgroundColor = 'red';" + // Light blue color
-                 "callout.style.border = '1px solid #000';" +
-                 "callout.style.borderRadius = '5px';" +
-                 "callout.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';" +
-                 "callout.style.zIndex = '10000';" +
-                 "callout.style.display = 'flex';" +
-                 "callout.style.alignItems = 'center';" +
-                 "var arrow = document.createElement('div');" +
-                 "arrow.style.width = '6px';" + // Bold arrow
-                 "arrow.style.height = '100px';" + // Long arrow
-                 "arrow.style.backgroundColor = '#000';" + // Black color
-                 "arrow.style.position = 'absolute';" +
-                 "arrow.style.left = '-20px';" +  // Adjust to position the arrow to the left of the callout
-                 "arrow.style.top = '5px';" + // Adjust to position the arrow down from the top of the callout
-               //  "arrow.style.transform = 'rotate(-45deg)';" +  // Incline the arrow
-//                 "arrow.style.transformOrigin = 'top left';" +
-//                 "callout.appendChild(arrow);" +
-//                 "var arrowHead = document.createElement('div');" +
-//                 "arrowHead.style.position = 'absolute';" +
-//                 "arrowHead.style.fontSize = '60px';" +
-//                 "arrowHead.style.color = '#000';" + // Black color
-//                 "arrowHead.style.left = '0px';" +  // Adjust to position the arrowhead at the end of the arrow
-//                 "arrowHead.style.top = '0px';" + // Adjust to position the arrowhead down from the top of the callout
-//                 "arrowHead.innerHTML = '&#x279E;';" + // Unicode for ➤
-//                 "callout.appendChild(arrowHead);" +
-//                 "document.body.appendChild(callout);" +
-                 "setTimeout(function() { document.body.removeChild(callout); }, 3000);";
+		 String script2 =  
+		     "var callout = document.createElement('div');" +
+		     "callout.innerHTML = '" + message + "';" +
+		     "callout.style.position = 'absolute';" +
+		     "callout.style.left = '" + calloutX + "px';" +
+		     "callout.style.top = '" + calloutY + "px';" +
+		     "callout.style.padding = '12px 20px';" +
+		     "callout.style.backgroundColor = 'green';" + 
+		     "callout.style.color = 'white';" + 
+		     "callout.style.fontSize = '16px';" +
+		     "callout.style.fontWeight = 'bold';" +
+		     "callout.style.borderRadius = '8px';" +
+		     "callout.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';" +
+		     "callout.style.zIndex = '10000';" +
+		     "callout.style.fontFamily = 'Arial, sans-serif';" +
+		     "callout.style.textAlign = 'center';" +
 
-	        ((JavascriptExecutor) driverR).executeScript(script2);
-	*/
-	        String script2 =  "var callout = document.createElement('div');" +
-         "callout.innerHTML = '" + message + "';" +
-         "callout.style.position = 'absolute';" +
-         "callout.style.left = '" + calloutX + "px';" +
-         "callout.style.top = '" + calloutY + "px';" +
-         "callout.style.padding = '10px';" +
-         "callout.style.backgroundColor = 'green';" + 
-         "callout.style.color = 'white';" + 
-         "callout.style.border = '1px white';" +
-         "callout.style.borderRadius = '5px';" +
-         "callout.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';" +
-         "callout.style.zIndex = '10000';" +
-         "callout.style.display = 'flex';" +
-         "callout.style.alignItems = 'center';" +
-         "var arrow = document.createElement('div');" +
-         "arrow.style.width = '0';" +
-         "arrow.style.height = '0';" +
-         "arrow.style.borderLeft =  '10px solid transparent';" +
-         "arrow.style.borderRight = '10px solid transparent';" +
-         "arrow.style.borderTop = 'white';" + // Same light blue color
-         "arrow.style.position = 'absolute';" +
-         "arrow.style.left = '10px';" +
-         "arrow.style.top = '100%';" +
-         "callout.appendChild(arrow);" +
-         "document.body.appendChild(callout);" +
-         "setTimeout(function() { document.body.removeChild(callout); }, 1000);";
-	        ((JavascriptExecutor) driverR).executeScript(script2);
+		     // Create arrow (tail)
+		     "var arrow = document.createElement('div');" +
+		     "arrow.style.position = 'absolute';" +
+		     "arrow.style.top = '100%';" +     // places below the callout
+		     "arrow.style.left = '30px';" +   // adjust for arrow position
+		     "arrow.style.width = '0';" +
+		     "arrow.style.height = '0';" +
+		     "arrow.style.borderLeft = '12px solid transparent';" +
+		     "arrow.style.borderRight = '12px solid transparent';" +
+		     "arrow.style.borderTop = '20px solid green';" + // same as callout background
+		     "callout.appendChild(arrow);" +
+
+		     "document.body.appendChild(callout);" +
+		     "setTimeout(function() { document.body.removeChild(callout); }, 1000);"; // 5 sec
+
+		 ((JavascriptExecutor) driverR).executeScript(script2);
 	    }
 	
-public static void safeClick(WebDriver driverR, JavascriptExecutor js, WebElement element) {
-    WebDriverWait wait = new WebDriverWait(driverR, Duration.ofSeconds(10));
-    try {
-        // Scroll element into center view
-//    	JavascriptExecutor js1 = (JavascriptExecutor)driverR;
-        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
-        // Wait until it is clickable
-        wait.until(ExpectedConditions.elementToBeClickable(element));
-        
-        try {
-            element.click();  // normal click
-        } catch (ElementClickInterceptedException e) {
-            System.out.println("Click intercepted, using JS fallback.");
-            js.executeScript("arguments[0].click();", element);  // fallback click
-        }
-    } catch (Exception e) {
-        System.out.println("safeClick failed: " + e.getMessage());
-    }
-}
+	 public static void safeClick(WebDriver driver, JavascriptExecutor js, WebElement element) {
+		    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+
+		    try {
+		        // ✅ Wait until visible & clickable
+		        element = wait.until(ExpectedConditions.elementToBeClickable(element));
+
+		        // ✅ Scroll into view (center)
+		        js.executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});", element);
+
+		        // ✅ Try normal Selenium click first
+		        element.click();
+		        System.out.println("✅ safeClick: Element clicked successfully");
+		    } catch (Exception e1) {
+		        System.out.println("⚠️ safeClick failed with normal click: " + e1.getMessage());
+		        try {
+		            // ✅ Fallback: JS Click
+		            js.executeScript("arguments[0].click();", element);
+		            System.out.println("✅ safeClick: Element clicked using JS executor");
+		        } catch (Exception e2) {
+		            System.out.println("❌ safeClick failed completely: " + e2.getMessage());
+		            throw e2; // rethrow if nothing worked
+		        }
+		    }
+		}
+
 public static WebElement ExpectTimesheetSuccesful(WebDriver driver, By locator, int timeoutSeconds) {
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
     return wait.until(ExpectedConditions.elementToBeClickable(locator));

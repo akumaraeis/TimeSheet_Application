@@ -95,7 +95,7 @@ public class ApplyLeaveNegativeScenarioTest extends BaseTest {
 	public void ValidateaddNewTimesheetFunctionality() throws InterruptedException, IOException
 	{
 
-		launchUrl();
+		launchLocalUrl();
 
 		Thread.sleep(2000);
 
@@ -280,7 +280,7 @@ public class ApplyLeaveNegativeScenarioTest extends BaseTest {
 		        .header("Authorization", "Token " + token)
 //		        .body(data)
 		        .when()
-		        .post("https://tsbackend.ndtatlas.com/api/utils/remove-automation-test-data/")
+		        .post("http://192.168.1.10:8085/api/utils/remove-automation-test-data/")
 		        .then()
 		        .statusCode(200)
 		        .log().all();

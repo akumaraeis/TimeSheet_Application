@@ -91,9 +91,15 @@ public class TimesheetSubmissionScenario2 extends BaseTest {
 	public void ValidateaddNewTimesheetFunctionalityWithClockOutScenario() throws InterruptedException, IOException
 	{
 
-		launchUrl();
+		Utility.showTooltip("Executing Automation Script to Check Negative Scenario that if Clock-out is missing");
+		
+		Thread.sleep(3000);
+		
+		launchLocalUrl();
+		
+		Utility.showTooltip("Step 1:-> After Launching Timesheet Application, Login as User and validate login Functionality");
 
-		Thread.sleep(2000);
+		Thread.sleep(3000);
 
 		lp.SendUserName();
 
@@ -106,9 +112,9 @@ public class TimesheetSubmissionScenario2 extends BaseTest {
 
 		sf.assertEquals(ActualProfileName, ExpectedProfileName);
 		tsp.ClickonTimesheetSubmission();
-//		Thread.sleep(1000);
-	
-
+		Thread.sleep(3000);
+		Utility.showTooltip("Step 2:-> Selecting Respective Week to Validate Timesheet submission Using Automation Script");        
+        Thread.sleep(5000);
 		DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("MMM d, yyyy", Locale.ENGLISH);
 		DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -120,7 +126,8 @@ public class TimesheetSubmissionScenario2 extends BaseTest {
 		totalWeeks = allWeeks.size();
         // API login
 		
-
+		Utility.showTooltip("Step 3 :->Now Creating Timesheet Entry from (Mon-Fri)such that Clock-Out is missing in one of entry using API RestAssured ");
+	
 		for (int index = 2; index <= totalWeeks; index++) {
 		    String weekXPath = "(//div[contains(@class,'p-1 shadow mb-2 bg-gradient border-2')])[" + index + "]";
 		    WebElement weekElement = driverR.findElement(By.xpath(weekXPath));
@@ -133,7 +140,7 @@ public class TimesheetSubmissionScenario2 extends BaseTest {
 		    String status = statusElement.getText().replace("\u00A0", " ").trim();
 		    System.out.println("Week " + index + " Status: '" + status + "'");
 
-		    if (status.equalsIgnoreCase("Not_Submitted")) {
+		    if (status.equalsIgnoreCase("NOT SUBMITTED")) {
 		        String startText = driverR.findElement(By.xpath("(" + weekXPath + "/div/div/span)[1]")).getText().trim();
 		        String endText = driverR.findElement(By.xpath("(" + weekXPath + "/div/div/span)[3]")).getText().trim();
 
@@ -172,7 +179,7 @@ public class TimesheetSubmissionScenario2 extends BaseTest {
 
 		        List<WebElement> taskButtons = driverR.findElements(By.xpath("//*[contains(text(),'Add Task')]"));
 		        System.out.println("Total Add Task buttons: " + taskButtons.size());
-
+		        Utility.showTooltip("Step 4:-> After Creating weekly TimesheetEntry,Now adding task to all entry using Automation Script");
 		        for (int i = 1; i <= taskButtons.size(); i++) {
 		            try {
 		                WebElement MinimizeBtn = driverR.findElement(By.xpath("(//*[contains(@class,'accordion-button')])[" + i + "]"));
@@ -207,7 +214,7 @@ public class TimesheetSubmissionScenario2 extends BaseTest {
 		                js.executeScript("arguments[0].click();", driverR.findElement(By.xpath("(//*[contains(text(),'Add Task')])[1]")));
 		            }
 		        }
-
+		        Utility.showTooltip("Step 5:-> After adding Task, submitting this week Timesheet using Automation Script");
 		        // Submit timesheet
 		        try {
 		            WebElement actionsBtn = Utility.waitForElementToBeClickable(driverR, By.xpath("//button[normalize-space()='Actions']"), 10);
@@ -279,7 +286,7 @@ public class TimesheetSubmissionScenario2 extends BaseTest {
 		        .header("Authorization", "Token " + token)
 		        .body(data)
 		        .when()
-		        .post("https://tsbackend.ndtatlas.com/api/attendance-test/" + endpoint + "/")
+		        .post("http://192.168.1.10:8085/api/attendance-test/" + endpoint + "/")
 		        .then()
 		        .statusCode(201)
 		        .log().all();
@@ -295,7 +302,7 @@ public class TimesheetSubmissionScenario2 extends BaseTest {
 		        .header("Authorization", "Token " + token)
 		        .body(data)
 		        .when()
-		        .patch("https://tsbackend.ndtatlas.com/api/attendance-test/" + endpoint + "/")
+		        .patch("http://192.168.1.10:8085/api/attendance-test/" + endpoint + "/")
 		        .then()
 		        .statusCode(201)
 		        .log().all();
@@ -312,7 +319,7 @@ public class TimesheetSubmissionScenario2 extends BaseTest {
 		        .header("Authorization", "Token " + token)
 //		        .body(data)
 		        .when()
-		        .post("https://tsbackend.ndtatlas.com/api/utils/remove-automation-test-data/")
+		        .post("http://192.168.1.10:8085/api/utils/remove-automation-test-data/")
 		        .then()
 		        .statusCode(200)
 		        .log().all();

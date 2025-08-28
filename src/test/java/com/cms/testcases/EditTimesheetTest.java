@@ -47,7 +47,7 @@ public class EditTimesheetTest extends BaseTest {
 	public void ValidateEditTimesheetFunctionality() throws InterruptedException, IOException
 	{
 
-		launchUrl();
+		launchLocalUrl();
 
 		Thread.sleep(2000);
 

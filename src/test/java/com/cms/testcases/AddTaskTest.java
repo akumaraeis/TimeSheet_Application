@@ -53,6 +53,7 @@ public class AddTaskTest extends BaseTest {
 		initBrowser(browser);
 		creatingObject();	
 		//		Utility.showTooltip("Browser is Launched using Selenium Automation Tool");
+		Utility.showTooltip("Executing Automation Script to Validate Add Task Scenario");
 		sf = new SoftAssert();
 	}
 
@@ -60,12 +61,13 @@ public class AddTaskTest extends BaseTest {
 	public void LaunchUrl() throws IOException, InterruptedException
 	{
 		//		Thread.sleep(2000);
+		
 		LaunchUrl();
 	}
 	
 	@Test(priority=0)
     public static  String getToken() {
-        RestAssured.baseURI = "https://tsbackend.ndtatlas.com";
+        RestAssured.baseURI = "http://192.168.1.10:8085";
 
         Response response = given()
             .header("Content-Type", "application/json")
@@ -89,7 +91,7 @@ public class AddTaskTest extends BaseTest {
 	public void DeleteTestUserRecord() throws InterruptedException, IOException
 	{
 
-        RestAssured.baseURI = "https://tsbackend.ndtatlas.com";
+        RestAssured.baseURI = "http://192.168.1.10:8085";
         Response loginResponse = RestAssured.given()
                 .header("Content-Type", "application/json")
                 .body("{ \"username\": \"AutomationTestUser\", \"password\": \"Test@123\" }")
@@ -127,7 +129,7 @@ public void ValidateClockIn() throws InterruptedException, IOException
 		.body(data)
 
 		.when()
-		.post("https://tsbackend.ndtatlas.com/api/attendance-test/clockin/")
+		.post("http://192.168.1.10:8085/api/attendance-test/clockin/")
 
 		.then()
 		.statusCode(201)
@@ -160,7 +162,7 @@ public void ValidateBreakIn() throws InterruptedException, IOException
 		.body(data)
 
 		.when()
-		.patch("https://tsbackend.ndtatlas.com/api/attendance-test/breakin/")
+		.patch("http://192.168.1.10:8085/api/attendance-test/breakin/")
 
 		.then()
 		.statusCode(201)
@@ -192,7 +194,7 @@ public void ValidateBreakOut() throws InterruptedException, IOException
 		.body(data)
 
 		.when()
-		.patch("https://tsbackend.ndtatlas.com/api/attendance-test/breakout/")
+		.patch("http://192.168.1.10:8085/api/attendance-test/breakout/")
 
 		.then()
 		.statusCode(201)
@@ -224,7 +226,7 @@ public void ValidateClockOut() throws InterruptedException, IOException
 		.body(data)
 
 		.when()
-		.patch("https://tsbackend.ndtatlas.com/api/attendance-test/clockout/")
+		.patch("http://192.168.1.10:8085/api/attendance-test/clockout/")
 
 		.then()
 		.statusCode(201)
@@ -234,8 +236,9 @@ public void ValidateClockOut() throws InterruptedException, IOException
 	@Test(priority=6)
 	public void ValidateAddTaskFunctionalityAfterClockOut() throws InterruptedException, IOException, ParseException
 	{
+		Utility.showTooltip("Step 1 :-> Launching Timesheet Application using Automation Script ");
 
-		launchUrl();
+		launchLocalUrl();
 
 		Thread.sleep(2000);
 
@@ -249,6 +252,8 @@ public void ValidateClockOut() throws InterruptedException, IOException
 		String ExpectedProfileName ="Welcome, AutomationTesting";
 
 		sf.assertEquals(ActualProfileName, ExpectedProfileName);
+		
+		Utility.showTooltip("User Profile Name Validated using AutomationScript.");
 
 		    String inputDate = clockInDate;
 	        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -257,9 +262,6 @@ public void ValidateClockOut() throws InterruptedException, IOException
 	        Date date = inputFormat.parse(inputDate);
 	        String formattedDate = outputFormat.format(date);
 
-//		String enteredTimesheetDate = clockInDate ; // Example input date
-//		String formattedDate = att.convertDateFormat(enteredTimesheetDate);
-		
 		att.SendDateFilter(formattedDate);
 		Thread.sleep(2000);
 		
@@ -328,8 +330,10 @@ public void ValidateClockOut() throws InterruptedException, IOException
 				String ExpectSuccessfulMsg = "Task created successfully!";
 
 				sf.assertEquals(ActualSuccessfulMsg, ExpectSuccessfulMsg);
+				
+				Utility.showTooltip("Task created successfully!");
 
-				Thread.sleep(2000);
+				Utility.waitForSeconds(2);
 
 				sf.assertAll();
 			}
@@ -338,17 +342,12 @@ public void ValidateClockOut() throws InterruptedException, IOException
 
 
 	public void DeleteAutomationTestUserRecords(String token) {
-//	    HashMap<String, String> data = new HashMap<>();
-//	    data.put("test_timestamp", timestamp);
-
-//	    System.out.println("→ Sending to " + endpoint + ": " + timestamp);
-
 	    given()
 	        .contentType("application/json")
 	        .header("Authorization", "Token " + token)
 //	        .body(data)
 	        .when()
-	        .post("https://tsbackend.ndtatlas.com/api/utils/remove-automation-test-data/")
+	        .post("http://192.168.1.10:8085/api/utils/remove-automation-test-data/")
 	        .then()
 	        .statusCode(200)
 	        .log().all();
