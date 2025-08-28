@@ -95,9 +95,12 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 
 //		launchUrl();
 
+<<<<<<< HEAD
 		launchLocalUrl();
 		
 		Utility.showTooltip("After Launching Timesheet Application, Login as User and validate login Functionality ");
+=======
+>>>>>>> afe53dadd2d36ae04716e878708d2494adee785f
 		
 		Thread.sleep(2000);
 
