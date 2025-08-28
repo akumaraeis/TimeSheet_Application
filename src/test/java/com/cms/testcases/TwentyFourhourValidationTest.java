@@ -47,7 +47,7 @@ public class TwentyFourhourValidationTest extends BaseTest {
 	public void ValidateTwentyFourhourScenario() throws InterruptedException, IOException
 	{
 
-		launchUrl();
+		launchLocalUrl();
 
 		Thread.sleep(2000);
 

@@ -73,7 +73,7 @@ public class ApplyLeaveTest2 extends BaseTest {
 	public void ValidateapplyLeaveFunctionality() throws InterruptedException, IOException
 	{
 
-		launchUrl();
+		launchLocalUrl();
 
 		Thread.sleep(2000);
 
@@ -132,7 +132,7 @@ public class ApplyLeaveTest2 extends BaseTest {
 	        .header("Authorization", "Token " + token)
 //	        .body(data)
 	        .when()
-	        .post("https://tsbackend.ndtatlas.com/api/utils/remove-automation-test-data/")
+	        .post("http://192.168.1.10:8085/api/utils/remove-automation-test-data/")
 	        .then()
 	        .statusCode(200)
 	        .log().all();

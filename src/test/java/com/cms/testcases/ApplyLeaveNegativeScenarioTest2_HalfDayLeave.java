@@ -93,7 +93,7 @@ public class ApplyLeaveNegativeScenarioTest2_HalfDayLeave extends BaseTest {
 
 	@Test(priority=2)
 	public void ValidateaddNewTimesheetFunctionality() throws InterruptedException, IOException {
-	    launchUrl();
+		launchLocalUrl();
 	    Thread.sleep(2000);
 	    lp.SendUserName();
 	    lp.SendPassword();
@@ -256,7 +256,7 @@ public class ApplyLeaveNegativeScenarioTest2_HalfDayLeave extends BaseTest {
 		        .header("Authorization", "Token " + token)
 //		        .body(data)
 		        .when()
-		        .post("https://tsbackend.ndtatlas.com/api/utils/remove-automation-test-data/")
+		        .post("http://192.168.1.10:8085/api/utils/remove-automation-test-data/")
 		        .then()
 		        .statusCode(200)
 		        .log().all();

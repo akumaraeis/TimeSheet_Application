@@ -50,7 +50,7 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 	public  String token;
 	String Start_date ;
 	String weekContainerXPath;
-	int totalWeeks =0;
+	int totalWeeks ;
 	public WebElement MinimizeBtn;
 	@BeforeClass
 	@Parameters("browser")
@@ -73,7 +73,7 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 	public void DeleteTestUserRecord() throws InterruptedException, IOException
 	{
 
-        RestAssured.baseURI = "https://tsbackend.ndtatlas.com";
+        RestAssured.baseURI = "http://192.168.1.10:8085";
         Response loginResponse = RestAssured.given()
                 .header("Content-Type", "application/json")
                 .body("{ \"username\": \"AutomationTestUser\", \"password\": \"Test@123\" }")
@@ -93,8 +93,14 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 	public void ValidateaddNewTimesheetFunctionality() throws InterruptedException, IOException
 	{
 
-		launchUrl();
+//		launchUrl();
 
+<<<<<<< HEAD
+		launchLocalUrl();
+		
+		Utility.showTooltip("After Launching Timesheet Application, Login as User and validate login Functionality ");
+=======
+>>>>>>> afe53dadd2d36ae04716e878708d2494adee785f
 		
 		Thread.sleep(2000);
 
@@ -110,7 +116,7 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 		sf.assertEquals(ActualProfileName, ExpectedProfileName);
 		tsp.ClickonTimesheetSubmission();
 //		Thread.sleep(1000);
-	
+		Utility.showTooltip("Executing Automation Script to Validate Timesheet submission and Approval Functionality ");
 
 		DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("MMM d, yyyy", Locale.ENGLISH);
 		DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -119,8 +125,10 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 		List<WebElement> allWeeks = driverR.findElements(By.xpath("//div[contains(@class,'p-1 shadow mb-2 bg-gradient border-2')]"));
 		System.out.println("Total week blocks found: " + allWeeks.size());
 		totalWeeks = allWeeks.size();
+		System.out.println("Total week size so that required for Loop"+ totalWeeks);
         // API login
 		
+		Utility.showTooltip("After Selecting Week, Script creating Timesheet Entry from Mon-Friday in Background using API RestAssured Concept ");
 		for (int index = 2; index <= totalWeeks; index++) {
 		    String weekXPath = "(//div[contains(@class,'p-1 shadow mb-2 bg-gradient border-2')])[" + index + "]";
 		    WebElement weekElement = driverR.findElement(By.xpath(weekXPath));
@@ -133,7 +141,7 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 		    String status = statusElement.getText().replace("\u00A0", " ").trim();
 		    System.out.println("Week " + index + " Status: '" + status + "'");
 
-		    if (status.equalsIgnoreCase("Not_Submitted")) {
+		    if (status.equalsIgnoreCase("NOT SUBMITTED")) {
 		        String startText = driverR.findElement(By.xpath("(" + weekXPath + "/div/div/span)[1]")).getText().trim();
 		        String endText = driverR.findElement(By.xpath("(" + weekXPath + "/div/div/span)[3]")).getText().trim();
 
@@ -141,36 +149,20 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 		        LocalDate startDate = LocalDate.parse(startText, inputFormatter2);
 		        LocalDate endDate = LocalDate.parse(endText, inputFormatter2);
 		        System.out.println("Parsed Start Date: " + startDate + " | End Date: " + endDate);
-/*
-		        // API login
-		        RestAssured.baseURI = "https://tsbackend.ndtatlas.com";
-		        Response loginResponse = RestAssured.given()
-		                .header("Content-Type", "application/json")
-		                .body("{ \"username\": \"AutomationTestUser\", \"password\": \"Test@123\" }")
-		                .when().post("/api/auth/login/")
-		                .then().statusCode(200)
-		                .extract().response();
-		        String token = loginResponse.jsonPath().getString("data.token");
-		        System.out.println("🔐 Token fetched: " + token);
-//		        Utility.waitForSeconds(2);
-		        DeleteAutomationTestUserRecords(token);
-		        Utility.waitForSeconds(1);
-		        driverR.navigate().refresh();
-		        Utility.waitForSeconds(2);		        
-		        // Submit attendance (from 3rd day onwards) 
-*/
+
+
 		        DateTimeFormatter outputFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		        String baseTime = "04:30:00";
 		        for (LocalDate date = startDate.plusDays(2); !date.isAfter(endDate); date = date.plusDays(1)) {
 		            String dateStr = date.format(outputFormatter2);
+		            System.out.println("Date Stamp entry for timestamp for send Attendance Method "+dateStr);
 		            System.out.println("🗓️ Submitting entries for: " + dateStr);
-		            sendAttendanceData(token, dateStr + "T" + baseTime + "Z", "clockin");
+		            sendAttendanceData(token,  dateStr + "T" + baseTime + "Z", "clockin");
 		            sendAttendanceData2(token, dateStr + "T" + addHours(baseTime, 1) + "Z", "breakin");
 		            sendAttendanceData2(token, dateStr + "T" + addHours(baseTime, 2) + "Z", "breakout");
 		            sendAttendanceData2(token, dateStr + "T" + addHours(baseTime, 9) + "Z", "clockout");
 		            Thread.sleep(2000);
 		        }
-
 		        // Add task and submit timesheet
 		        driverR.navigate().refresh();
 		        Utility.waitForSeconds(2);
@@ -181,6 +173,8 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 
 		        List<WebElement> taskButtons = driverR.findElements(By.xpath("//*[contains(text(),'Add Task')]"));
 		        System.out.println("Total Add Task buttons: " + taskButtons.size());
+		        
+		        Utility.showTooltip("After Creating Entry,Now adding task to all entry using Automation Script");
 
 		        for (int i = 1; i <= taskButtons.size(); i++) {
 		            try {
@@ -218,6 +212,7 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 		            }
 		        }
 
+		        Utility.showTooltip("After adding Task, submitting this week Timesheet using Automation Script");
 		        // Submit timesheet
 		        try {
 		            WebElement actionsBtn = Utility.waitForElementToBeClickable(driverR, By.xpath("//button[normalize-space()='Actions']"), 10);
@@ -237,7 +232,7 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 		            Utility.highlightElement(confirmSubmit);
 		            Utility.safeClick(driverR, js, confirmSubmit);
 		            Utility.waitForSeconds(2);
-		            System.out.println("✅ Timesheet submitted for week " + index);
+		            System.out.println("✅ Timesheet submitted for week " + 2);
 		            
 		            WebElement confirmMsg = driverR.findElement(By.xpath("//*[contains(text(),'Timesheet submitted successfully!')]"));
 		            Utility.highlightElement(confirmMsg);
@@ -269,10 +264,13 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 		        }
 		        
 		    }
+			sf.assertAll();
 		}
 		
-		sf.assertAll();
 	}
+	
+
+//	}
 
 
 		public String addHours(String baseTime, int hoursToAdd) {
@@ -292,7 +290,7 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 		        .header("Authorization", "Token " + token)
 		        .body(data)
 		        .when()
-		        .post("https://tsbackend.ndtatlas.com/api/attendance-test/" + endpoint + "/")
+		        .post("http://192.168.1.10:8085/api/attendance-test/" + endpoint + "/")
 		        .then()
 		        .statusCode(201)
 		        .log().all();
@@ -308,7 +306,7 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 		        .header("Authorization", "Token " + token)
 		        .body(data)
 		        .when()
-		        .patch("https://tsbackend.ndtatlas.com/api/attendance-test/" + endpoint + "/")
+		        .patch("http://192.168.1.10:8085/api/attendance-test/" + endpoint + "/")
 		        .then()
 		        .statusCode(201)
 		        .log().all();
@@ -325,7 +323,7 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 		        .header("Authorization", "Token " + token)
 //		        .body(data)
 		        .when()
-		        .post("https://tsbackend.ndtatlas.com/api/utils/remove-automation-test-data/")
+		        .post("http://192.168.1.10:8085/api/utils/remove-automation-test-data/")
 		        .then()
 		        .statusCode(200)
 		        .log().all();

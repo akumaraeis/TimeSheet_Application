@@ -8,6 +8,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+import com.cms.utility.Log;
 import com.cms.utility.Utility;
 
 import org.openqa.selenium.OutputType;
@@ -108,6 +109,7 @@ public class Listener implements ITestListener {
 	        String fullTestName = result.getTestClass().getName() + " : " + result.getMethod().getMethodName();
 	        test = extent.createTest(fullTestName);
 	        test.log(Status.INFO, "Test Started: " + fullTestName);
+	        Log.info("==== Starting test: " + result.getName() + " ====");
 	    }
 
 	    @Override
@@ -117,6 +119,7 @@ public class Listener implements ITestListener {
 	        String screenshotPath = Utility.captureScreenshot(result.getMethod().getMethodName(), "PASS");
 			if (screenshotPath != null) {
 			    test.addScreenCaptureFromPath(screenshotPath);
+			    Log.info("==== Test Passed: " + result.getName() + " ====");
 			}
 	    }
 
@@ -127,6 +130,7 @@ public class Listener implements ITestListener {
 	        String screenshotPath = Utility.captureScreenshot(result.getMethod().getMethodName(), "FAIL");
 			if (screenshotPath != null) {
 			    test.addScreenCaptureFromPath(screenshotPath);
+			    Log.error("==== Test Failed: " + result.getName() + " ====");
 			}
 	    }
 

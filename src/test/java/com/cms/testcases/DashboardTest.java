@@ -68,7 +68,11 @@ public class DashboardTest extends BaseTest {
 	public void ValidateAddTaskFunctionalityAfterClockOut() throws InterruptedException, IOException, ParseException
 	{
 
+<<<<<<< HEAD
+		launchLocalUrl();
+=======
 		launchUrl();
+>>>>>>> afe53dadd2d36ae04716e878708d2494adee785f
 
 		Thread.sleep(2000);
 

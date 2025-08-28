@@ -35,17 +35,22 @@ import com.cms.pageObjects.AddTaskPage;
 import com.cms.pageObjects.AddTimesheetPage;
 import com.cms.pageObjects.AddTimesheetPage2;
 import com.cms.pageObjects.ApplyLeavePage;
+<<<<<<< HEAD
+import com.cms.pageObjects.ChangePasswordPage;
+=======
+>>>>>>> afe53dadd2d36ae04716e878708d2494adee785f
 import com.cms.pageObjects.DashboardPage;
 import com.cms.pageObjects.Gross_TaskHourValidationPage;
 import com.cms.pageObjects.InValid_TimesheetEntryValidationPage;
 import com.cms.pageObjects.LoginPage;
 import com.cms.pageObjects.MultipleClockInScenarioPage;
 import com.cms.pageObjects.PreviousEntryClockOutScenarioPage;
+import com.cms.pageObjects.RegularizationPage;
 import com.cms.pageObjects.TimeOverlappingScenarioPage;
 import com.cms.pageObjects.TimesheetSlotMinimumHourValidationPage;
 import com.cms.pageObjects.TimesheetSubmissionPage;
 import com.cms.pageObjects.TwentyFourhourValidationPage;
-import com.cms.utility.ReadConfig;
+
 import com.cms.utility.Utility;
 
 
@@ -70,6 +75,11 @@ public class BaseTest{
 	public static TimesheetSubmissionPage tsp;
 	public static ApplyLeavePage alp;
 	public static DashboardPage tdp;
+<<<<<<< HEAD
+	public static ChangePasswordPage tcp;
+	public static RegularizationPage trp;
+=======
+>>>>>>> afe53dadd2d36ae04716e878708d2494adee785f
 	
 	//****To Run Code in Virtual Cloud Machine.
 	public void initBrowser(String Browsername ) throws IOException
@@ -220,6 +230,11 @@ public class BaseTest{
 		 tsp =new TimesheetSubmissionPage(driverR);
 		 alp =new ApplyLeavePage(driverR);
 		 tdp = new DashboardPage(driverR);
+<<<<<<< HEAD
+		 tcp = new ChangePasswordPage(driverR);
+		 trp = new RegularizationPage(driverR);
+=======
+>>>>>>> afe53dadd2d36ae04716e878708d2494adee785f
 	}
 
 

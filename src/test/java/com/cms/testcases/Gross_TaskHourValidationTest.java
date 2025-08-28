@@ -50,7 +50,7 @@ public class Gross_TaskHourValidationTest extends BaseTest {
 	public void ValidateGrossWithTashHourScenario() throws InterruptedException, IOException
 	{
 
-		launchUrl();
+		launchLocalUrl();
 
 		Thread.sleep(2000);
 

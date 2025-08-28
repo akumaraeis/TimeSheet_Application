@@ -22,6 +22,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.cms.basetest.BaseTest;
+import com.cms.utility.Log;
 import com.cms.utility.Utility;
 
 public class TimesheetSubmissionPage extends BaseTest{
@@ -153,6 +154,9 @@ public class TimesheetSubmissionPage extends BaseTest{
 	
 	@FindBy(xpath="//button[normalize-space()='Actions']")
 	private WebElement Actions ;
+	
+	@FindBy(xpath="//a[normalize-space()='Timesheet Approve/Reject']")
+	private WebElement TimesheetApproval ;
 	// *********Construction Declaration to initialize Data Member********	
 	
 	
@@ -266,6 +270,7 @@ public class TimesheetSubmissionPage extends BaseTest{
 	public void ClickonTimesheet() throws InterruptedException
 	{
 		Utility.ExplicitWait(Timesheet);
+		Utility.showCallout("Selecting Timesheet using Script", Timesheet);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",Timesheet );
 		Timesheet.click();
@@ -284,6 +289,8 @@ public class TimesheetSubmissionPage extends BaseTest{
 	public void ClickonTimesheetSubmission() throws InterruptedException
 	{
 		Utility.ExplicitWait(TimesheetSubmission);
+		Utility.showCallout2("Selecting Timesheet Submission ", TimesheetSubmission);
+		Log.info("Selecting Timesheet Submission");
 //		Thread.sleep(1000);
 		JavascriptExecutor js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].scrollIntoView(true);", TimesheetSubmission);
@@ -294,6 +301,9 @@ public class TimesheetSubmissionPage extends BaseTest{
 	public void ClickonActionsButton() throws InterruptedException
 	{
 		Utility.ExplicitWait(Actions);
+		Utility.showCallout("Clicking on Action Button using Script", Actions);
+		Log.info("Clicking on Action Button using Script");
+		Thread.sleep(2000);
 		Actions.click();
 	    Thread.sleep(2000);
 	}
@@ -340,10 +350,21 @@ public class TimesheetSubmissionPage extends BaseTest{
 	public void ClickonSubmit() throws InterruptedException
 	{
 		Utility.ExplicitWait(Submit);
+		Utility.showCallout("Clicking on Submit Button using AutomationScript", Submit);
+		Log.info("Clicking on Submit Button using AutomationScript");
 		Submit.click();
 	    Thread.sleep(2000);
 	}
-
+	
+	
+	public void ClickonTimesheetApproval() throws InterruptedException
+	{
+		Utility.ExplicitWait(TimesheetApproval);
+		Utility.showCallout2("Clicking on TimesheetApproval using AutomationScript", TimesheetApproval);
+		Log.info("Clicking on TimesheetApproval using AutomationScript");
+		TimesheetApproval.click();
+	    Thread.sleep(2000);
+	}
 	public void SendTaskDescription() throws InterruptedException
 	{
 		Utility.ExplicitWait(TaskDescription);

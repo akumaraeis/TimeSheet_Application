@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
+<testng-results ignored="0" total="3" passed="3" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2025-08-28T03:43:04 GMT-04:00" name="Suite" finished-at="2025-08-28T03:44:15 GMT-04:00" duration-ms="70644">
+    <groups>
+    </groups>
+    <test started-at="2025-08-28T03:43:04 GMT-04:00" name="Test" finished-at="2025-08-28T03:44:15 GMT-04:00" duration-ms="70644">
+      <class name="com.cms.testcases.ApprovalRegularizationTest">
+        <test-method is-config="true" signature="openUrl(java.lang.String)[pri:0, instance:com.cms.testcases.ApprovalRegularizationTest@f5958c9]" started-at="2025-08-28T03:43:05 GMT-04:00" name="openUrl" finished-at="2025-08-28T03:43:10 GMT-04:00" duration-ms="5164" status="PASS">
+=======
 <testng-results ignored="0" total="2" passed="2" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
@@ -8,6 +19,7 @@
     <test started-at="2025-08-01T11:44:26 IST" name="Test" finished-at="2025-08-01T11:46:28 IST" duration-ms="121578">
       <class name="com.cms.testcases.TimesheetSubmissionScenario1">
         <test-method is-config="true" signature="openUrl(java.lang.String)[pri:0, instance:com.cms.testcases.TimesheetSubmissionScenario1@185a6e9]" started-at="2025-08-01T11:44:26 IST" name="openUrl" finished-at="2025-08-01T11:44:31 IST" duration-ms="5195" status="PASS">
+>>>>>>> afe53dadd2d36ae04716e878708d2494adee785f
           <params>
             <param index="0">
               <value>
@@ -18,6 +30,49 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- openUrl -->
+<<<<<<< HEAD
+        <test-method is-config="true" signature="LaunchUrl()[pri:0, instance:com.cms.testcases.ApprovalRegularizationTest@f5958c9]" started-at="2025-08-28T03:43:10 GMT-04:00" name="LaunchUrl" finished-at="2025-08-28T03:43:11 GMT-04:00" duration-ms="1136" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LaunchUrl -->
+        <test-method signature="DeleteTestUserRecord()[pri:1, instance:com.cms.testcases.ApprovalRegularizationTest@f5958c9]" started-at="2025-08-28T03:43:11 GMT-04:00" name="DeleteTestUserRecord" finished-at="2025-08-28T03:43:13 GMT-04:00" duration-ms="2153" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- DeleteTestUserRecord -->
+        <test-method is-config="true" signature="closeURL()[pri:0, instance:com.cms.testcases.ApprovalRegularizationTest@f5958c9]" started-at="2025-08-28T03:43:13 GMT-04:00" name="closeURL" finished-at="2025-08-28T03:43:13 GMT-04:00" duration-ms="116" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeURL -->
+        <test-method is-config="true" signature="LaunchUrl()[pri:0, instance:com.cms.testcases.ApprovalRegularizationTest@f5958c9]" started-at="2025-08-28T03:43:13 GMT-04:00" name="LaunchUrl" finished-at="2025-08-28T03:43:15 GMT-04:00" duration-ms="1079" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LaunchUrl -->
+        <test-method signature="ValidateRegularizationFunctionality()[pri:1, instance:com.cms.testcases.ApprovalRegularizationTest@f5958c9]" started-at="2025-08-28T03:43:15 GMT-04:00" name="ValidateRegularizationFunctionality" finished-at="2025-08-28T03:43:53 GMT-04:00" duration-ms="38284" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- ValidateRegularizationFunctionality -->
+        <test-method is-config="true" signature="closeURL()[pri:0, instance:com.cms.testcases.ApprovalRegularizationTest@f5958c9]" started-at="2025-08-28T03:43:53 GMT-04:00" name="closeURL" finished-at="2025-08-28T03:43:53 GMT-04:00" duration-ms="121" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeURL -->
+        <test-method is-config="true" signature="LaunchUrl()[pri:0, instance:com.cms.testcases.ApprovalRegularizationTest@f5958c9]" started-at="2025-08-28T03:43:53 GMT-04:00" name="LaunchUrl" finished-at="2025-08-28T03:43:54 GMT-04:00" duration-ms="1096" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LaunchUrl -->
+        <test-method signature="ValidateApproveRegularizationFunctionality()[pri:2, instance:com.cms.testcases.ApprovalRegularizationTest@f5958c9]" started-at="2025-08-28T03:43:54 GMT-04:00" name="ValidateApproveRegularizationFunctionality" finished-at="2025-08-28T03:44:14 GMT-04:00" duration-ms="19465" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- ValidateApproveRegularizationFunctionality -->
+        <test-method is-config="true" signature="closeURL()[pri:0, instance:com.cms.testcases.ApprovalRegularizationTest@f5958c9]" started-at="2025-08-28T03:44:14 GMT-04:00" name="closeURL" finished-at="2025-08-28T03:44:14 GMT-04:00" duration-ms="126" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeURL -->
+        <test-method is-config="true" signature="closebrowser()[pri:0, instance:com.cms.testcases.ApprovalRegularizationTest@f5958c9]" started-at="2025-08-28T03:44:14 GMT-04:00" name="closebrowser" finished-at="2025-08-28T03:44:15 GMT-04:00" duration-ms="808" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closebrowser -->
+      </class> <!-- com.cms.testcases.ApprovalRegularizationTest -->
+=======
         <test-method signature="DeleteTestUserRecord()[pri:1, instance:com.cms.testcases.TimesheetSubmissionScenario1@185a6e9]" started-at="2025-08-01T11:44:31 IST" name="DeleteTestUserRecord" finished-at="2025-08-01T11:44:34 IST" duration-ms="2804" status="PASS">
           <reporter-output>
           </reporter-output>
@@ -31,6 +86,7 @@
           </reporter-output>
         </test-method> <!-- closebrowser -->
       </class> <!-- com.cms.testcases.TimesheetSubmissionScenario1 -->
+>>>>>>> afe53dadd2d36ae04716e878708d2494adee785f
     </test> <!-- Test -->
   </suite> <!-- Suite -->
 </testng-results>
