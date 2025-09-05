@@ -29,6 +29,11 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import com.cms.basetest.BaseTest;
+<<<<<<< HEAD
+=======
+import com.cms.utility.Log;
+//import com.cms.utility.LogHelper;
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 import com.cms.utility.Utility;
 
 import io.restassured.RestAssured;
@@ -36,8 +41,15 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import java.util.List;
 
+<<<<<<< HEAD
 public class TimesheetSubmissionApprovalScenario extends BaseTest {
 	public SoftAssert sf;
+=======
+
+public class TimesheetSubmissionApprovalScenario extends BaseTest {
+	public SoftAssert sf;
+	public SoftAssert sf2;
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 	public JavascriptExecutor js;
 	public boolean isSuccessful = false;
 	public String clockInDate;
@@ -55,6 +67,11 @@ public class TimesheetSubmissionApprovalScenario extends BaseTest {
 	public WebElement MinimizeBtn;
 	public String ActualUserName;
 	public String ExpectTimesheetApproveMsg;
+<<<<<<< HEAD
+=======
+	public String dateStr;
+
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 	@BeforeClass
 	@Parameters("browser")
 	public void openUrl(String browser) throws IOException
@@ -62,7 +79,11 @@ public class TimesheetSubmissionApprovalScenario extends BaseTest {
 		initBrowser(browser);
 		creatingObject();	
 		//		Utility.showTooltip("Browser is Launched using Selenium Automation Tool");
+<<<<<<< HEAD
 		sf = new SoftAssert();
+=======
+		
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 	}
 
 	//	@BeforeMethod
@@ -76,6 +97,7 @@ public class TimesheetSubmissionApprovalScenario extends BaseTest {
 	public void DeleteTestUserRecord() throws InterruptedException, IOException
 	{
 
+<<<<<<< HEAD
         RestAssured.baseURI = "https://tsbackend.ndtatlas.com";
         Response loginResponse = RestAssured.given()
                 .header("Content-Type", "application/json")
@@ -88,6 +110,20 @@ public class TimesheetSubmissionApprovalScenario extends BaseTest {
 //        Utility.waitForSeconds(2);
         DeleteAutomationTestUserRecords(token);
 //        Utility.waitForSeconds(1);
+=======
+		RestAssured.baseURI = "http://192.168.1.10:8085";
+		Response loginResponse = RestAssured.given()
+				.header("Content-Type", "application/json")
+				.body("{ \"username\": \"AutomationTestUser\", \"password\": \"Test@123\" }")
+				.when().post("/api/auth/login/")
+				.then().statusCode(200)
+				.extract().response();
+		token = loginResponse.jsonPath().getString("data.token");
+		System.out.println("🔐 Token fetched: " + token);
+		//        Utility.waitForSeconds(2);
+		DeleteAutomationTestUserRecords(token);
+		//        Utility.waitForSeconds(1);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 
 	}
 
@@ -95,6 +131,7 @@ public class TimesheetSubmissionApprovalScenario extends BaseTest {
 	@Test(priority=2)
 	public void ValidateTimesheetSubmissionFunctionality() throws InterruptedException, IOException
 	{
+<<<<<<< HEAD
 
 		Utility.showTooltip("Executing Automation Script to Check Timesheet Submission by User and Approval Functionality by Line Manager.");
 
@@ -114,16 +151,51 @@ public class TimesheetSubmissionApprovalScenario extends BaseTest {
 
 		String ActualProfileName=lp.GetProfileName();
 		String ExpectedProfileName ="Welcome, AutomationTesting";
+=======
+		sf = new SoftAssert();
+		Utility.showTooltip("Executing Automation Script to Check Timesheet Submission by User and Approval Functionality by Line Manager.");
+
+		Utility.waitForSeconds(5);
+		
+		launchLocalUrl();
+		Log.info("Url is launched");
+
+		Utility.showTooltip("Step 1:->After Launching Timesheet Application, Login as User to submit Weekly Timesheet using Automation Script");
+
+		Utility.waitForSeconds(2);
+
+		lp.SendUserName();
+		Log.info("input user name");
+		
+		lp.SendPassword();
+		Log.info("input user Password");
+		
+		lp.ClickonLoginBtn();
+		Log.info("Click on Login Button");
+
+		String ActualProfileName=lp.GetProfileName();
+		String ExpectedProfileName ="Welcome, AutomationTesting";
+		Log.info("Profile Name is verified");
+		
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		String str =  "Welcome, AutomationTesting";
 		ActualUserName = str.replace("Welcome, ", "");
 		System.out.println(ActualUserName);
 
 
 		sf.assertEquals(ActualProfileName, ExpectedProfileName);
+<<<<<<< HEAD
 		tsp.ClickonTimesheetSubmission();		
 		Utility.waitForSeconds(3);
 		Utility.showTooltip("Step 2:-> Selecting Respective Week to Validate Timesheet submission Using Automation Script");
 		Utility.waitForSeconds(5);
+=======
+		tsp.ClickonTimesheetSubmission();
+	
+		Utility.waitForSeconds(3);
+		Utility.showTooltip("Step 2:-> Selecting Respective Week to Validate Timesheet submission Using Automation Script");
+        Thread.sleep(5000);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("MMM d, yyyy", Locale.ENGLISH);
 		DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -132,7 +204,11 @@ public class TimesheetSubmissionApprovalScenario extends BaseTest {
 		System.out.println("Total week blocks found: " + allWeeks.size());
 		totalWeeks = allWeeks.size();
 		System.out.println("Total week size so that required for Loop"+ totalWeeks);
+<<<<<<< HEAD
 		// API login
+=======
+		// API Login
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 
 		Utility.showTooltip("Step 3 :->After Selecting Week,Timesheet Entry from (Mon-Fri) are creating in Background using API RestAssured ");
 		for (int index = 2; index <= totalWeeks; index++) {
@@ -160,14 +236,25 @@ public class TimesheetSubmissionApprovalScenario extends BaseTest {
 				DateTimeFormatter outputFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 				String baseTime = "04:30:00";
 				for (LocalDate date = startDate.plusDays(2); !date.isAfter(endDate); date = date.plusDays(1)) {
+<<<<<<< HEAD
 					String dateStr = date.format(outputFormatter2);
 					System.out.println("Date Stamp entry for timestamp for send Attendance Method "+dateStr);
 					System.out.println("🗓️ Submitting entries for: " + dateStr);
+=======
+					dateStr = date.format(outputFormatter2);
+					System.out.println("Date Stamp entry for timestamp for send Attendance Method "+dateStr);
+					System.out.println("🗓️ Submitting entries for:->" + dateStr);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 					sendAttendanceData(token,  dateStr + "T" + baseTime + "Z", "clockin");
 					sendAttendanceData2(token, dateStr + "T" + addHours(baseTime, 1) + "Z", "breakin");
 					sendAttendanceData2(token, dateStr + "T" + addHours(baseTime, 2) + "Z", "breakout");
 					sendAttendanceData2(token, dateStr + "T" + addHours(baseTime, 9) + "Z", "clockout");
+<<<<<<< HEAD
 					Thread.sleep(2000);
+=======
+					Utility.waitForSeconds(2);
+					Log.info("Timesheet entry Created Successfully for date :->"+dateStr);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 				}
 				// Add task and submit timesheet
 				driverR.navigate().refresh();
@@ -181,6 +268,7 @@ public class TimesheetSubmissionApprovalScenario extends BaseTest {
 				System.out.println("Total Add Task buttons: " + taskButtons.size());
 
 				Utility.showTooltip("Step 4:-> After Creating weekly TimesheetEntry,Now adding task to all entry using Automation Script");
+<<<<<<< HEAD
 
 				for (int i = 1; i <= taskButtons.size(); i++) {
 					try {
@@ -188,6 +276,18 @@ public class TimesheetSubmissionApprovalScenario extends BaseTest {
 						Utility.scrollIntoView(driverR, js, MinimizeBtn);
 						MinimizeBtn.click();
 						//	                Utility.waitForSeconds(1);
+=======
+				WebElement MinimizeBtn = driverR.findElement(By.xpath("(//*[contains(@class,'accordion-button')])[1]"));
+				Utility.scrollIntoView(driverR, js, MinimizeBtn);
+				MinimizeBtn.click();
+
+				for (int i = 1; i <= taskButtons.size(); i++) {
+					try {
+						WebElement MinimizeBtn2 = driverR.findElement(By.xpath("(//*[contains(@class,'accordion-button')])[" + i + "]"));
+						Utility.scrollIntoView(driverR, js, MinimizeBtn2);
+						MinimizeBtn2.click();
+			//	        Utility.waitForSeconds(1);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 						WebElement addTaskBtn = driverR.findElement(By.xpath("(//*[contains(text(),'Add Task')])[1]"));
 						Utility.scrollIntoView(driverR, js, addTaskBtn);
 						wait.until(ExpectedConditions.elementToBeClickable(addTaskBtn));
@@ -198,7 +298,11 @@ public class TimesheetSubmissionApprovalScenario extends BaseTest {
 						att.SendTaskDescription();
 						att.SendTaskDuration();
 						att.ClickonTaskSubmit();
+<<<<<<< HEAD
 						Thread.sleep(1000);
+=======
+						Utility.waitForSeconds(1);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 
 						WebElement SuccessfulMsg = driverR.findElement(By.xpath("//*[contains(text(),'Task created successfully!')]"));
 //						Utility.highlightElement(SuccessfulMsg);
@@ -206,12 +310,20 @@ public class TimesheetSubmissionApprovalScenario extends BaseTest {
 						String ActualSuccessfulMsg = SuccessfulMsg.getText();
 						String ExpectSuccessfulMsg = "Task created successfully!";
 						sf.assertEquals(ActualSuccessfulMsg, ExpectSuccessfulMsg);
+<<<<<<< HEAD
 
 
 
 						WebElement MinimizeBtn2 = driverR.findElement(By.xpath("(//*[contains(@class,'accordion-button')])[1]"));
 						Utility.scrollIntoView(driverR, js, MinimizeBtn2);
 						MinimizeBtn2.click();
+=======
+						Log.info("Task added Successfully to Timesheet for Respective date");
+
+						WebElement MinimizeBtn3 = driverR.findElement(By.xpath("(//*[contains(@class,'accordion-button')])[1]"));
+						Utility.scrollIntoView(driverR, js, MinimizeBtn3);
+						MinimizeBtn3.click();
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 						Utility.waitForSeconds(2);
 					} catch (ElementClickInterceptedException e) {
 						System.out.println("Add Task Click Intercepted: Retrying via JS click.");
@@ -224,6 +336,7 @@ public class TimesheetSubmissionApprovalScenario extends BaseTest {
 				try {
 					WebElement actionsBtn = Utility.waitForElementToBeClickable(driverR, By.xpath("//button[normalize-space()='Actions']"), 10);
 					Utility.scrollIntoView(driverR, js, actionsBtn);
+<<<<<<< HEAD
 					Utility.showCallout("Click on actions Button ", actionsBtn);
 					Thread.sleep(1000);
 					Utility.safeClick(driverR, js, actionsBtn);
@@ -236,6 +349,22 @@ public class TimesheetSubmissionApprovalScenario extends BaseTest {
 //               	Utility.highlightElement(submitBtn);
 					Utility.safeClick(driverR, js, submitBtn);
 					Utility.waitForSeconds(2);
+=======
+					Utility.showCallout2("Click on actions Button ", actionsBtn);
+					Utility.waitForSeconds(1);
+					Utility.safeClick(driverR, js, actionsBtn);
+					Utility.waitForSeconds(2);
+					Log.info("Script click on Action Button");
+					
+					WebElement submitBtn = Utility.waitForElementToBeClickable(driverR, By.xpath("//a[normalize-space()='Submit Timesheet']"), 10);
+					Utility.scrollIntoView(driverR, js, submitBtn);
+					Utility.showCallout2("Click on Submit Button ", submitBtn);
+					Utility.waitForSeconds(1);
+//               	Utility.highlightElement(submitBtn);
+					Utility.safeClick(driverR, js, submitBtn);
+					Utility.waitForSeconds(2);
+					Log.info("Script click on Submit Button");
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 
 					WebElement confirmSubmit = Utility.waitForElementToBeClickable(driverR, By.xpath("//button[normalize-space()='Submit']"), 10);
 					Utility.scrollIntoView(driverR, js, confirmSubmit);
@@ -252,6 +381,10 @@ public class TimesheetSubmissionApprovalScenario extends BaseTest {
 					System.out.println("Timesheet submission Succesful Message :-> " + ActualTimesheetSuccesful);
 					String ExpectTimesheetSuccesful ="Timesheet submitted successfully!";
 					sf.assertEquals(ActualTimesheetSuccesful, ExpectTimesheetSuccesful);
+<<<<<<< HEAD
+=======
+					Log.info("Timesheet Submitted for this Respective week Successfully");
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 					// Check final status after submission
 					driverR.navigate().refresh();
 					Utility.waitForSeconds(2);
@@ -274,14 +407,21 @@ public class TimesheetSubmissionApprovalScenario extends BaseTest {
 				}
 
 			}
+<<<<<<< HEAD
 			sf.assertAll();
 		}
 
+=======
+			
+		}
+		sf.assertAll();
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 	}
 
 	@Test(priority=3)
 	public void ValidateApproveTimesheetReportFunctionality() throws InterruptedException, IOException
 	{
+<<<<<<< HEAD
 		Utility.showTooltip("Executing Automation Script to Validate Timesheet Approval Functionality by Line Manager.");
 
 		Thread.sleep(5000); 
@@ -299,23 +439,57 @@ public class TimesheetSubmissionApprovalScenario extends BaseTest {
 		lp.ClickonLoginBtn();
 
 		Thread.sleep(2000);
+=======
+		sf2 = new SoftAssert();
+		Utility.showTooltip("Executing Automation Script to Validate Timesheet Approval Functionality by Line Manager.");
+
+		Utility.waitForSeconds(5); 
+
+		launchLocalUrl();
+
+		Utility.waitForSeconds(2);
+
+		Utility.showTooltip("Step 6:->Again Opening Timesheet Application,Now Login as Line Manager to Approve Sent Timesheet Report ");				
+
+		lp.SendAdminUserName2();		
+		Log.info("entering Line-manager Credential");
+
+		lp.SendAdminPassword();
+		Log.info("entering Line-manager Password");
+		
+		lp.ClickonLoginBtn();
+		Log.info("Line Manager Login ");
+		Utility.waitForSeconds(2);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 
 		String ActualProfileName=lp.GetProfileName();
 		System.out.println("ActualProfileName :->"+ActualProfileName);
 		String ExpectedProfileName ="Welcome, LNM TestuserLINE MANAGER";
 
+<<<<<<< HEAD
 		sf.assertEquals(ActualProfileName, ExpectedProfileName);
 
+=======
+		sf2.assertEquals(ActualProfileName, ExpectedProfileName);
+		Log.info("Profile Name verified ");
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		tsp.ClickonTimesheetApproval();
 
 		List<WebElement> allWeeks = driverR.findElements(By.xpath("//div[contains(@class,'p-1 shadow mb-2 bg-gradient week')]"));
 		System.out.println("Total week blocks found: " + allWeeks.size());
 		totalWeeks = allWeeks.size();
 		System.out.println("Total week size so that required for Loop"+ totalWeeks);
+<<<<<<< HEAD
 		// API login
 
 		Utility.showTooltip("Step 7:->After Selecting Respective Week,then select same Timesheet Report Sent by The User using Automation Script ");
 		Thread.sleep(3000);
+=======
+		// API Login
+
+		Utility.showTooltip("Step 7:->After Selecting Respective Week,then select same Timesheet Report Sent by The User using Automation Script ");
+		Utility.waitForSeconds(3);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		
 		outerloop:
 		for (int index = 2; index <= totalWeeks; index++) {
@@ -348,6 +522,7 @@ public class TimesheetSubmissionApprovalScenario extends BaseTest {
 
 				            WebElement actionsBtn = Utility.waitForElementToBeClickable(driverR, By.xpath("//button[normalize-space()='Actions']"), 10);
 				            Utility.scrollIntoView(driverR, js, actionsBtn);
+<<<<<<< HEAD
 				            Utility.showCallout("Click on Action Button using Automation Script", actionsBtn);
 				            Utility.safeClick(driverR, js, actionsBtn);
 				            Utility.waitForSeconds(2);
@@ -355,6 +530,18 @@ public class TimesheetSubmissionApprovalScenario extends BaseTest {
 				            WebElement submitBtn = Utility.waitForElementToBeClickable(driverR, By.xpath("//a[normalize-space()='Approve Timesheet']"), 10);
 				            Utility.scrollIntoView(driverR, js, submitBtn);
 				            Utility.showCallout("Click on Approve Timesheet using Automation Script", submitBtn);
+=======
+				            Utility.showCallout2("Click on Action Button using Automation Script", actionsBtn);
+				            Utility.waitForSeconds(1);
+				            Utility.safeClick(driverR, js, actionsBtn);
+				            Utility.waitForSeconds(2);
+				         
+				            
+				            WebElement submitBtn = Utility.waitForElementToBeClickable(driverR, By.xpath("//a[normalize-space()='Approve Timesheet']"), 10);
+				            Utility.scrollIntoView(driverR, js, submitBtn);
+				            Utility.showCallout2("Click on Approve Timesheet using Automation Script", submitBtn);
+				            Utility.waitForSeconds(1);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 				            Utility.safeClick(driverR, js, submitBtn);
 				            Utility.waitForSeconds(2);
 
@@ -377,10 +564,18 @@ public class TimesheetSubmissionApprovalScenario extends BaseTest {
 				            WebElement confirmMsg = driverR.findElement(By.xpath("//*[contains(text(),'Approved successfully!')]"));
 				            Utility.highlightElement(confirmMsg);
 				            String ActualTimesheetApproveMsg = confirmMsg.getText();
+<<<<<<< HEAD
 				            System.out.println("Timesheet submission Successful Message :-> " + ActualTimesheetApproveMsg);
 
 				            ExpectTimesheetApproveMsg = "Approved successfully!";
 				            sf.assertEquals(ActualTimesheetApproveMsg, ExpectTimesheetApproveMsg);
+=======
+				            System.out.println("Timesheet submission Successf2ul Message :-> " + ActualTimesheetApproveMsg);
+
+				            ExpectTimesheetApproveMsg = "Approved successfully!";
+				            sf2.assertEquals(ActualTimesheetApproveMsg, ExpectTimesheetApproveMsg);
+				            Log.info("User Timesheet Approved successf2ully by Line Manager");
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 
 				            break outerloop; // ✅ Exit loop once done
 				        } else {
@@ -404,15 +599,21 @@ public class TimesheetSubmissionApprovalScenario extends BaseTest {
 				    }
 					
 				}
+<<<<<<< HEAD
 				
 				sf.assertAll();
 	}
+=======
+	}
+		sf2.assertAll();
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 	}
 
 	//	}
 
 
 	public String addHours(String baseTime, int hoursToAdd) {
+<<<<<<< HEAD
 	    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 	    LocalTime time = LocalTime.parse(baseTime, timeFormatter);
 	    return time.plusHours(hoursToAdd).format(timeFormatter);
@@ -469,6 +670,63 @@ public class TimesheetSubmissionApprovalScenario extends BaseTest {
 	}
 
 	
+=======
+		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+		LocalTime time = LocalTime.parse(baseTime, timeFormatter);
+		return time.plusHours(hoursToAdd).format(timeFormatter);
+	}
+
+	public void sendAttendanceData(String token, String timestamp, String endpoint) {
+		HashMap<String, String> data = new HashMap<>();
+		data.put("test_timestamp", timestamp);
+
+		System.out.println("→ Sending to " + endpoint + ": " + timestamp);
+
+		given()
+		.contentType("application/json")
+		.header("Authorization", "Token " + token)
+		.body(data)
+		.when()
+		.post("http://192.168.1.10:8085/api/attendance-test/" + endpoint + "/")
+		.then()
+		.statusCode(201)
+		.log().all();
+	}
+	public void sendAttendanceData2(String token, String timestamp, String endpoint) {
+		HashMap<String, String> data = new HashMap<>();
+		data.put("test_timestamp", timestamp);
+
+		System.out.println("→ Sending to " + endpoint + ": " + timestamp);
+
+		given()
+		.contentType("application/json")
+		.header("Authorization", "Token " + token)
+		.body(data)
+		.when()
+		.patch("http://192.168.1.10:8085/api/attendance-test/" + endpoint + "/")
+		.then()
+		.statusCode(201)
+		.log().all();
+	}
+
+	public void DeleteAutomationTestUserRecords(String token) {
+		//		    HashMap<String, String> data = new HashMap<>();
+		//		    data.put("test_timestamp", timestamp);
+
+		//		    System.out.println("→ Sending to " + endpoint + ": " + timestamp);
+
+		given()
+		.contentType("application/json")
+		.header("Authorization", "Token " + token)
+		//		        .body(data)
+		.when()
+		.post("http://192.168.1.10:8085/api/utils/remove-automation-test-data/")
+		.then()
+		.statusCode(200)
+		.log().all();
+	}
+
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 
 
 

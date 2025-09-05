@@ -22,6 +22,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.cms.basetest.BaseTest;
+import com.cms.utility.Log;
 import com.cms.utility.Utility;
 
 public class TimesheetSubmissionPage extends BaseTest{
@@ -289,6 +290,10 @@ public class TimesheetSubmissionPage extends BaseTest{
 	{
 		Utility.ExplicitWait(TimesheetSubmission);
 		Utility.showCallout2("Selecting Timesheet Submission ", TimesheetSubmission);
+<<<<<<< HEAD
+=======
+		Log.info("Selecting Timesheet Submission");
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 //		Thread.sleep(1000);
 		JavascriptExecutor js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].scrollIntoView(true);", TimesheetSubmission);
@@ -300,6 +305,10 @@ public class TimesheetSubmissionPage extends BaseTest{
 	{
 		Utility.ExplicitWait(Actions);
 		Utility.showCallout("Clicking on Action Button using Script", Actions);
+<<<<<<< HEAD
+=======
+		Log.info("Clicking on Action Button using Script");
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		Thread.sleep(2000);
 		Actions.click();
 	    Thread.sleep(2000);
@@ -348,6 +357,10 @@ public class TimesheetSubmissionPage extends BaseTest{
 	{
 		Utility.ExplicitWait(Submit);
 		Utility.showCallout("Clicking on Submit Button using AutomationScript", Submit);
+<<<<<<< HEAD
+=======
+		Log.info("Clicking on Submit Button using AutomationScript");
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		Submit.click();
 	    Thread.sleep(2000);
 	}
@@ -357,6 +370,10 @@ public class TimesheetSubmissionPage extends BaseTest{
 	{
 		Utility.ExplicitWait(TimesheetApproval);
 		Utility.showCallout2("Clicking on TimesheetApproval using AutomationScript", TimesheetApproval);
+<<<<<<< HEAD
+=======
+		Log.info("Clicking on TimesheetApproval using AutomationScript");
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		TimesheetApproval.click();
 	    Thread.sleep(2000);
 	}

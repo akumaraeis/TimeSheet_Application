@@ -108,7 +108,7 @@ public class Validate_UserInterfaceAttendanceFunctionality extends BaseTest {
 
 		try
 		{
-		launchUrl();
+		launchLocalUrl();
 
 		Thread.sleep(2000);
 

@@ -66,7 +66,7 @@ public class TimesheetSubmissionScenario3 extends BaseTest {
 	public void LaunchUrl() throws IOException, InterruptedException
 	{
 		//		Thread.sleep(2000);
-		LaunchUrl();
+		launchLocalUrl();
 	}
 
 	@Test(priority=1)
@@ -91,7 +91,7 @@ public class TimesheetSubmissionScenario3 extends BaseTest {
 	public void ValidateaddNewTimesheetFunctionality() throws InterruptedException, IOException
 	{
 
-		launchUrl();
+		launchLocalUrl();
 
 		Thread.sleep(2000);
 
@@ -272,7 +272,7 @@ public class TimesheetSubmissionScenario3 extends BaseTest {
 		        .header("Authorization", "Token " + token)
 		        .body(data)
 		        .when()
-		        .post("https://tsbackend.ndtatlas.com/api/attendance-test/" + endpoint + "/")
+		        .post("http://192.168.1.10:8085/api/attendance-test/" + endpoint + "/")
 		        .then()
 		        .statusCode(201)
 		        .log().all();
@@ -288,7 +288,7 @@ public class TimesheetSubmissionScenario3 extends BaseTest {
 		        .header("Authorization", "Token " + token)
 		        .body(data)
 		        .when()
-		        .patch("https://tsbackend.ndtatlas.com/api/attendance-test/" + endpoint + "/")
+		        .patch("http://192.168.1.10:8085/api/attendance-test/" + endpoint + "/")
 		        .then()
 		        .statusCode(201)
 		        .log().all();
@@ -304,7 +304,7 @@ public class TimesheetSubmissionScenario3 extends BaseTest {
 		        .header("Authorization", "Token " + token)
 //		        .body(data)
 		        .when()
-		        .post("https://tsbackend.ndtatlas.com/api/utils/remove-automation-test-data/")
+		        .post("http://192.168.1.10:8085/api/utils/remove-automation-test-data/")
 		        .then()
 		        .statusCode(200)
 		        .log().all();

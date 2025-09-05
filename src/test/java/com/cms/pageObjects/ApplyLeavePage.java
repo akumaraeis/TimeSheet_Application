@@ -237,6 +237,7 @@ public class ApplyLeavePage extends BaseTest{
 	{
 //		WebElement SecureSite = driver2.findElement(By.xpath("//*[contains(text(),\"Continue to site\")]"));
 		Utility.ExplicitWait(User_List);
+		Utility.showCallout("Clicking on User List", User_List);
 		User_List.click();
 	    Thread.sleep(5000);
 	}
@@ -298,7 +299,8 @@ public class ApplyLeavePage extends BaseTest{
 
 	public void  ClickonApplyLeave() throws InterruptedException
 	{
-		Utility.ExplicitWait(ApplyLeave);
+		Utility.ExplicitWait(ApplyLeave);		
+		Utility.showCallout("Selecting Apply Leave Module", ApplyLeave);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",ApplyLeave );
 		ApplyLeave.click();
@@ -307,7 +309,8 @@ public class ApplyLeavePage extends BaseTest{
 	public void ClickonApplyLeaveBtn() throws InterruptedException
 	{
 //		Utility.ExplicitWait(ApplyLeaveBtn);
-		int index = 8;
+//		Utility.showCallout("Click on Apply Leave Button", ApplyLeaveBtn);
+		int index = 6;
 		boolean clicked = false;
 
 		while (true) {
@@ -341,6 +344,7 @@ public class ApplyLeavePage extends BaseTest{
 	public void ClickonApplyLeaveBtn2(String FindDate) throws InterruptedException
 	{
 //		Utility.ExplicitWait(ApplyLeaveBtn);
+//		Utility.showCallout("Finding Date ", ApplyLeaveBtn);
 		int index = 8;
 		boolean clicked = false;
 
@@ -375,6 +379,7 @@ public class ApplyLeavePage extends BaseTest{
 	public void ClickonSubmitBtn() throws InterruptedException
 	{
 		Utility.ExplicitWait(SubmitButton);
+		Utility.showCallout("Clicking on Submit Button", SubmitButton);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",SubmitButton );
 		SubmitButton.click();
@@ -430,6 +435,7 @@ public class ApplyLeavePage extends BaseTest{
 	public void SelectLeaveType() throws InterruptedException
 	{
 		Utility.ExplicitWait(LeaveType);
+		Utility.showCallout("Selecting Leave Type", LeaveType);
 		Select s4 = new Select(LeaveType);
 		List<WebElement> options = s4.getOptions();
 
@@ -461,6 +467,7 @@ public class ApplyLeavePage extends BaseTest{
 	public void SelectLeaveType2() throws InterruptedException
 	{
 		Utility.ExplicitWait(LeaveType);
+		Utility.showCallout("Selecting Leave Type", LeaveType);
 		Select s4 = new Select(LeaveType);
 		List<WebElement> options = s4.getOptions();
 
@@ -491,6 +498,7 @@ public class ApplyLeavePage extends BaseTest{
 	public void SendComment() throws InterruptedException
 	{
 		Utility.ExplicitWait(Comment);
+		Utility.showCallout("Sending Comment", Comment);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",Comment );
 		Comment.sendKeys("TestComment");
@@ -501,6 +509,7 @@ public class ApplyLeavePage extends BaseTest{
 	public void ClickonSubmit() throws InterruptedException
 	{
 		Utility.ExplicitWait(Submit);
+		Utility.showCallout("Clicking on Submit", Submit);
 		Submit.click();
 	    Thread.sleep(2000);
 	}
@@ -508,12 +517,14 @@ public class ApplyLeavePage extends BaseTest{
 	public void SendTaskDescription() throws InterruptedException
 	{
 		Utility.ExplicitWait(TaskDescription);
+		Utility.showCallout("Sending task Description", TaskDescription);
 		TaskDescription.sendKeys("Test Description");
 		Thread.sleep(2000);
 	}
 	public String GetTaskAlert() throws InterruptedException
 	{
 		Utility.ExplicitWait(TaskAlert);
+		Utility.showCallout2("Validation check applied on Alert Message", TaskAlert);
 		String ActualMsg2 = TaskAlert.getText();
 		System.out.println(" Message received on Timesheet"+ActualMsg2);
 		Thread.sleep(2000);

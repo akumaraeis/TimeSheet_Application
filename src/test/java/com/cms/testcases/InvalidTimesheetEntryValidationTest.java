@@ -42,7 +42,7 @@ public class InvalidTimesheetEntryValidationTest extends BaseTest {
 	public void ValidateInvalidTimesheetEntry() throws InterruptedException, IOException
 	{
 
-		launchUrl();
+		launchLocalUrl();
 
 		Thread.sleep(2000);
 

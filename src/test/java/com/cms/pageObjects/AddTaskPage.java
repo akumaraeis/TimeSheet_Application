@@ -26,6 +26,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.cms.basetest.BaseTest;
+import com.cms.utility.Log;
 import com.cms.utility.Utility;
 
 public class AddTaskPage extends BaseTest{
@@ -364,13 +365,18 @@ public class AddTaskPage extends BaseTest{
 	public void SelectSubProcess() throws InterruptedException
 	{
 		Utility.ExplicitWait(SubProcess);
+<<<<<<< HEAD
 		Utility.showCallout("Selecting Sub Process using AutomationScript", SubProcess);
+=======
+		Utility.showCallout("Selecting Sub Process using AutomationScript", SubProcess);        
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",SubProcess );
 //		Utility.safeClick(driver2, js, SubProcess);
 		Select S8 = new Select(SubProcess);
 		S8.selectByVisibleText("ALIMS SOFTWARE DEVELOPMENT (D): QA & TESTING (Q)");
 	    Thread.sleep(2000);
+	    
 	}
 
 	public void ClickonActivity() throws InterruptedException
@@ -446,8 +452,9 @@ public class AddTaskPage extends BaseTest{
 	public String GetTaskSuccessfulNotification() throws InterruptedException
 	{
 		Utility.ExplicitWait(taskSuccessfulMsg);
-		js = (JavascriptExecutor)driver2;
-		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",taskSuccessfulMsg );
+		Utility.showCallout2("Validation Checks on Task Successful", taskSuccessfulMsg);
+//		js = (JavascriptExecutor)driver2;
+//		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",taskSuccessfulMsg );
 		String ActualMsg = taskSuccessfulMsg.getText();
 		System.out.println("Successful Message received on Timesheet"+ActualMsg);
 		Thread.sleep(2000);
@@ -457,7 +464,11 @@ public class AddTaskPage extends BaseTest{
 	public void ClickonTaskSubmit() throws InterruptedException
 	{
 		Utility.ExplicitWait(TaskSubmit);
+<<<<<<< HEAD
 		Utility.showCallout("Selecting TaskSubmit using AutomationScript", TaskSubmit);
+=======
+		Utility.showCallout2("Selecting TaskSubmit using AutomationScript", TaskSubmit);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",TaskSubmit );
 		TaskSubmit.click();
@@ -583,6 +594,28 @@ public class AddTaskPage extends BaseTest{
     }
 
 	
+	public void SendDateFilter2(String Date) throws InterruptedException
+	{
+		Utility.ExplicitWait(DateFilter);		
+		js = (JavascriptExecutor)driver2;
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')", DateFilter);
+		Thread.sleep(2000);
+		js.executeScript("arguments[0].scrollIntoView()",DateFilter);
+		Thread.sleep(2000);
+		Utility.showCallout2("Selecting Date Filter to pass same date used by API", DateFilter);
+		Utility.safeClick(driver2, js, DateFilter);
+	//	DateFilter.click();
+		Thread.sleep(2000);
+		js.executeScript("arguments[0].scrollIntoView()",DateFilter );
+		DateFilter.sendKeys(Keys.chord(Keys.CONTROL,"a"));
+		DateFilter.sendKeys(Keys.DELETE);
+		Thread.sleep(2000);
+		DateFilter.sendKeys(Date);
+		Thread.sleep(2000);
+		Utility.safeClick(driver2, js, SereachDate);
+//		SereachDate.click();
+	}
+	
 	public void SendDateFilter(String Date) throws InterruptedException
 	{
 		Utility.ExplicitWait(DateFilter);
@@ -603,6 +636,7 @@ public class AddTaskPage extends BaseTest{
 		Utility.safeClick(driver2, js, SereachDate);
 //		SereachDate.click();
 	}
+
 	
 	public void ClickOnEdit()
 	{

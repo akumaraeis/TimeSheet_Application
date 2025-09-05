@@ -47,7 +47,7 @@ public class MultipleClockInTest extends BaseTest {
 	public void ValidateMultipleClockInScenario() throws InterruptedException, IOException
 	{
 
-		launchUrl();
+		launchLocalUrl();
 
 		Thread.sleep(2000);
 

@@ -24,6 +24,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import com.cms.basetest.BaseTest;
+import com.cms.utility.Log;
 import com.cms.utility.Utility;
 
 import io.restassured.RestAssured;
@@ -48,8 +49,6 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 	{
 		initBrowser(browser);
 		creatingObject();	
-		//		Utility.showTooltip("Browser is Launched using Selenium Automation Tool");
-		sf = new SoftAssert();
 	}
 
 	//	@BeforeMethod
@@ -61,7 +60,11 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 
 	@Test(priority=0)
 	public static  String getToken() {
+<<<<<<< HEAD
 		RestAssured.baseURI = "https://tsbackend.ndtatlas.com";
+=======
+		RestAssured.baseURI = "http://192.168.1.10:8085";
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 
 		Response response = given()
 				.header("Content-Type", "application/json")
@@ -71,6 +74,7 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 				.then()
 				.statusCode(200)
 				.extract().response();
+<<<<<<< HEAD
 		JsonPath jsonPath = response.jsonPath();
 		String token = response.jsonPath().getString("data.token");  // Change key if API returns it with a different name
 		System.out.println("Token: " + token);
@@ -81,6 +85,22 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 	public void DeleteTestUserRecord() throws InterruptedException, IOException
 	{
 		RestAssured.baseURI = "https://tsbackend.ndtatlas.com";
+=======
+
+		// Extract token from response
+		JsonPath jsonPath = response.jsonPath();
+		String token = response.jsonPath().getString("data.token");  // Change key if API returns it with a different name
+
+		System.out.println("Token: " + token);
+		return token;
+
+	}
+	@Test(priority=1)
+	public void DeleteTestUserRecord() throws InterruptedException, IOException
+	{
+
+		RestAssured.baseURI = "http://192.168.1.10:8085";
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		Response loginResponse = RestAssured.given()
 				.header("Content-Type", "application/json")
 				.body("{ \"username\": \"AutomationTestUser\", \"password\": \"Test@123\" }")
@@ -90,6 +110,10 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 		String token = loginResponse.jsonPath().getString("data.token");
 		System.out.println("🔐 Token fetched: " + token);
 		DeleteAutomationTestUserRecords(token);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 	}
 
 	@Test(priority=1)
@@ -98,7 +122,11 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 
 		System.out.println("Final Token "+ (getToken()));
 		clockInDate = att.generateRandomDate(); // Generate a date in February
+<<<<<<< HEAD
 		//			clockInTime = att.timestamp();
+=======
+		//		clockInTime = att.timestamp();
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		clockInTime = "05:00:00";
 		Timein = clockInDate+"T"+clockInTime +"Z";
 		System.out.println("Final Time-In given :->"+Timein);
@@ -112,6 +140,7 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 		.body(data)
 
 		.when()
+<<<<<<< HEAD
 		.post("https://tsbackend.ndtatlas.com/api/attendance-test/clockin/")
 		.then()
 		.statusCode(201)
@@ -119,6 +148,16 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 		System.out.println("******Clock-in Functionality Verified************");
 	}	
 
+=======
+		.post("http://192.168.1.10:8085/api/attendance-test/clockin/")
+
+		.then()
+		.statusCode(201)
+		.log().all();
+		System.out.println("******Clock-in Functionality Verified************");
+	}	
+
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 	@Test(priority=2,dependsOnMethods="ValidateClockIn")
 	public void ValidateBreakIn() throws InterruptedException, IOException
 	{
@@ -130,6 +169,7 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 		updatedTimeStr = updatedTime.format(timeFormatter);
 		Timein  = clockInDate+"T"+updatedTimeStr +"Z";
 		System.out.println("Final Time-In given :->"+updatedTimeStr);
+<<<<<<< HEAD
 		HashMap data = new HashMap();
 		data.put("test_timestamp", Timein );
 		System.out.println("found accountId detail for delete functions : "+Timein);
@@ -140,6 +180,20 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 
 		.when()
 		.patch("https://tsbackend.ndtatlas.com/api/attendance-test/breakin/")
+=======
+
+		HashMap data = new HashMap();
+		data.put("test_timestamp", Timein );
+		System.out.println("found accountId detail for delete functions : "+Timein);
+		given()
+		.contentType("application/json")
+		.headers("Authorization",("Token "+getToken()))
+		.body(data)
+
+		.when()
+		.patch("http://192.168.1.10:8085/api/attendance-test/breakin/")
+
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		.then()
 		.statusCode(201)
 		.log().all();
@@ -158,6 +212,7 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 
 		String Timein = clockInDate+"T"+updatedTimeStr +"Z";
 		System.out.println("Final Time-In given :->"+Timein);
+<<<<<<< HEAD
 		HashMap data = new HashMap();
 		data.put("test_timestamp", Timein );
 		System.out.println("found accountId detail for delete functions : "+Timein);
@@ -168,6 +223,20 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 
 		.when()
 		.patch("https://tsbackend.ndtatlas.com/api/attendance-test/breakout/")
+=======
+
+		HashMap data = new HashMap();
+		data.put("test_timestamp", Timein );
+		System.out.println("found accountId detail for delete functions : "+Timein);
+		given()
+		.contentType("application/json")
+		.headers("Authorization",("Token "+getToken()))
+		.body(data)
+
+		.when()
+		.patch("http://192.168.1.10:8085/api/attendance-test/breakout/")
+
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		.then()
 		.statusCode(201)
 		.log().all();
@@ -196,7 +265,11 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 		.body(data)
 
 		.when()
+<<<<<<< HEAD
 		.patch("https://tsbackend.ndtatlas.com/api/attendance-test/clockout/")
+=======
+		.patch("http://192.168.1.10:8085/api/attendance-test/clockout/")
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 
 		.then()
 		.statusCode(201)
@@ -207,9 +280,17 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 	@Test(priority =5 ,dependsOnMethods="ValidateClockIn")
 	public void ValidateAddedTimesheetEntry() throws InterruptedException, IOException, ParseException
 	{
+<<<<<<< HEAD
 
 		launchUrl();
 
+=======
+        Utility.showTooltip("Now Launching Timesheet Application to validate on UI for Clock-in/Out & Break-in/Out logged using API ");
+        sf = new SoftAssert();
+		launchLocalUrl();
+        Log.info("URL IS Launched");
+        
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		Utility.waitForSeconds(2);
 
 		lp.SendUserName();
@@ -269,12 +350,23 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 		sf.assertAll();
 	}
 
+<<<<<<< HEAD
 	public void DeleteAutomationTestUserRecords(String token) {
 		given()
 		.contentType("application/json")
 		.header("Authorization", "Token " + token)
 		.when()
 		.post("https://tsbackend.ndtatlas.com/api/utils/remove-automation-test-data/")
+=======
+
+	public void DeleteAutomationTestUserRecords(String token) {
+   		given()
+		.contentType("application/json")
+		.header("Authorization", "Token " + token)
+		//        .body(data)
+		.when()
+		.post("http://192.168.1.10:8085/api/utils/remove-automation-test-data/")
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		.then()
 		.statusCode(200)
 		.log().all();
@@ -292,7 +384,10 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 		teardown();
 	}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 }
 
 

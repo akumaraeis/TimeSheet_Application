@@ -120,6 +120,10 @@ public class RegularizationPage extends BaseTest{
 	public void SendRegularizationReason() throws InterruptedException
 	{
 		Utility.ExplicitWait(RegularizationReason);
+<<<<<<< HEAD
+=======
+		Utility.showCallout("Sending Regularization Reason", RegularizationReason);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",RegularizationReason );
 		RegularizationReason.sendKeys("Test");
@@ -129,6 +133,10 @@ public class RegularizationPage extends BaseTest{
 	public void SelectRegularizationStatus() throws InterruptedException
 	{
 		Utility.ExplicitWait(RegularizationStatus);
+<<<<<<< HEAD
+=======
+		Utility.showCallout("Selecting Regularization Status", RegularizationStatus);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",RegularizationStatus );
 		Select S1 = new Select(RegularizationStatus);
@@ -137,6 +145,10 @@ public class RegularizationPage extends BaseTest{
 	public void SendClockIn() throws InterruptedException
 	{
 		Utility.ExplicitWait(ClockIn);
+<<<<<<< HEAD
+=======
+		Utility.showCallout("Sending Requested Clockin Time", ClockIn);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",ClockIn );
 		ClockIn.sendKeys("10:30");
@@ -146,6 +158,10 @@ public class RegularizationPage extends BaseTest{
 	public void SendBreakIn() throws InterruptedException
 	{
 		Utility.ExplicitWait(BreakIn);
+<<<<<<< HEAD
+=======
+		Utility.showCallout("Sending Requested BreakIn Time", BreakIn);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",BreakIn );
 		BreakIn.sendKeys("14:00");
@@ -155,6 +171,10 @@ public class RegularizationPage extends BaseTest{
 	public void SendBreakBreakOut() throws InterruptedException
 	{
 		Utility.ExplicitWait(BreakOut);
+<<<<<<< HEAD
+=======
+		Utility.showCallout("Sending Requested BreakOut Time", BreakOut);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",BreakOut );
 		BreakOut.sendKeys("14:30");
@@ -164,6 +184,10 @@ public class RegularizationPage extends BaseTest{
 	public void SendClockOut() throws InterruptedException
 	{
 		Utility.ExplicitWait(ClockOut);
+<<<<<<< HEAD
+=======
+		Utility.showCallout("Sending Requested ClockOut Time", ClockOut);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",ClockOut );
 		ClockOut.sendKeys("19:30");
@@ -173,6 +197,10 @@ public class RegularizationPage extends BaseTest{
 	public void ClickonSubmitBtn() throws InterruptedException
 	{
 		Utility.ExplicitWait(SubmitBtn);
+<<<<<<< HEAD
+=======
+		Utility.showCallout("Clicking on Submit Button", SubmitBtn);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",SubmitBtn );
 		SubmitBtn.click();
@@ -241,6 +269,10 @@ public class RegularizationPage extends BaseTest{
 	public void ClickonRegularizationsBtn() throws InterruptedException
 	{
 		Utility.ExplicitWait(Regularizations);
+<<<<<<< HEAD
+=======
+		Utility.showCallout("Selecting Regularization ", Regularizations);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",Regularizations );
 		Regularizations.click();
@@ -250,6 +282,10 @@ public class RegularizationPage extends BaseTest{
 	public void ClickonRegularizationRequestBtn() throws InterruptedException
 	{
 		Utility.ExplicitWait(RegularizationRequest);
+<<<<<<< HEAD
+=======
+		Utility.showCallout("Selecting Regularization ", RegularizationRequest);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",RegularizationRequest );
 		RegularizationRequest.click();
@@ -268,6 +304,10 @@ public class RegularizationPage extends BaseTest{
 	public String GetSuccessfulMsg() throws InterruptedException
 	{
 		Utility.ExplicitWait(SuccessMsg);
+<<<<<<< HEAD
+=======
+		Utility.showCallout2("Validation Checks applied on Alert Msg", SuccessMsg);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",SuccessMsg );
 		Thread.sleep(2000);

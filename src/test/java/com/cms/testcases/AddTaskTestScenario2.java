@@ -65,7 +65,7 @@ public class AddTaskTestScenario2 extends BaseTest {
 	
 	@Test(priority=0)
     public static  String getToken() {
-        RestAssured.baseURI = "https://tsbackend.ndtatlas.com";
+        RestAssured.baseURI = "http://192.168.1.10:8085";
 
         Response response = given()
             .header("Content-Type", "application/json")
@@ -105,7 +105,7 @@ public void ValidateClockIn() throws InterruptedException, IOException
 		.body(data)
 
 		.when()
-		.post("https://tsbackend.ndtatlas.com/api/attendance-test/clockin/")
+		.post("http://192.168.1.10:8085/api/attendance-test/clockin/")
 
 		.then()
 		.statusCode(201)
@@ -138,7 +138,7 @@ public void ValidateBreakIn() throws InterruptedException, IOException
 		.body(data)
 
 		.when()
-		.patch("https://tsbackend.ndtatlas.com/api/attendance-test/breakin/")
+		.patch("http://192.168.1.10:8085/api/attendance-test/breakin/")
 
 		.then()
 		.statusCode(201)
@@ -170,7 +170,7 @@ public void ValidateBreakOut() throws InterruptedException, IOException
 		.body(data)
 
 		.when()
-		.patch("https://tsbackend.ndtatlas.com/api/attendance-test/breakout/")
+		.patch("http://192.168.1.10:8085/api/attendance-test/breakout/")
 
 		.then()
 		.statusCode(201)
@@ -214,7 +214,7 @@ public void ValidateBreakOut() throws InterruptedException, IOException
 	public void ValidateAddTaskFunctionalityAfterClockOut() throws InterruptedException, IOException, ParseException
 	{
 
-		launchUrl();
+		launchLocalUrl();
 
 		Thread.sleep(2000);
 

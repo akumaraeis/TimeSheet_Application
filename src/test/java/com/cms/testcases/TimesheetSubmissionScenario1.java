@@ -50,7 +50,7 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 	public  String token;
 	String Start_date ;
 	String weekContainerXPath;
-	int totalWeeks =0;
+	int totalWeeks ;
 	public WebElement MinimizeBtn;
 	@BeforeClass
 	@Parameters("browser")
@@ -73,7 +73,7 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 	public void DeleteTestUserRecord() throws InterruptedException, IOException
 	{
 
-        RestAssured.baseURI = "https://tsbackend.ndtatlas.com";
+        RestAssured.baseURI = "http://192.168.1.10:8085";
         Response loginResponse = RestAssured.given()
                 .header("Content-Type", "application/json")
                 .body("{ \"username\": \"AutomationTestUser\", \"password\": \"Test@123\" }")
@@ -93,7 +93,12 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 	public void ValidateaddNewTimesheetFunctionality() throws InterruptedException, IOException
 	{
 
-		launchUrl();
+//		launchUrl();
+
+
+		launchLocalUrl();
+		
+		Utility.showTooltip("After Launching Timesheet Application, Login as User and validate login Functionality ");
 
 		
 		Utility.showTooltip("After Launching Timesheet Application, Login as User and validate login Functionality ");
@@ -265,6 +270,11 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 		
 	}
 	
+<<<<<<< HEAD
+=======
+
+//	}
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 
 
 		public String addHours(String baseTime, int hoursToAdd) {
@@ -284,7 +294,7 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 		        .header("Authorization", "Token " + token)
 		        .body(data)
 		        .when()
-		        .post("https://tsbackend.ndtatlas.com/api/attendance-test/" + endpoint + "/")
+		        .post("http://192.168.1.10:8085/api/attendance-test/" + endpoint + "/")
 		        .then()
 		        .statusCode(201)
 		        .log().all();
@@ -300,7 +310,7 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 		        .header("Authorization", "Token " + token)
 		        .body(data)
 		        .when()
-		        .patch("https://tsbackend.ndtatlas.com/api/attendance-test/" + endpoint + "/")
+		        .patch("http://192.168.1.10:8085/api/attendance-test/" + endpoint + "/")
 		        .then()
 		        .statusCode(201)
 		        .log().all();
@@ -317,7 +327,7 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 		        .header("Authorization", "Token " + token)
 //		        .body(data)
 		        .when()
-		        .post("https://tsbackend.ndtatlas.com/api/utils/remove-automation-test-data/")
+		        .post("http://192.168.1.10:8085/api/utils/remove-automation-test-data/")
 		        .then()
 		        .statusCode(200)
 		        .log().all();

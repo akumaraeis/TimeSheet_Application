@@ -3,6 +3,7 @@ package com.cms.testcases;
 import static io.restassured.RestAssured.given;
 
 import java.io.IOException;
+<<<<<<< HEAD
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,6 +16,11 @@ import java.util.NoSuchElementException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+=======
+import java.util.List;
+
+import org.openqa.selenium.By;
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -27,6 +33,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import com.cms.basetest.BaseTest;
+<<<<<<< HEAD
 import com.cms.utility.Utility;
 
 import io.restassured.RestAssured;
@@ -46,6 +53,20 @@ public class RegularizationTest extends BaseTest {
 	public String updatedTime2;
 	
 	
+=======
+import com.cms.utility.Log;
+import com.cms.utility.Utility;
+
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+
+public class RegularizationTest extends BaseTest {
+	public SoftAssert sf;
+	public JavascriptExecutor js;
+	public String token;
+
+
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 	@BeforeClass
 	@Parameters("browser")
 	public void openUrl(String browser) throws IOException
@@ -53,7 +74,11 @@ public class RegularizationTest extends BaseTest {
 		initBrowser(browser);
 		creatingObject();	
 		//		Utility.showTooltip("Browser is Launched using Selenium Automation Tool");
+<<<<<<< HEAD
 		sf = new SoftAssert();
+=======
+		
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 	}
 
 	//	@BeforeMethod
@@ -62,6 +87,7 @@ public class RegularizationTest extends BaseTest {
 		//		Thread.sleep(2000);
 		LaunchUrl();
 	}
+<<<<<<< HEAD
 	
 	@Test(priority=1)
 	public void ValidateRegularizationFunctionality() throws InterruptedException, IOException
@@ -78,13 +104,63 @@ public class RegularizationTest extends BaseTest {
 		lp.ClickonLoginBtn();
 		
 		Thread.sleep(2000);
+=======
+	@Test(priority=1)
+	public void DeleteTestUserRecord() throws InterruptedException, IOException
+	{
+
+        RestAssured.baseURI = "http://192.168.1.10:8085";
+        Response loginResponse = RestAssured.given()
+                .header("Content-Type", "application/json")
+                .body("{ \"username\": \"AutomationTestUser\", \"password\": \"Test@123\" }")
+                .when().post("/api/auth/login/")
+                .then().statusCode(200)
+                .extract().response();
+        token = loginResponse.jsonPath().getString("data.token");
+        System.out.println("🔐 Token fetched: " + token);
+//        Utility.waitForSeconds(2);
+        DeleteAutomationTestUserRecords(token);
+//        Utility.waitForSeconds(1);
+
+	}
+
+	@Test(priority=2)
+	public void ValidateRegularizationFunctionality() throws InterruptedException, IOException
+	{
+
+		sf = new SoftAssert();
+		Utility.showTooltip("Executing Automation Script to Validate Regularization Send by User.");
+		
+		launchLocalUrl();
+		
+		Utility.waitForSeconds(2);
+		
+		lp.SendUserName();
+        Log.info("Input User Name");
+        
+		lp.SendPassword();
+		Log.info("Input User Password");
+		
+		lp.ClickonLoginBtn();
+		Log.info("login submitted with  user credential ");
+		
+		Utility.waitForSeconds(2);
+		Utility.showTooltip("User Login Successfully");
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		
 	   String ActualProfileName=lp.GetProfileName();
 	   String ExpectedProfileName ="Welcome, AutomationTesting";
 	   
 	   sf.assertEquals(ActualProfileName, ExpectedProfileName);
+<<<<<<< HEAD
 	   
        trp.ClickonRegularizationsBtn();
+=======
+	   Log.info("Profile Name is verified.");
+	   
+       trp.ClickonRegularizationsBtn();
+       Log.info("User Navigate to Regularization page.");
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
        
        List<WebElement> table = driverR.findElements(By.xpath("//table[@class=\"shadow table table-light table-sm table-bordered table-hover\"]//tbody//tr"));
        int tablesize = table.size();
@@ -97,7 +173,11 @@ public class RegularizationTest extends BaseTest {
            System.out.println("Boolean Status found on Action Button :->"+ActionButtonStatus);
            String RegularizeDate = driverR.findElement(By.xpath("(//table[@class=\"shadow table table-light table-sm table-bordered table-hover\"]//tbody//tr)["+i+"]//td[2]")).getText();
            System.out.println("Selected Regularize Date :->"+RegularizeDate);
+<<<<<<< HEAD
            
+=======
+           Utility.showTooltip("New Regularization Request details Submitted using AutomationScript.");
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
            if((ActionStatusText.equalsIgnoreCase("Regularize"))&& (ActionButtonStatus == true) )      	   
            {
         	   WebElement ActionButton = driverR.findElement(By.xpath("(//table[@class=\"shadow table table-light table-sm table-bordered table-hover\"]//tbody//tr)["+i+"]//td[14]//button"));
@@ -114,6 +194,12 @@ public class RegularizationTest extends BaseTest {
         	   String ActualMsg = trp.GetSuccessfulMsg();
         	   String ExpectMsg ="Regularization updated successfully!";
         	   sf.assertEquals(ActualMsg, ExpectMsg);
+<<<<<<< HEAD
+=======
+        	   Log.info("Regularization Request Sent successfully by User.");
+        	   Utility.showTooltip("Regularization Request Sent successfully by User.");
+        	   
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
         	    if(ActualMsg.equalsIgnoreCase("Regularization updated successfully!"))
         	    {
         	    	System.out.println("Loop Breaks");
@@ -132,7 +218,27 @@ public class RegularizationTest extends BaseTest {
            }
     	   sf.assertAll();
        }
+<<<<<<< HEAD
        
+=======
+	public void DeleteAutomationTestUserRecords(String token) {
+		//		    HashMap<String, String> data = new HashMap<>();
+		//		    data.put("test_timestamp", timestamp);
+
+		//		    System.out.println("→ Sending to " + endpoint + ": " + timestamp);
+
+		given()
+		.contentType("application/json")
+		.header("Authorization", "Token " + token)
+		//		        .body(data)
+		.when()
+		.post("http://192.168.1.10:8085/api/utils/remove-automation-test-data/")
+		.then()
+		.statusCode(200)
+		.log().all();
+	}
+
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 	   
 	   
 		

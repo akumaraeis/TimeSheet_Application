@@ -48,7 +48,7 @@ public class TimeOverlappingScenarioTest extends BaseTest {
 	public void ValidateTimeOverlappingScenario() throws InterruptedException, IOException
 	{
 
-		launchUrl();
+		launchLocalUrl();
 
 		Thread.sleep(2000);
 

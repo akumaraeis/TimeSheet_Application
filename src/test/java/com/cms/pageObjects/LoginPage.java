@@ -90,7 +90,11 @@ public class LoginPage extends BaseTest{
 	public void SendUserName() throws InterruptedException
 	{
 		Utility.ExplicitWait(UserName);
+<<<<<<< HEAD
 		Utility.showCallout("Sending user Name", UserName);
+=======
+		Utility.showCallout2("Entering user Name", UserName);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",UserName );
 		UserName.sendKeys("AutomationTestUser");
@@ -100,6 +104,10 @@ public class LoginPage extends BaseTest{
 	public void SendUserName2() throws InterruptedException
 	{
 		Utility.ExplicitWait(UserName);
+<<<<<<< HEAD
+=======
+		Utility.showCallout2("Entering user Name", UserName);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",UserName );
 		UserName.sendKeys("tmptest@test.com");
@@ -109,6 +117,7 @@ public class LoginPage extends BaseTest{
 	public void SendInvalidUserName() throws InterruptedException
 	{
 		Utility.ExplicitWait(UserName);
+		Utility.showCallout2("Entering user Name", UserName);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",UserName );
 		UserName.sendKeys("InvalidCredential");
@@ -118,8 +127,25 @@ public class LoginPage extends BaseTest{
 	public void SendAdminUserName() throws InterruptedException
 	{
 		Utility.ExplicitWait(UserName);
+
+		Utility.showCallout2("Entering user Name", UserName);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",UserName );
+		UserName.sendKeys("linemtest@test.com");
+		Thread.sleep(2000);
+	}
+	
+	public void SendAdminUserName2() throws InterruptedException
+	{
+		Utility.ExplicitWait(UserName);
+		Utility.showCallout2("Entering Test Line-Manager Credential", UserName);
+		js = (JavascriptExecutor)driver2;
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",UserName );
+		UserName.sendKeys("linemtest@test.com");
+
+		js = (JavascriptExecutor)driver2;
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",UserName );
+<<<<<<< HEAD
 		UserName.sendKeys("linemtest@test.com");
 		Thread.sleep(2000);
 	}
@@ -131,25 +157,41 @@ public class LoginPage extends BaseTest{
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",UserName );
 		UserName.sendKeys("linemtest@test.com");
+=======
+		UserName.sendKeys("Faraz");
+
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		Thread.sleep(2000);
 	}
 	public void SendPassword() throws InterruptedException
 	{
 		Utility.ExplicitWait(Password);
+<<<<<<< HEAD
 		Utility.showCallout("Sending user Password", Password);
+=======
+		Utility.showCallout2("Entering user Password", Password);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",Password );
 		Password.sendKeys("Test@123");
-		Thread.sleep(2000); 
+		Utility.waitForSeconds(2);
 	}
 
 	public void SendAdminPassword() throws InterruptedException
 	{
 		Utility.ExplicitWait(Password);
+
+		Utility.showCallout2("Entering Line Manager Password", Password);
+		js = (JavascriptExecutor)driver2;
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",Password );
+		Password.sendKeys("Test@123");
+		Utility.waitForSeconds(2);
+
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",Password );
 		Password.sendKeys("Test@123");
 		Thread.sleep(2000); 
+
 	}
 	public void SendInvalidPassword() throws InterruptedException
 	{
@@ -157,15 +199,20 @@ public class LoginPage extends BaseTest{
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",Password );
 		Password.sendKeys("Test@1234");
-		Thread.sleep(2000); 
+		Utility.waitForSeconds(2);
 	}
 
 	public void ClickonLoginBtn() throws InterruptedException
 	{
 		Utility.ExplicitWait(Login);
+<<<<<<< HEAD
 		Utility.showCallout("Click on Login Button", Login);
+=======
+		Utility.showCallout2("Click on Login Button", Login);
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",Login );
+		Utility.waitForSeconds(2);
 		Login.click();
 	}
 

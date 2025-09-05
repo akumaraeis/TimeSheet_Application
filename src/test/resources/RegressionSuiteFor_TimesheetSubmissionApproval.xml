@@ -4,12 +4,17 @@
 									<listeners>
 		<listener class-name="com.cms.listener.Listener"/>
 	</listeners>
+<<<<<<< HEAD
   <test thread-count="5" name="chromeTest">
+=======
+  <test thread-count="5" name="Test">
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 	      <parameter name="browser" value="chrome"/>
     <classes>
       <class name="com.cms.testcases.TimesheetSubmissionApprovalScenario"/>
     </classes>
   </test> <!-- Test -->
+<<<<<<< HEAD
   
     <test thread-count="5" name="edgeTest">
 	      <parameter name="browser" value="edge"/>
@@ -26,4 +31,6 @@
     </classes>
   </test> <!-- Test -->
 
+=======
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 </suite> <!-- Suite -->
