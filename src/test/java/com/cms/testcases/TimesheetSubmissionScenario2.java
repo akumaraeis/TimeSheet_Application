@@ -133,7 +133,7 @@ public class TimesheetSubmissionScenario2 extends BaseTest {
 		    String status = statusElement.getText().replace("\u00A0", " ").trim();
 		    System.out.println("Week " + index + " Status: '" + status + "'");
 
-		    if (status.equalsIgnoreCase("Not_Submitted")) {
+		    if (status.equalsIgnoreCase("NOT SUBMITTED")) {
 		        String startText = driverR.findElement(By.xpath("(" + weekXPath + "/div/div/span)[1]")).getText().trim();
 		        String endText = driverR.findElement(By.xpath("(" + weekXPath + "/div/div/span)[3]")).getText().trim();
 

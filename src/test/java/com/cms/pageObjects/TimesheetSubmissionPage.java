@@ -153,6 +153,9 @@ public class TimesheetSubmissionPage extends BaseTest{
 	
 	@FindBy(xpath="//button[normalize-space()='Actions']")
 	private WebElement Actions ;
+	
+	@FindBy(xpath="//a[normalize-space()='Timesheet Approve/Reject']")
+	private WebElement TimesheetApproval ;
 	// *********Construction Declaration to initialize Data Member********	
 	
 	
@@ -266,6 +269,7 @@ public class TimesheetSubmissionPage extends BaseTest{
 	public void ClickonTimesheet() throws InterruptedException
 	{
 		Utility.ExplicitWait(Timesheet);
+		Utility.showCallout("Selecting Timesheet using Script", Timesheet);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",Timesheet );
 		Timesheet.click();
@@ -284,6 +288,7 @@ public class TimesheetSubmissionPage extends BaseTest{
 	public void ClickonTimesheetSubmission() throws InterruptedException
 	{
 		Utility.ExplicitWait(TimesheetSubmission);
+		Utility.showCallout2("Selecting Timesheet Submission ", TimesheetSubmission);
 //		Thread.sleep(1000);
 		JavascriptExecutor js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].scrollIntoView(true);", TimesheetSubmission);
@@ -294,6 +299,8 @@ public class TimesheetSubmissionPage extends BaseTest{
 	public void ClickonActionsButton() throws InterruptedException
 	{
 		Utility.ExplicitWait(Actions);
+		Utility.showCallout("Clicking on Action Button using Script", Actions);
+		Thread.sleep(2000);
 		Actions.click();
 	    Thread.sleep(2000);
 	}
@@ -340,10 +347,19 @@ public class TimesheetSubmissionPage extends BaseTest{
 	public void ClickonSubmit() throws InterruptedException
 	{
 		Utility.ExplicitWait(Submit);
+		Utility.showCallout("Clicking on Submit Button using AutomationScript", Submit);
 		Submit.click();
 	    Thread.sleep(2000);
 	}
-
+	
+	
+	public void ClickonTimesheetApproval() throws InterruptedException
+	{
+		Utility.ExplicitWait(TimesheetApproval);
+		Utility.showCallout2("Clicking on TimesheetApproval using AutomationScript", TimesheetApproval);
+		TimesheetApproval.click();
+	    Thread.sleep(2000);
+	}
 	public void SendTaskDescription() throws InterruptedException
 	{
 		Utility.ExplicitWait(TaskDescription);

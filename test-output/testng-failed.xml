@@ -4,16 +4,28 @@
   <listeners>
     <listener class-name="com.cms.listener.Listener"/>
   </listeners>
-  <test thread-count="5" name="Test(failed)">
-    <parameter name="browser" value="chrome"/>
+  <test thread-count="5" name="edgeTest(failed)">
+    <parameter name="browser" value="edge"/>
     <classes>
-      <class name="com.cms.testcases.TimesheetSubmissionScenario1">
+      <class name="com.cms.testcases.TimesheetSubmissionApprovalScenario">
         <methods>
-          <include name="closebrowser"/>
+          <include name="ValidateTimesheetSubmissionFunctionality"/>
           <include name="openUrl"/>
-          <include name="ValidateaddNewTimesheetFunctionality"/>
+          <include name="closebrowser"/>
         </methods>
-      </class> <!-- com.cms.testcases.TimesheetSubmissionScenario1 -->
+      </class> <!-- com.cms.testcases.TimesheetSubmissionApprovalScenario -->
     </classes>
-  </test> <!-- Test(failed) -->
+  </test> <!-- edgeTest(failed) -->
+  <test thread-count="5" name="firefoxTest(failed)">
+    <parameter name="browser" value="firefox"/>
+    <classes>
+      <class name="com.cms.testcases.TimesheetSubmissionApprovalScenario">
+        <methods>
+          <include name="ValidateTimesheetSubmissionFunctionality"/>
+          <include name="openUrl"/>
+          <include name="closebrowser"/>
+        </methods>
+      </class> <!-- com.cms.testcases.TimesheetSubmissionApprovalScenario -->
+    </classes>
+  </test> <!-- firefoxTest(failed) -->
 </suite> <!-- Failed suite [Suite] -->

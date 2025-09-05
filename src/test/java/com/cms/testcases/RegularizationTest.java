@@ -1,0 +1,156 @@
+package com.cms.testcases;
+
+import static io.restassured.RestAssured.given;
+
+import java.io.IOException;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.NoSuchElementException;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+
+import com.cms.basetest.BaseTest;
+import com.cms.utility.Utility;
+
+import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
+
+
+public class RegularizationTest extends BaseTest {
+	public SoftAssert sf;
+	public JavascriptExecutor js;
+	public boolean isSuccessful = false;
+	public String clockInDate;
+	public String FinalAlert;
+	public String Timein ;
+	public String clockInTime;
+	public String updatedTimeStr;
+	public String updatedTime2;
+	
+	
+	@BeforeClass
+	@Parameters("browser")
+	public void openUrl(String browser) throws IOException
+	{
+		initBrowser(browser);
+		creatingObject();	
+		//		Utility.showTooltip("Browser is Launched using Selenium Automation Tool");
+		sf = new SoftAssert();
+	}
+
+	//	@BeforeMethod
+	public void LaunchUrl() throws IOException, InterruptedException
+	{
+		//		Thread.sleep(2000);
+		LaunchUrl();
+	}
+	
+	@Test(priority=1)
+	public void ValidateRegularizationFunctionality() throws InterruptedException, IOException
+	{
+
+		launchUrl();
+		
+		Thread.sleep(2000);
+		
+		lp.SendUserName();
+
+		lp.SendPassword();
+
+		lp.ClickonLoginBtn();
+		
+		Thread.sleep(2000);
+		
+	   String ActualProfileName=lp.GetProfileName();
+	   String ExpectedProfileName ="Welcome, AutomationTesting";
+	   
+	   sf.assertEquals(ActualProfileName, ExpectedProfileName);
+	   
+       trp.ClickonRegularizationsBtn();
+       
+       List<WebElement> table = driverR.findElements(By.xpath("//table[@class=\"shadow table table-light table-sm table-bordered table-hover\"]//tbody//tr"));
+       int tablesize = table.size();
+       
+       for(int i=2 ;i<=tablesize ;i++)
+       {
+           String ActionStatusText = driverR.findElement(By.xpath("(//table[@class=\"shadow table table-light table-sm table-bordered table-hover\"]//tbody//tr)["+i+"]//td[14]//button")).getText();
+           boolean ActionButtonStatus = driverR.findElement(By.xpath("(//table[@class=\"shadow table table-light table-sm table-bordered table-hover\"]//tbody//tr)["+i+"]//td[14]//button")).isEnabled();
+           System.out.println("status Text found on Action Button :->"+ActionStatusText);
+           System.out.println("Boolean Status found on Action Button :->"+ActionButtonStatus);
+           String RegularizeDate = driverR.findElement(By.xpath("(//table[@class=\"shadow table table-light table-sm table-bordered table-hover\"]//tbody//tr)["+i+"]//td[2]")).getText();
+           System.out.println("Selected Regularize Date :->"+RegularizeDate);
+           
+           if((ActionStatusText.equalsIgnoreCase("Regularize"))&& (ActionButtonStatus == true) )      	   
+           {
+        	   WebElement ActionButton = driverR.findElement(By.xpath("(//table[@class=\"shadow table table-light table-sm table-bordered table-hover\"]//tbody//tr)["+i+"]//td[14]//button"));
+        	   js =(JavascriptExecutor)driverR;
+        	   Utility.safeClick(driverR, js, ActionButton);
+        	   Thread.sleep(2000);
+        	   trp.SendRegularizationReason();
+        	   trp.SendClockIn();
+        	   trp.SendBreakIn();
+        	   trp.SendBreakBreakOut();
+        	   trp.SendClockOut();
+        	   trp.ClickonSubmitBtn();
+        	   
+        	   String ActualMsg = trp.GetSuccessfulMsg();
+        	   String ExpectMsg ="Regularization updated successfully!";
+        	   sf.assertEquals(ActualMsg, ExpectMsg);
+        	    if(ActualMsg.equalsIgnoreCase("Regularization updated successfully!"))
+        	    {
+        	    	System.out.println("Loop Breaks");
+        	    	break;
+        	    }
+        	    else
+        	    {
+        	    	System.out.println("Otherwise Loop Continues");
+        	    }
+           }
+           else
+           {
+        	 System.out.println("Either Regularize or Action Button is not enabled");  
+           }
+           
+           }
+    	   sf.assertAll();
+       }
+       
+	   
+	   
+		
+	
+	//	@AfterMethod
+	public void closeURL()
+	{
+		driverR.navigate().to("about:blank");
+	}
+
+	@AfterClass
+	public void closebrowser()
+	{
+
+		teardown();
+	}
+
+}
+
+
+

@@ -41,6 +41,7 @@ import com.cms.pageObjects.InValid_TimesheetEntryValidationPage;
 import com.cms.pageObjects.LoginPage;
 import com.cms.pageObjects.MultipleClockInScenarioPage;
 import com.cms.pageObjects.PreviousEntryClockOutScenarioPage;
+import com.cms.pageObjects.RegularizationPage;
 import com.cms.pageObjects.TimeOverlappingScenarioPage;
 import com.cms.pageObjects.TimesheetSlotMinimumHourValidationPage;
 import com.cms.pageObjects.TimesheetSubmissionPage;
@@ -70,6 +71,7 @@ public class BaseTest{
 	public static TimesheetSubmissionPage tsp;
 	public static ApplyLeavePage alp;
 	public static DashboardPage tdp;
+	public static RegularizationPage trp;
 	
 	//****To Run Code in Virtual Cloud Machine.
 	public void initBrowser(String Browsername ) throws IOException
@@ -80,7 +82,7 @@ public class BaseTest{
 		case "firefox" :
 
 			FirefoxOptions firefoxOptions = new FirefoxOptions();
-			firefoxOptions.addArguments("--start-maximized");
+//			firefoxOptions.addArguments("--start-maximized");
 			firefoxOptions.addArguments("--incognito");
 			firefoxOptions.addArguments("--disable-notifications");
 			firefoxOptions.addArguments("--disable-blink-features=AutomationControlled");
@@ -90,47 +92,19 @@ public class BaseTest{
 			break;
 		case "chrome" :
 			ChromeOptions chromeOptions = new ChromeOptions();
-			chromeOptions.addArguments("start-maximized");
+//			chromeOptions.addArguments("start-maximized");
 			chromeOptions.addArguments("--incognito");
 //			chromeOptions.addArguments("--disable-notifications");
 //			chromeOptions.addArguments("--disable-blink-features=AutomationControlled");
 
 			chromeOptions.addArguments("--disable-extensions");
-//			chromeOptions.addArguments("-headless");
-//			chromeOptions.addArguments("--window-size=2560,1440");
-//			chromeOptions.addArguments("--force-device-scale-factor=1");
-//			chromeOptions.addArguments("--disable-gpu");
-			//		    ChromeOptions chromeOptions = new ChromeOptions();
-			//          chromeOptions.addArguments("start-maximized");
-			//          chromeOptions.addArguments("--incognito");
-			//          chromeOptions.addArguments("--disable-notifications");
-			//          chromeOptions.addArguments("--disable-blink-features=AutomationControlled");
-			//          chromeOptions.addArguments("--disable-extensions");
-			//          chromeOptions.addArguments("--headless");  // Run in headless mode
-			//          chromeOptions.addArguments("window-size=1920,1080");
-			//          chromeOptions.addArguments("--no-sandbox");  // Bypass OS security model
-			//          chromeOptions.addArguments("--disable-dev-shm-usage");  // Overcome limited resource problems
-			//          chromeOptions.addArguments("--remote-allow-origins=*");
-			//          chromeOptions.addArguments("--disable-gpu");  // Disable GPU acceleration (optional)
-			//
-			//
-			//          // Set binary path if needed (optional)
-			//          chromeOptions.setBinary("/opt/google/chrome/google-chrome"); 
-			         driverR = new ChromeDriver(chromeOptions);
-			//		options.addArguments("--disable-web-security");
-			//        options.addArguments("--disable-site-isolation-trials");
-
-			//		driverR = new FirefoxDriver();
-			//        driverR= new EdgeDriver();
+		         driverR = new ChromeDriver(chromeOptions);
 			break;
 		case "edge" :
+			 System.setProperty("webdriver.edge.driver", "C:\\Users\\ATLAS-ADMIN\\Downloads\\edgedriver_win64\\msedgedriver.exe");
 			EdgeOptions edgeOptions = new EdgeOptions();
-			edgeOptions.addArguments("start-maximized");
-		edgeOptions.addArguments("--incognito");
-			edgeOptions.addArguments("--disable-notifications");
-			edgeOptions.addArguments("--disable-blink-features=AutomationControlled");
-			edgeOptions.addArguments("--disable-extensions");
-			edgeOptions.addArguments("--window-size=1920x1080");
+//			edgeOptions.addArguments("start-maximized");
+		    edgeOptions.addArguments("--incognito");
 			driverR = new EdgeDriver(edgeOptions);
 		default:
 			System.err.println("Please provide valid Machine_Name");
@@ -148,24 +122,17 @@ public class BaseTest{
 
 	public void launchUrl() throws IOException, InterruptedException
 	{
-		driverR.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));		
-		//	driverR.get(getFile("baseurl"));
-
-		//	driverR.get("https://contactcenter.intelledash.com/");
+		driverR.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));	
+		driverR.manage().window().maximize();
 		driverR.get("https://timesheet.ndtatlas.com/login");
-//		driverR.get("https://timesheet.ndtatlas.com/");
-//		driverR.get("https://contactcenter.intelledash.com/?token=07DphO7pAhaC7jcUkQBsiVaK4aZv8h3f");
 			Thread.sleep(1000);	
-//		WebElement SecureSite = driverR.findElement(By.xpath("//*[contains(text(),\"Continue to site\")]"));
-//		Utility.ExplicitWait(SecureSite);
-//		SecureSite.click();
-//		Thread.sleep(5000);
 
 	}
 
 	public void launchLocalUrl() throws IOException, InterruptedException
 	{
 		driverR.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));		
+		driverR.manage().window().maximize();
 		driverR.get("http://192.168.1.10:8086/login");
 		Thread.sleep(1000);	
 	}
@@ -220,6 +187,7 @@ public class BaseTest{
 		 tsp =new TimesheetSubmissionPage(driverR);
 		 alp =new ApplyLeavePage(driverR);
 		 tdp = new DashboardPage(driverR);
+		 trp = new RegularizationPage(driverR);
 	}
 
 

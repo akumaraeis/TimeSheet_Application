@@ -141,6 +141,7 @@ public class Validate_UserInterfaceAttendanceFunctionality extends BaseTest {
 		Thread.sleep(2000);
 		String ActualSuccessfulMsg2 = driverR.findElement(By.xpath("//*[contains(text(),'Attendance updated successfully!')]")).getText();
 		String ExpectSuccessfulMsg2 ="Attendance updated successfully!";
+		System.out.println("ActualSuccesful Message found :->"+ActualSuccessfulMsg2);
 		sf.assertEquals(ActualSuccessfulMsg2, ExpectSuccessfulMsg2);
 		Thread.sleep(60000);
 		
@@ -150,6 +151,7 @@ public class Validate_UserInterfaceAttendanceFunctionality extends BaseTest {
 		Thread.sleep(2000);
 		String ActualSuccessfulMsg3 = driverR.findElement(By.xpath("//*[contains(text(),'Attendance updated successfully!')]")).getText();
 		String ExpectSuccessfulMsg3 ="Attendance updated successfully!";
+		System.out.println("ActualSuccesful Message found :->"+ActualSuccessfulMsg3);
 		sf.assertEquals(ActualSuccessfulMsg3, ExpectSuccessfulMsg3);
 		Thread.sleep(60000);
 		
@@ -159,6 +161,7 @@ public class Validate_UserInterfaceAttendanceFunctionality extends BaseTest {
 		Thread.sleep(2000);
 		String ActualSuccessfulMsg4 = driverR.findElement(By.xpath("//*[contains(text(),'Attendance updated successfully!')]")).getText();
 		String ExpectSuccessfulMsg4 ="Attendance updated successfully!";
+		System.out.println("ActualSuccesful Message found :->"+ActualSuccessfulMsg4);
 		sf.assertEquals(ActualSuccessfulMsg4, ExpectSuccessfulMsg4);
         sf.assertAll();
 		

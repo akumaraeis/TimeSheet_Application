@@ -90,9 +90,19 @@ public class LoginPage extends BaseTest{
 	public void SendUserName() throws InterruptedException
 	{
 		Utility.ExplicitWait(UserName);
+		Utility.showCallout("Sending user Name", UserName);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",UserName );
 		UserName.sendKeys("AutomationTestUser");
+		Thread.sleep(2000);
+	}
+	
+	public void SendUserName2() throws InterruptedException
+	{
+		Utility.ExplicitWait(UserName);
+		js = (JavascriptExecutor)driver2;
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",UserName );
+		UserName.sendKeys("tmptest@test.com");
 		Thread.sleep(2000);
 	}
 	
@@ -110,12 +120,23 @@ public class LoginPage extends BaseTest{
 		Utility.ExplicitWait(UserName);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",UserName );
-		UserName.sendKeys("Faraz");
+		UserName.sendKeys("linemtest@test.com");
+		Thread.sleep(2000);
+	}
+	
+	public void SendAdminUserName2() throws InterruptedException
+	{
+		Utility.ExplicitWait(UserName);
+		Utility.showCallout("Sending Test Line-Manager Credential", UserName);
+		js = (JavascriptExecutor)driver2;
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",UserName );
+		UserName.sendKeys("linemtest@test.com");
 		Thread.sleep(2000);
 	}
 	public void SendPassword() throws InterruptedException
 	{
 		Utility.ExplicitWait(Password);
+		Utility.showCallout("Sending user Password", Password);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",Password );
 		Password.sendKeys("Test@123");
@@ -142,6 +163,7 @@ public class LoginPage extends BaseTest{
 	public void ClickonLoginBtn() throws InterruptedException
 	{
 		Utility.ExplicitWait(Login);
+		Utility.showCallout("Click on Login Button", Login);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",Login );
 		Login.click();
@@ -151,6 +173,7 @@ public class LoginPage extends BaseTest{
 	public String GetProfileName() throws InterruptedException
 	{
 		Utility.ExplicitWait(ProfileName);
+		Utility.showCallout2("Validating Profile Name after Login", ProfileName);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",ProfileName );
 		Thread.sleep(2000);
@@ -166,9 +189,6 @@ public class LoginPage extends BaseTest{
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",LogOut );
 		LogOut.click();
 	}
-
-
-
 }
 
 

@@ -334,6 +334,7 @@ public class AddTaskPage extends BaseTest{
 	public void ClickonAddTask() throws InterruptedException
 	{
 		Utility.ExplicitWait(AddTask);
+		Utility.showCallout("Adding Task using AutomationScript", AddTask);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",AddTask );
 		AddTask.click();
@@ -343,9 +344,10 @@ public class AddTaskPage extends BaseTest{
 	public void ClickonSearchDate() throws InterruptedException
 	{
 		Utility.ExplicitWait(SereachDate);
+		Utility.showCallout("Searching Date using AutomationScript", SereachDate);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",SereachDate );
-		AddTask.click();
+		SereachDate.click();
 	    Thread.sleep(2000);
 	}
 	
@@ -362,6 +364,7 @@ public class AddTaskPage extends BaseTest{
 	public void SelectSubProcess() throws InterruptedException
 	{
 		Utility.ExplicitWait(SubProcess);
+		Utility.showCallout("Selecting Sub Process using AutomationScript", SubProcess);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",SubProcess );
 //		Utility.safeClick(driver2, js, SubProcess);
@@ -373,6 +376,7 @@ public class AddTaskPage extends BaseTest{
 	public void ClickonActivity() throws InterruptedException
 	{
 		Utility.ExplicitWait(Activity);
+		Utility.showCallout2("Selecting Activity using AutomationScript", Activity);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",Activity );
 		Select S2 = new Select(Activity);
@@ -384,6 +388,7 @@ public class AddTaskPage extends BaseTest{
 	public void SendTaskDescription() throws InterruptedException
 	{
 		Utility.ExplicitWait(TaskDescription);
+		Utility.showCallout2("Sending Task Description using AutomationScript", TaskDescription);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",TaskDescription );
 		TaskDescription.sendKeys("Test Description");
@@ -393,38 +398,39 @@ public class AddTaskPage extends BaseTest{
 	public void SendTaskDuration() throws InterruptedException
 	{
 		Utility.ExplicitWait(TaskDuration);
+		Utility.showCallout2("Selecting TaskDuration using AutomationScript", TaskDuration);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",TaskDuration );
 		TaskDuration.click();		
 		Select S9 = new Select(TaskDuration);
 		S9.selectByVisibleText("08:00");
-		Thread.sleep(2000);
-		
+		Thread.sleep(2000);		
 	}
 	
 	public void SendTaskDuration2() throws InterruptedException
 	{
 		Utility.ExplicitWait(TaskDuration);
+		Utility.showCallout2("Selecting TaskDuration using AutomationScript", TaskDuration);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",TaskDuration );
 		TaskDuration.click();		
 		Select S9 = new Select(TaskDuration);
 		S9.selectByVisibleText("09:00");
-		Thread.sleep(2000);
-		
+		Thread.sleep(2000);		
 	}
 
 	public void SendTaskDuration3() throws InterruptedException
 	{
 		Utility.ExplicitWait(TaskDuration);
+		Utility.showCallout2("Selecting TaskDuration using AutomationScript", TaskDuration);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",TaskDuration );
 		TaskDuration.click();		
 		Select S9 = new Select(TaskDuration);
 		S9.selectByVisibleText("06:00");
-		Thread.sleep(2000);
-		
+		Thread.sleep(2000);		
 	}
+	
 	public String GetSuccessfulNotification() throws InterruptedException
 	{
 		Utility.ExplicitWait(SuccessfulNotification);
@@ -451,6 +457,7 @@ public class AddTaskPage extends BaseTest{
 	public void ClickonTaskSubmit() throws InterruptedException
 	{
 		Utility.ExplicitWait(TaskSubmit);
+		Utility.showCallout("Selecting TaskSubmit using AutomationScript", TaskSubmit);
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",TaskSubmit );
 		TaskSubmit.click();
