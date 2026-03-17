@@ -13,6 +13,7 @@ import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -86,7 +87,7 @@ public class ApplyLeavePage extends BaseTest{
 	@FindBy(xpath="//a[normalize-space()='Timesheet']")
 	private WebElement Timesheet ;
 	
-	@FindBy(xpath="//span[normalize-space()='Submit']")
+	@FindBy(xpath="//button[normalize-space()='Submit']")
 	private WebElement Submit ;
 	
 	@FindBy(xpath="(//*[contains(text(),'Add Task')])[1]")
@@ -155,17 +156,26 @@ public class ApplyLeavePage extends BaseTest{
 	@FindBy(xpath="//li[normalize-space()='100']")
 	private WebElement SelectRecordsPerPage ;
 	
-	@FindBy(xpath="//*[text()='Apply Leave']")
+	@FindBy(xpath="//button[normalize-space()='Apply Leave']")
 	private WebElement ApplyLeave ;
 	
-	@FindBy(xpath="//div[3]//div[1]//div[5]//button[1]")
-	private WebElement ApplyLeaveBtn ;
+	@FindBy(xpath="//div[contains(text(),\"Apply Leave\")]")
+	private WebElement ApplyLeaveonModal ;
 	
 	@FindBy(xpath="//select[@aria-label='Select Activity']")
 	private WebElement LeaveType ;
 	
 	@FindBy(xpath="//textarea[@placeholder='Enter comment']")
 	private WebElement Comment ;
+	
+	@FindBy(xpath="//*[contains(@class,\"form-control form-control-sm border\")]")
+	private WebElement FromDate ;
+	
+	@FindBy(xpath="(//*[contains(@class,\"orm-control form-control-sm border border-seconda\")])[2]")
+	private WebElement ToDate ;
+	
+	@FindBy(xpath="//*[contains(text(),'My Leaves')]")
+	private WebElement MyLeave ;	
 	
 	@FindBy(xpath="//a[contains(@class,'border-end rounded-start rounded-pill text-end mb-2 bg-gradient bg-opacity-25 nav-link active')]")
 	private WebElement User_List ;
@@ -182,36 +192,11 @@ public class ApplyLeavePage extends BaseTest{
 	//********time stamp Creation *******************************************
 	
     public static String generateRandomDate() {
-        Random random = new Random();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        int currentYear = LocalDate.now().getYear(); // 2025
-        int previousYear = currentYear - 1; // 2024
-        LocalDate today = LocalDate.now();
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
-        int randomYear = random.nextBoolean() ? currentYear : previousYear; // Pick 2024 or 2025
+        LocalDate futureDate = LocalDate.now().plusDays(2);  // Add 2 days to current date
 
-        int randomMonth;
-        int maxDay;
-
-        if (randomYear == currentYear) { 
-            // If selecting 2025, restrict months to January until current month
-            randomMonth = random.nextInt(today.getMonthValue()) + 1; // From Jan to Current Month (Feb)
-            maxDay = (randomMonth == today.getMonthValue()) 
-                     ? today.getDayOfMonth()  // If it's the current month, don't go beyond today
-                     : LocalDate.of(randomYear, randomMonth, 1).lengthOfMonth(); // Otherwise, full month range
-        } else { 
-            // If selecting 2024, allow full range (Jan to Dec)
-            randomMonth = random.nextInt(12) + 1; // 1 to 12
-            maxDay = LocalDate.of(randomYear, randomMonth, 1).lengthOfMonth();
-        }
-
-        // Generate a random day within the valid range
-        int randomDay = random.nextInt(maxDay) + 1;
-
-        // Construct the final valid date
-        LocalDate randomDate = LocalDate.of(randomYear, randomMonth, randomDay);
-        
-        return randomDate.format(formatter); // Format as "dd/MM/yyyy"
+        return futureDate.format(formatter); // Format as "dd/MM/yyyy"
     }
 	public static String timestamp()
 	{
@@ -299,13 +284,41 @@ public class ApplyLeavePage extends BaseTest{
 
 	public void  ClickonApplyLeave() throws InterruptedException
 	{
+		Utility.ExplicitWait(MyLeave);
+	    MyLeave.click();	
+	    Utility.waitForSeconds(2);
 		Utility.ExplicitWait(ApplyLeave);		
 		Utility.showCallout("Selecting Apply Leave Module", ApplyLeave);
 		js = (JavascriptExecutor)driver2;
-		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",ApplyLeave );
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",ApplyLeave );		
 		ApplyLeave.click();
+		Utility.waitForSeconds(1);
+		FromDate.sendKeys(Keys.chord(Keys.CONTROL,"a"));
+		FromDate.sendKeys(Keys.DELETE);
+		Utility.waitForSeconds(1);
+		String LeaveDate = generateRandomDate();
+		FromDate.sendKeys(LeaveDate);
+		Utility.waitForSeconds(2);
+		 
+		ToDate.sendKeys(Keys.chord(Keys.CONTROL,"a"));
+		ToDate.sendKeys(Keys.DELETE);
+		Utility.waitForSeconds(1);
+		ToDate.sendKeys(LeaveDate);
+		Utility.waitForSeconds(2);
+		Actions act = new Actions(driverR);
+		act.moveToElement(ApplyLeaveonModal).click().perform();	
+		Utility.waitForSeconds(2);
+		Select s1 = new Select(LeaveType);
+		s1.selectByVisibleText("Full Day - Casual Leave");
+		Utility.waitForSeconds(1);
+		Comment.sendKeys("TestComment");
+		Utility.waitForSeconds(1);
+		Submit.click();
+		
+		
 	}
 	
+
 	public void ClickonApplyLeaveBtn() throws InterruptedException
 	{
 //		Utility.ExplicitWait(ApplyLeaveBtn);

@@ -4,46 +4,17 @@
   <listeners>
     <listener class-name="com.cms.listener.Listener"/>
   </listeners>
-  <test thread-count="5" name="edgeTest(failed)">
-    <parameter name="browser" value="edge"/>
+  <test thread-count="5" name="ChromeTest(failed)">
+    <parameter name="browser" value="chrome"/>
     <classes>
-<<<<<<< HEAD
-      <class name="com.cms.testcases.TimesheetSubmissionApprovalScenario">
+      <class name="com.cms.testcases.ModifiedTimesheetSubmissionScenario">
         <methods>
-          <include name="ValidateTimesheetSubmissionFunctionality"/>
-          <include name="openUrl"/>
           <include name="closebrowser"/>
-        </methods>
-      </class> <!-- com.cms.testcases.TimesheetSubmissionApprovalScenario -->
-=======
-      <class name="com.cms.testcases.AddTaskTest">
-        <methods>
-          <include name="ValidateBreakIn"/>
-          <include name="closebrowser"/>
-          <include name="ValidateBreakOut"/>
-          <include name="ValidateClockOut"/>
-          <include name="ValidateAddTaskFunctionalityAfterClockOut"/>
-          <include name="ValidateClockIn"/>
+          <include name="ValidateApproveTimesheetReportFunctionality"/>
           <include name="openUrl"/>
-<<<<<<< HEAD
-=======
-          <include name="ValidateaddNewTimesheetFunctionality"/>
->>>>>>> afe53dadd2d36ae04716e878708d2494adee785f
+          <include name="closeURL"/>
         </methods>
-      </class> <!-- com.cms.testcases.AddTaskTest -->
->>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
+      </class> <!-- com.cms.testcases.ModifiedTimesheetSubmissionScenario -->
     </classes>
-  </test> <!-- edgeTest(failed) -->
-  <test thread-count="5" name="firefoxTest(failed)">
-    <parameter name="browser" value="firefox"/>
-    <classes>
-      <class name="com.cms.testcases.TimesheetSubmissionApprovalScenario">
-        <methods>
-          <include name="ValidateTimesheetSubmissionFunctionality"/>
-          <include name="openUrl"/>
-          <include name="closebrowser"/>
-        </methods>
-      </class> <!-- com.cms.testcases.TimesheetSubmissionApprovalScenario -->
-    </classes>
-  </test> <!-- firefoxTest(failed) -->
+  </test> <!-- ChromeTest(failed) -->
 </suite> <!-- Failed suite [Suite] -->

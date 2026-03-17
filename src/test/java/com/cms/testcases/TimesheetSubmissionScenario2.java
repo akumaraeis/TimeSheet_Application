@@ -236,11 +236,11 @@ public class TimesheetSubmissionScenario2 extends BaseTest {
 		            Utility.waitForSeconds(2);
 		            System.out.println("✅ Timesheet submitted for week " + index);
 		           
-		            WebElement ConfirmAlert = driverR.findElement(By.xpath("//*[contains(text(),'Please clock out every timesheet for the selected week.')]"));
+		            WebElement ConfirmAlert = driverR.findElement(By.xpath("//*[contains(text(),'All timesheets for this week must be clocked out before submission.')]"));
                     Utility.highlightElement(ConfirmAlert);
 		            String ActualTimesheetSuccesful = ConfirmAlert.getText();
 		            System.out.println("Timesheet submission Succesful Message :-> " + ActualTimesheetSuccesful);
-		            String ExpectTimesheetSuccesful ="Please clock out every timesheet for the selected week.";
+		            String ExpectTimesheetSuccesful ="All timesheets for this week must be clocked out before submission.";
 		            sf.assertEquals(ActualTimesheetSuccesful, ExpectTimesheetSuccesful);
 		            // Check final status after submission
 		            driverR.navigate().refresh();

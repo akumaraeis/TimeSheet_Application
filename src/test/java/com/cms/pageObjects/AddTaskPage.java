@@ -177,6 +177,8 @@ public class AddTaskPage extends BaseTest{
 	@FindBy(xpath="//button[normalize-space()='Confirm']")
 	private WebElement ConfirmationBtn ;
 	
+	@FindBy(xpath="///button[normalize-space()='Clear']")
+	private WebElement ClearBtn ;
 	// *********Construction Declaration to initialize Data Member********	
 	public AddTaskPage(WebDriver driverR)
 	{
@@ -365,11 +367,11 @@ public class AddTaskPage extends BaseTest{
 	public void SelectSubProcess() throws InterruptedException
 	{
 		Utility.ExplicitWait(SubProcess);
-<<<<<<< HEAD
+
 		Utility.showCallout("Selecting Sub Process using AutomationScript", SubProcess);
-=======
+
 		Utility.showCallout("Selecting Sub Process using AutomationScript", SubProcess);        
->>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
+
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",SubProcess );
 //		Utility.safeClick(driver2, js, SubProcess);
@@ -464,11 +466,11 @@ public class AddTaskPage extends BaseTest{
 	public void ClickonTaskSubmit() throws InterruptedException
 	{
 		Utility.ExplicitWait(TaskSubmit);
-<<<<<<< HEAD
+
 		Utility.showCallout("Selecting TaskSubmit using AutomationScript", TaskSubmit);
-=======
+
 		Utility.showCallout2("Selecting TaskSubmit using AutomationScript", TaskSubmit);
->>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
+
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",TaskSubmit );
 		TaskSubmit.click();
@@ -566,6 +568,14 @@ public class AddTaskPage extends BaseTest{
 		Utility.safeClick(driver2, js, TimeOut);
 //		TimeOut.click();
 	}
+	
+	public void ClickonClearBtn() throws InterruptedException
+	{
+		js = (JavascriptExecutor)driver2;
+		Utility.safeClick(driver2, js, ClearBtn);
+		
+//		TimeOut.click();
+	}
 	public void EditBreakDuration() throws InterruptedException
 	{
 	    Utility.ExplicitWait(BreakDuration);
@@ -634,6 +644,7 @@ public class AddTaskPage extends BaseTest{
 		DateFilter.sendKeys(Date);
 		Thread.sleep(2000);
 		Utility.safeClick(driver2, js, SereachDate);
+		
 //		SereachDate.click();
 	}
 
@@ -646,6 +657,12 @@ public class AddTaskPage extends BaseTest{
 		Edit.click();
 	}
 
+	public void SelectDate()
+	{
+		
+	}
+	
+	
 	public void ClickonHome() throws InterruptedException
 	{
 		Utility.ExplicitWait(Home);

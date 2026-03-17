@@ -53,26 +53,11 @@ public class Utility extends BaseTest {
 	    }
 	
 
-	
-//	  public static String captureScreenshot(String methodName, String status) throws IOException {
-//	        TakesScreenshot ts = (TakesScreenshot) Base.driverR; // or pass WebDriver as parameter
-//	        File src = ts.getScreenshotAs(OutputType.FILE);
-//
-//	        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-//	        String screenshotDir = System.getProperty("user.dir") + "/Screenshots/" + status + "/";
-//	        new File(screenshotDir).mkdirs(); // Create directory if it doesn't exist
-//
-//	        String filePath = screenshotDir + methodName + "_" + timestamp + ".png";
-//	        File dest = new File(filePath);
-//	        FileUtils.copyFile(src, dest);
-//	        return filePath;
-//	    }
-//	
  public static String getToken() {
     String token ="Bearer "+"Z4uzBKvHpTJlh5QCf9SDzQyHJoKQJpb6";
 //      String token ="Bearer "+"07DphO7pAhaC7jcUkQBsiVaK4aZv8h3f";
 		return token ;
-<<<<<<< HEAD
+
  }
  
  
@@ -91,26 +76,9 @@ public class Utility extends BaseTest {
      ArrayList<String> tabs = new ArrayList<>(driverR.getWindowHandles());
      driverR.switchTo().window(tabs.get(index));
  }
-=======
-    }
+
     
-    
-    // Method to wait for visibility of WebElement
-    public static WebElement ExplicitWait(WebElement element) {
-    	WebDriverWait wait = new WebDriverWait(driverR,Duration.ofSeconds(300));
-        return wait.until(ExpectedConditions.visibilityOf(element));
-    }
-    
-    public static WebElement ExplicitClickWait(WebElement element) {
-    	WebDriverWait wait = new WebDriverWait(driverR,Duration.ofSeconds(300));
-        return wait.until(ExpectedConditions.elementToBeClickable(element));
-    }
-    
-    public static void switchToTab(int index) {
-        ArrayList<String> tabs = new ArrayList<>(driverR.getWindowHandles());
-        driverR.switchTo().window(tabs.get(index));
-    }
->>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
+
 
 	 public static void showTooltip(String message) {
 		 String script = "var tooltip = document.createElement('div');" +
@@ -129,12 +97,9 @@ public class Utility extends BaseTest {
 				    "tooltip.style.transform = 'translateX(-50%)';" +
 				    "tooltip.style.fontFamily = 'Arial, sans-serif';" +
 				    "document.body.appendChild(tooltip);" +
-<<<<<<< HEAD
+
 				    "setTimeout(function() { document.body.removeChild(tooltip); }, 10000);";
-=======
-				    "setTimeout(function() { document.body.removeChild(tooltip); }, 2000);";
->>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
-	        ((JavascriptExecutor) driverR).executeScript(script);
+        	        ((JavascriptExecutor) driverR).executeScript(script);
 	    }
 	 
 	 public static void showTooltipWithElementPoint(String message ,WebElement element) {
@@ -228,11 +193,11 @@ public class Utility extends BaseTest {
 		     "callout.innerHTML = '" + message + "';" +
 		     "callout.style.position = 'absolute';" +
 		     "callout.style.left = '" + calloutX + "px';" +
-<<<<<<< HEAD
+
 		     "callout.style.top = '" +  calloutY + "px';" +
-=======
+
 		     "callout.style.top = '" + calloutY + "px';" +
->>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
+
 		     "callout.style.padding = '12px 20px';" +
 		     "callout.style.backgroundColor = 'green';" + 
 		     "callout.style.color = 'white';" + 
@@ -257,12 +222,8 @@ public class Utility extends BaseTest {
 		     "callout.appendChild(arrow);" +
 
 		     "document.body.appendChild(callout);" +
-<<<<<<< HEAD
-		     "setTimeout(function() { document.body.removeChild(callout); }, 1000);"; // 1 sec
-=======
-		     "setTimeout(function() { document.body.removeChild(callout); }, 1000);"; // 5 sec
->>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
 
+		     "setTimeout(function() { document.body.removeChild(callout); }, 1000);"; // 1 sec
 		 ((JavascriptExecutor) driverR).executeScript(script2);
 	    }
 	

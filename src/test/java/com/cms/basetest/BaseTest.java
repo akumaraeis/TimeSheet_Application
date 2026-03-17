@@ -74,14 +74,14 @@ public class BaseTest{
 	public static TimesheetSubmissionPage tsp;
 	public static ApplyLeavePage alp;
 	public static DashboardPage tdp;
-<<<<<<< HEAD
+
 	public static RegularizationPage trp;
-=======
+
 
 	public static ChangePasswordPage tcp;
-	public static RegularizationPage trp;
 
->>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
+
+
 	
 	//****To Run Code in Virtual Cloud Machine.
 	public void initBrowser(String Browsername ) throws IOException
@@ -101,14 +101,14 @@ public class BaseTest{
 			driverR = new FirefoxDriver(firefoxOptions);
 			break;
 		case "chrome" :
-			ChromeOptions chromeOptions = new ChromeOptions();
-//			chromeOptions.addArguments("start-maximized");
-			chromeOptions.addArguments("--incognito");
-//			chromeOptions.addArguments("--disable-notifications");
-//			chromeOptions.addArguments("--disable-blink-features=AutomationControlled");
-
-			chromeOptions.addArguments("--disable-extensions");
-		         driverR = new ChromeDriver(chromeOptions);
+			ChromeOptions options = new ChromeOptions();
+			options.addArguments("--no-sandbox");
+			options.addArguments("--disable-dev-shm-usage");
+			options.addArguments("--disable-gpu");
+			options.addArguments("--remote-allow-origins=*");
+			driverR = new ChromeDriver(options);
+//			chromeOptions.addArguments("--disable-extensions");
+//		         driverR = new ChromeDriver(chromeOptions);
 			break;
 		case "edge" :
 			 System.setProperty("webdriver.edge.driver", "C:\\Users\\ATLAS-ADMIN\\Downloads\\edgedriver_win64\\msedgedriver.exe");
@@ -134,7 +134,9 @@ public class BaseTest{
 	{
 		driverR.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));	
 		driverR.manage().window().maximize();
-		driverR.get("https://timesheet.ndtatlas.com/login");
+//		driverR.get("https://timesheet.ndtatlas.com/login");
+		driverR.get("https://www.timesheet.ndtatlas.com/members/");
+		
 			Thread.sleep(1000);	
 
 	}
@@ -197,14 +199,14 @@ public class BaseTest{
 		 tsp =new TimesheetSubmissionPage(driverR);
 		 alp =new ApplyLeavePage(driverR);
 		 tdp = new DashboardPage(driverR);
-<<<<<<< HEAD
+
 		 trp = new RegularizationPage(driverR);
-=======
+
 
 		 tcp = new ChangePasswordPage(driverR);
-		 trp = new RegularizationPage(driverR);
+		
 
->>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
+
 	}
 
 

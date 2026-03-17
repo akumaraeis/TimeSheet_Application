@@ -1,36 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Suite">
-									<listeners>
+		  					<listeners>
 		<listener class-name="com.cms.listener.Listener"/>
 	</listeners>
-<<<<<<< HEAD
-  <test thread-count="5" name="chromeTest">
-=======
-  <test thread-count="5" name="Test">
->>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
-	      <parameter name="browser" value="chrome"/>
+
+  <test thread-count="5" name="ChromeTest">
+	    <parameter name="browser" value="chrome"/>
     <classes>
-      <class name="com.cms.testcases.TimesheetSubmissionApprovalScenario"/>
+      <class name="com.cms.testcases.TimesheetSubmissionScenario"/>
     </classes>
   </test> <!-- Test -->
-<<<<<<< HEAD
   
-    <test thread-count="5" name="edgeTest">
-	      <parameter name="browser" value="edge"/>
-    <classes>
-      <class name="com.cms.testcases.TimesheetSubmissionApprovalScenario"/>
-    </classes>
-  </test> <!-- Test -->
-
-
-  <test thread-count="5" name="firefoxTest">
-	      <parameter name="browser" value="firefox"/>
-    <classes>
-      <class name="com.cms.testcases.TimesheetSubmissionApprovalScenario"/>
-    </classes>
-  </test> <!-- Test -->
-
-=======
->>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
+  <test thread-count ="5" name="firefoxTest">
+	  <parameter name="browser" value="firefox"/>
+	  <classes>
+	  <class name="com.cms.testcases.TimesheetSubmissionScenario"/>
+  </classes>
+  </test>
+  
+  <test thread-count="5" name ="edgeTest">
+	  <parameter name="browser" value="edge"/>
+	  <classes>
+	  <class name ="com.cms.testcases.TimesheetSubmissionScenario"/>
+  </classes>
+  </test>
 </suite> <!-- Suite -->
+
