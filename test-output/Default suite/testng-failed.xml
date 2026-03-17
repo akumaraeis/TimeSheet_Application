@@ -3,14 +3,30 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
+<<<<<<< HEAD
+      <class name="com.cms.testcases.Validate_AttendanceFunctionality">
+        <methods>
+          <include name="ValidateBreakOut"/>
+          <include name="ValidateAddedTimesheetEntry"/>
+          <include name="ValidateBreakIn"/>
+          <include name="ValidateClockIn"/>
+          <include name="ValidateClockOut"/>
+=======
       <class name="com.cms.testcases.Validate_UserInterfaceAttendanceFunctionality">
         <methods>
           <include name="ValidateAddedTimesheetEntry"/>
           <include name="closebrowser"/>
           <include name="DeleteTestUserRecord"/>
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
           <include name="openUrl"/>
+          <include name="DeleteTestUserRecord"/>
+          <include name="closebrowser"/>
         </methods>
+<<<<<<< HEAD
+      </class> <!-- com.cms.testcases.Validate_AttendanceFunctionality -->
+=======
       </class> <!-- com.cms.testcases.Validate_UserInterfaceAttendanceFunctionality -->
+>>>>>>> 5c076efa1cad2d354015a96482539401643c64e0
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

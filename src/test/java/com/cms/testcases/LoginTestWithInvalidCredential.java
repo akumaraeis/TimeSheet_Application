@@ -43,7 +43,7 @@ public class LoginTestWithInvalidCredential extends BaseTest {
 	public void ValidateLoginFunctionality() throws InterruptedException, IOException
 	{
 
-		launchLocalUrl();
+		launchUrl();
 		
 		Thread.sleep(2000);
 		

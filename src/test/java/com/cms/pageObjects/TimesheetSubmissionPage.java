@@ -149,7 +149,7 @@ public class TimesheetSubmissionPage extends BaseTest{
 	@FindBy(xpath="//a[normalize-space()='Attendance']")
 	private WebElement Attendance ;
 	
-	@FindBy(xpath="//*[contains(text(),'Timesheet Submission')]")
+	@FindBy(xpath="(//*[contains(text(),'Submit Timesheet')])")
 	private WebElement TimesheetSubmission ;
 	
 	@FindBy(xpath="//button[normalize-space()='Actions']")
@@ -157,6 +157,12 @@ public class TimesheetSubmissionPage extends BaseTest{
 	
 	@FindBy(xpath="//a[normalize-space()='Timesheet Approve/Reject']")
 	private WebElement TimesheetApproval ;
+	
+	@FindBy(xpath="//*[@name=\"comment\"]")
+	private WebElement Comment ;
+	
+	@FindBy(xpath="//*[contains(text(),'Timesheet Approvals')]")
+	private WebElement ModuleTimesheetApproval ;
 	// *********Construction Declaration to initialize Data Member********	
 	
 	
@@ -269,11 +275,11 @@ public class TimesheetSubmissionPage extends BaseTest{
 	
 	public void ClickonTimesheet() throws InterruptedException
 	{
-		Utility.ExplicitWait(Timesheet);
-		Utility.showCallout("Selecting Timesheet using Script", Timesheet);
+		Utility.ExplicitWait(TimesheetSubmission);
+		Utility.showCallout("Selecting Timesheet using Script", TimesheetSubmission);
 		js = (JavascriptExecutor)driver2;
-		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",Timesheet );
-		Timesheet.click();
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",TimesheetSubmission );
+		Utility.safeClick(driver2, js, TimesheetSubmission);
 	}
 
 	public void ClickonAddNewTimesheet() throws InterruptedException
@@ -291,10 +297,24 @@ public class TimesheetSubmissionPage extends BaseTest{
 		Utility.ExplicitWait(TimesheetSubmission);
 		Utility.showCallout2("Selecting Timesheet Submission ", TimesheetSubmission);
 		Log.info("Selecting Timesheet Submission");
-//		Thread.sleep(1000);
+		Thread.sleep(1000);
 		JavascriptExecutor js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].scrollIntoView(true);", TimesheetSubmission);
-		TimesheetSubmission.click();
+//		TimesheetSubmission.click();
+		Utility.safeClick(driver2, js, TimesheetSubmission);
+//	    Thread.sleep(1000);
+	}
+	
+	public void ClickonTimesheetApprovals() throws InterruptedException
+	{
+		Utility.ExplicitWait(ModuleTimesheetApproval);
+		Utility.showCallout2("Selecting Timesheet Submission ", ModuleTimesheetApproval);
+		Log.info("ModuleTimesheetApproval");
+		Thread.sleep(1000);
+		JavascriptExecutor js = (JavascriptExecutor)driver2;
+		js.executeScript("arguments[0].scrollIntoView(true);", ModuleTimesheetApproval);
+//		TimesheetSubmission.click();
+		Utility.safeClick(driver2, js, ModuleTimesheetApproval);
 //	    Thread.sleep(1000);
 	}
 	
@@ -302,7 +322,9 @@ public class TimesheetSubmissionPage extends BaseTest{
 	{
 		Utility.ExplicitWait(Actions);
 		Utility.showCallout("Clicking on Action Button using Script", Actions);
+
 		Log.info("Clicking on Action Button using Script");
+
 		Thread.sleep(2000);
 		Actions.click();
 	    Thread.sleep(2000);
@@ -351,7 +373,9 @@ public class TimesheetSubmissionPage extends BaseTest{
 	{
 		Utility.ExplicitWait(Submit);
 		Utility.showCallout("Clicking on Submit Button using AutomationScript", Submit);
+
 		Log.info("Clicking on Submit Button using AutomationScript");
+
 		Submit.click();
 	    Thread.sleep(2000);
 	}
@@ -361,7 +385,9 @@ public class TimesheetSubmissionPage extends BaseTest{
 	{
 		Utility.ExplicitWait(TimesheetApproval);
 		Utility.showCallout2("Clicking on TimesheetApproval using AutomationScript", TimesheetApproval);
+
 		Log.info("Clicking on TimesheetApproval using AutomationScript");
+
 		TimesheetApproval.click();
 	    Thread.sleep(2000);
 	}
@@ -369,6 +395,13 @@ public class TimesheetSubmissionPage extends BaseTest{
 	{
 		Utility.ExplicitWait(TaskDescription);
 		TaskDescription.sendKeys("Test Description");
+		Thread.sleep(2000);
+	}
+	
+	public void SendComment() throws InterruptedException
+	{
+		Utility.ExplicitWait(Comment);
+		Comment.sendKeys("Test Comment");
 		Thread.sleep(2000);
 	}
 	public String GetTaskAlert() throws InterruptedException

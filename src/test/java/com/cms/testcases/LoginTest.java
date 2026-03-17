@@ -42,36 +42,36 @@ public class LoginTest extends BaseTest {
 	@Test(priority=1)
 	public void ValidateLoginFunctionality() throws InterruptedException, IOException
 	{
- while(true)
- {
-		launchLocalUrl();
-		
-		Thread.sleep(2000);
-		
-		lp.SendUserName();
+		while(true)
+		{
+			launchUrl();
 
-		lp.SendPassword();
+			Thread.sleep(2000);
 
-		lp.ClickonLoginBtn();
-		
-		Thread.sleep(2000);
-		
-		System.out.println("Log4j2 Config Location: " + 
-			    System.getProperty("log4j.configurationFile"));
-			System.out.println("Log File Name: " + 
-			    System.getProperty("logFilename"));
+			lp.SendUserName();
 
-		
-	   String ActualProfileName=lp.GetProfileName();
-	   String ExpectedProfileName ="Welcome, AutomationTesting";
-	   
-	   sf.assertEquals(ActualProfileName, ExpectedProfileName);
-	   
-	   lp.ClickonLogoutBtn();
-	   
-	   sf.assertAll();
-      }
-		
+			lp.SendPassword();
+
+			lp.ClickonLoginBtn();
+
+			Thread.sleep(2000);
+
+//			System.out.println("Log4j2 Config Location: " + 
+//					System.getProperty("log4j.configurationFile"));
+//			System.out.println("Log File Name: " + 
+//					System.getProperty("logFilename"));
+
+
+			String ActualProfileName=lp.GetProfileName();
+			String ExpectedProfileName ="Welcome, AutomationTesting!";
+
+			sf.assertEquals(ActualProfileName, ExpectedProfileName);
+
+			lp.ClickonLogoutBtn();
+
+			sf.assertAll();
+		}
+
 	}
 	//	@AfterMethod
 	public void closeURL()

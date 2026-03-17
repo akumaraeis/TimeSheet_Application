@@ -55,7 +55,7 @@ public class ApplyLeaveTest extends BaseTest {
 		sf = new SoftAssert();
 	}
 
-		@BeforeMethod
+//		@BeforeMethod
 	public void LaunchUrl() throws IOException, InterruptedException
 	{
 		//		Thread.sleep(2000);
@@ -66,7 +66,7 @@ public class ApplyLeaveTest extends BaseTest {
 		@Test(priority=1)
 		public void DeleteTestUserRecord() throws InterruptedException, IOException
 		{
-			RestAssured.baseURI = "http://192.168.1.10:8085";
+			RestAssured.baseURI = "https://timesheet.ndtatlas.com/";
 			Response loginResponse = RestAssured.given()
 					.header("Content-Type", "application/json")
 					.body("{ \"username\": \"AutomationTestUser\", \"password\": \"Test@123\" }")
@@ -82,9 +82,11 @@ public class ApplyLeaveTest extends BaseTest {
 	public void ValidateapplyLeaveFunctionality() throws InterruptedException, IOException
 	{
 
-		Utility.showTooltip("Step 1:->After Launching Timesheet Application, Login as User to apply Leave Request using Automation Script");
-
-		Utility.waitForSeconds(2);
+//		Utility.showTooltip("Step 1:->After Launching Timesheet Application, Login as User to apply Leave Request using Automation Script");
+//
+//		Utility.waitForSeconds(2);
+		
+		launchUrl();
 		
 		lp.SendUserName();
 
@@ -96,39 +98,29 @@ public class ApplyLeaveTest extends BaseTest {
 		
 		Utility.waitForSeconds(2);
 		String ActualProfileName=lp.GetProfileName();
-		String ExpectedProfileName ="Welcome, AutomationTesting";
+		String ExpectedProfileName ="Welcome, AutomationTesting!";
 		Log.info("User Profile successfully Verified in Application");
 		
 		sf.assertEquals(ActualProfileName, ExpectedProfileName);
 		
 		Utility.showTooltip("Step 2:->After Selecting Apply Leave Module , all inputs provided using Automation Script");
 		
+		
 		alp.ClickonApplyLeave();
 		
-		Utility.waitForSeconds(2);
+//		Utility.waitForSeconds(2);
 		
-		alp.ClickonApplyLeaveBtn();
-		
-		Utility.waitForSeconds(2);
-		
-		alp.SelectLeaveType();
-		
-		Utility.waitForSeconds(2);
-		
-		alp.SendComment();
-		
-		alp.ClickonSubmitBtn();
-		
-		Thread.sleep(2000);
-		Utility.showTooltip("Step 3:->After Applying Leave , Validate the Submission using Automation Script");
-		
-		Thread.sleep(3000);
-		WebElement Toaster = driverR.findElement(By.xpath("//*[contains(@class,'Toastify__toast Toastify')]"));
-		String Toaster_Msg = Toaster.getText();
-		System.out.println("Message Received on Submitting Apply Leave:->"+Toaster_Msg);
-		
+//		Utility.showTooltip("Step 3:->After Applying Leave , Validate the Submission using Automation Script");
+//		
+//		Thread.sleep(3000);
+		WebElement Toaster = driverR.findElement(By.xpath("//div[contains(text(),'Leave applied successfully!')]"));
+		Utility.ExplicitWait(Toaster);
+		String ActToaster_Msg = Toaster.getText();
+		String ExpToaster_Msg = "Leave applied successfully!";
+		System.out.println("Message Received on Submitting Apply Leave:->"+ActToaster_Msg);
+		sf.assertEquals(ActToaster_Msg, ExpToaster_Msg);
 		Log.info("Leave Applied Successfully");
-		alp.ClickonUserList();
+//		alp.ClickonUserList();
 		
 		Utility.showTooltip("Step 4:-> Clicking User List using Automation Script");
 		
@@ -142,17 +134,17 @@ public class ApplyLeaveTest extends BaseTest {
 		.header("Authorization", "Token " + token)
 		//		        .body(data)
 		.when()
-		.post("http://192.168.1.10:8085/api/utils/remove-automation-test-data/")
+		.post("https://timesheet.ndtatlas.com/api/utils/remove-automation-test-data/")
 		.then()
 		.statusCode(200)
 		.log().all();
 	}
 
-		@AfterMethod
-	public void closeURL()
-	{
-		driverR.navigate().to("about:blank");
-	}
+//		@AfterMethod
+//	public void closeURL()
+//	{
+//		driverR.navigate().to("about:blank");
+//	}
 
 	@AfterClass
 	public void closebrowser()

@@ -43,7 +43,6 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 	public boolean isTaskSuccessful = false ;
 	public String FinalAlert;
 	boolean keepProcessing = true;
-//	private int index=2;
 	public String clockInTime;
 	public String Timein;
 	public String updatedTimeStr;
@@ -82,10 +81,7 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
                 .extract().response();
          token = loginResponse.jsonPath().getString("data.token");
         System.out.println("🔐 Token fetched: " + token);
-//        Utility.waitForSeconds(2);
         DeleteAutomationTestUserRecords(token);
-//        Utility.waitForSeconds(1);
-
 	}
 
 
@@ -100,6 +96,8 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 		
 		Utility.showTooltip("After Launching Timesheet Application, Login as User and validate login Functionality ");
 
+		
+		Utility.showTooltip("After Launching Timesheet Application, Login as User and validate login Functionality ");
 		
 		Thread.sleep(2000);
 
@@ -269,7 +267,6 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 	}
 	
 
-//	}
 
 
 		public String addHours(String baseTime, int hoursToAdd) {
@@ -312,10 +309,6 @@ public class TimesheetSubmissionScenario1 extends BaseTest {
 		}
 
 		public void DeleteAutomationTestUserRecords(String token) {
-//		    HashMap<String, String> data = new HashMap<>();
-//		    data.put("test_timestamp", timestamp);
-
-//		    System.out.println("→ Sending to " + endpoint + ": " + timestamp);
 
 		    given()
 		        .contentType("application/json")

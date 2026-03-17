@@ -53,6 +53,7 @@ public class AddTaskTestScenario2 extends BaseTest {
 		initBrowser(browser);
 		creatingObject();	
 		//		Utility.showTooltip("Browser is Launched using Selenium Automation Tool");
+		Utility.showTooltip("Executing Automation Script to Validate Add Task Scenario");
 		sf = new SoftAssert();
 	}
 
@@ -60,12 +61,13 @@ public class AddTaskTestScenario2 extends BaseTest {
 	public void LaunchUrl() throws IOException, InterruptedException
 	{
 		//		Thread.sleep(2000);
+		
 		LaunchUrl();
 	}
 	
 	@Test(priority=0)
     public static  String getToken() {
-        RestAssured.baseURI = "http://192.168.1.10:8085";
+        RestAssured.baseURI = "https://timesheet.ndtatlas.com/";
 
         Response response = given()
             .header("Content-Type", "application/json")
@@ -84,137 +86,171 @@ public class AddTaskTestScenario2 extends BaseTest {
         return token;
         
     }
-
-@Test(priority=1)
-public void ValidateClockIn() throws InterruptedException, IOException
-{
-
-       System.out.println("Final Token "+ (getToken()));
-		clockInDate = att.generateRandomDate(); // Generate a date in February
-        clockInTime = "05:00:00";
-//		clockInTime = att.timestamp();
-		Timein = clockInDate+"T"+clockInTime +"Z";
-		System.out.println("Final Time-In given :->"+Timein);
-
-		HashMap data = new HashMap();
-		data.put("test_timestamp", Timein );
-		System.out.println("found accountId detail for delete functions : "+Timein);
-		given()
-		.contentType("application/json")
-		.headers("Authorization",("Token "+getToken()))
-		.body(data)
-
-		.when()
-		.post("http://192.168.1.10:8085/api/attendance-test/clockin/")
-
-		.then()
-		.statusCode(201)
-		.log().all();
-		System.out.println("******Clock-in Functionality Verified************");
-
-		
-	}	
 	
-@Test(priority=2,dependsOnMethods="ValidateClockIn")
-public void ValidateBreakIn() throws InterruptedException, IOException
-{
-
-       System.out.println("Final Token "+ (getToken()));
-//		clockInDate = att.generateRandomDate(); // Generate a date in February
-//		String clockInTime = att.timestamp();
-       DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-       LocalTime originalTime = LocalTime.parse(clockInTime, timeFormatter);
-       LocalTime updatedTime = originalTime.plusHours(1);
-        updatedTimeStr = updatedTime.format(timeFormatter);
-		 Timein  = clockInDate+"T"+updatedTimeStr +"Z";
-		System.out.println("Final Time-In given :->"+updatedTimeStr);
-
-		HashMap data = new HashMap();
-		data.put("test_timestamp", Timein );
-		System.out.println("found accountId detail for delete functions : "+Timein);
-		given()
-		.contentType("application/json")
-		.headers("Authorization",("Token "+getToken()))
-		.body(data)
-
-		.when()
-		.patch("http://192.168.1.10:8085/api/attendance-test/breakin/")
-
-		.then()
-		.statusCode(201)
-		.log().all();
-		System.out.println("******BreakIn Functionality is  Verified************");
-}
-
-@Test(priority=3,dependsOnMethods="ValidateBreakIn")
-public void ValidateBreakOut() throws InterruptedException, IOException
-{
-
-       System.out.println("Final Token "+ (getToken()));
-//		clockInDate = att.generateRandomDate(); // Generate a date in February
-//		String clockInTime = att.timestamp();
-           DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-           LocalTime originalTime = LocalTime.parse(updatedTimeStr, timeFormatter);
-           LocalTime updatedTime2 = originalTime.plusHours(1);
-           String updatedTimeStr = updatedTime2.format(timeFormatter);
-
-		String Timein = clockInDate+"T"+updatedTimeStr +"Z";
-		System.out.println("Final Time-In given :->"+Timein);
-
-		HashMap data = new HashMap();
-		data.put("test_timestamp", Timein );
-		System.out.println("found accountId detail for delete functions : "+Timein);
-		given()
-		.contentType("application/json")
-		.headers("Authorization",("Token "+getToken()))
-		.body(data)
-
-		.when()
-		.patch("http://192.168.1.10:8085/api/attendance-test/breakout/")
-
-		.then()
-		.statusCode(201)
-		.log().all();
-		System.out.println("******BreakOut Functionality is Verified************");
-}
-
-////@Test(priority=4,dependsOnMethods="ValidateBreakOut")
-//public void ValidateClockOut() throws InterruptedException, IOException
-//{
-//
-//       System.out.println("Final Token "+ (getToken()));
-////		clockInDate = att.generateRandomDate(); // Generate a date in February
-////		String clockInTime = att.timestamp();
-//           DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-//           LocalTime originalTime2 = LocalTime.parse(updatedTimeStr, timeFormatter);
-//           LocalTime updatedTime3 = originalTime2.plusHours(8);
-//           String updatedTimeStr = updatedTime3.format(timeFormatter);
-//
-//		String Timein = clockInDate+"T"+updatedTime3 +"Z";
-//		System.out.println("Final Time-In given :->"+Timein);
-//
-//		HashMap data = new HashMap();
-//		data.put("test_timestamp", Timein );
-//		System.out.println("found accountId detail for delete functions : "+Timein);
-//		given()
-//		.contentType("application/json")
-//		.headers("Authorization",("Token "+getToken()))
-//		.body(data)
-//
-//		.when()
-//		.patch("https://tsbackend.ndtatlas.com/api/attendance-test/clockout/")
-//
-//		.then()
-//		.statusCode(201)
-//		.log().all();
-//		System.out.println("******Clock-Out Functionality is Verified************");
-//}
-
-	@Test(priority=5)
-	public void ValidateAddTaskFunctionalityAfterClockOut() throws InterruptedException, IOException, ParseException
+	@Test(priority=1)
+	public void DeleteTestUserRecord() throws InterruptedException, IOException
 	{
 
-		launchLocalUrl();
+        RestAssured.baseURI = "https://timesheet.ndtatlas.com/";
+        Response loginResponse = RestAssured.given()
+                .header("Content-Type", "application/json")
+                .body("{ \"username\": \"AutomationTestUser\", \"password\": \"Test@123\" }")
+                .when().post("/api/auth/login/")
+                .then().statusCode(200)
+                .extract().response();
+        String token = loginResponse.jsonPath().getString("data.token");
+        System.out.println("🔐 Token fetched: " + token);
+//        Utility.waitForSeconds(2);
+        DeleteAutomationTestUserRecords(token);
+//        Utility.waitForSeconds(1);
+//        driverR.navigate().refresh();
+//        Utility.waitForSeconds(1);		        
+		
+	}
+
+
+	@Test(priority=2)
+	public void ValidateClockIn() throws InterruptedException, IOException
+	{
+
+	       System.out.println("Final Token "+ (getToken()));
+			clockInDate = att.generateRandomDate(); // Generate a date in February
+	        clockInTime = "05:00:00";
+//			clockInTime = att.timestamp();
+			Timein = clockInDate+"T"+clockInTime +"Z";
+			System.out.println("Final Time-In given :->"+Timein);
+
+			HashMap data = new HashMap();
+			data.put("action", "CLOCK_IN" );
+			data.put("action_date", clockInDate );
+			data.put("action_time", clockInTime );
+			System.out.println("found accountId detail for delete functions : "+Timein);
+			given()
+			.contentType("application/json")
+			.headers("Authorization",("Token "+getToken()))
+			.body(data)
+
+			.when()
+			.post("https://timesheet.ndtatlas.com/api/clock-entries/action-test/")
+
+			.then()
+			.statusCode(200)
+			.log().all();
+			System.out.println("******Clock-in Functionality Verified************");
+
+			
+		}	
+		
+	@Test(priority=3,dependsOnMethods="ValidateClockIn")
+	public void ValidateBreakIn() throws InterruptedException, IOException
+	{
+
+	       System.out.println("Final Token "+ (getToken()));
+//			clockInDate = att.generateRandomDate(); // Generate a date in February
+//			String clockInTime = att.timestamp();
+	       DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+	       LocalTime originalTime = LocalTime.parse(clockInTime, timeFormatter);
+	       LocalTime updatedTime = originalTime.plusHours(1);
+	        updatedTimeStr = updatedTime.format(timeFormatter);
+			 Timein  = clockInDate+"T"+updatedTimeStr +"Z";
+			System.out.println("Final Time-In given :->"+updatedTimeStr);
+
+			HashMap data = new HashMap();
+			data.put("action", "BREAK_IN" );
+			data.put("action_date", clockInDate );
+			data.put("action_time", updatedTimeStr );
+			System.out.println("found accountId detail for delete functions : "+Timein);
+			given()
+			.contentType("application/json")
+			.headers("Authorization",("Token "+getToken()))
+			.body(data)
+
+			.when()
+			.post("https://timesheet.ndtatlas.com/api/clock-entries/action-test/")
+
+			.then()
+			.statusCode(200)
+			.log().all();
+			System.out.println("******Clock-in Functionality Verified************");
+	}
+
+	@Test(priority=4,dependsOnMethods="ValidateBreakIn")
+	public void ValidateBreakOut() throws InterruptedException, IOException
+	{
+
+	       System.out.println("Final Token "+ (getToken()));
+//			clockInDate = att.generateRandomDate(); // Generate a date in February
+//			String clockInTime = att.timestamp();
+	           DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+	           LocalTime originalTime = LocalTime.parse(updatedTimeStr, timeFormatter);
+	           LocalTime updatedTime2 = originalTime.plusHours(1);
+	           String updatedTimeStr = updatedTime2.format(timeFormatter);
+
+			String Timein = clockInDate+"T"+updatedTimeStr +"Z";
+			System.out.println("Final Time-In given :->"+Timein);
+
+			HashMap data = new HashMap();
+			data.put("action", "BREAK_OUT" );
+			data.put("action_date", clockInDate );
+			data.put("action_time", updatedTimeStr );
+			System.out.println("found accountId detail for delete functions : "+Timein);
+			given()
+			.contentType("application/json")
+			.headers("Authorization",("Token "+getToken()))
+			.body(data)
+
+			.when()
+			.post("https://timesheet.ndtatlas.com/api/clock-entries/action-test/")
+
+			.then()
+			.statusCode(200)
+			.log().all();
+			System.out.println("******Clock-in Functionality Verified************");
+
+	}
+
+	/*
+	@Test(priority=5,dependsOnMethods="ValidateBreakOut")
+	public void ValidateClockOut() throws InterruptedException, IOException
+	{
+
+	       System.out.println("Final Token "+ (getToken()));
+//			clockInDate = att.generateRandomDate(); // Generate a date in February
+//			String clockInTime = att.timestamp();
+	           DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+	           LocalTime originalTime2 = LocalTime.parse(updatedTimeStr, timeFormatter);
+	           LocalTime updatedTime3 = originalTime2.plusHours(8);
+	           String updatedTimeStr = updatedTime3.format(timeFormatter);
+
+			String Timein = clockInDate+"T"+updatedTime3 +"Z";
+			System.out.println("Final Time-In given :->"+Timein);
+
+			HashMap data = new HashMap();
+			data.put("action", "CLOCK_OUT" );
+			data.put("action_date", clockInDate );
+			data.put("action_time", updatedTimeStr );
+			System.out.println("found accountId detail for delete functions : "+Timein);
+			given()
+			.contentType("application/json")
+			.headers("Authorization",("Token "+getToken()))
+			.body(data)
+
+			.when()
+			.post("https://timesheet.ndtatlas.com/api/clock-entries/action-test/")
+
+			.then()
+			.statusCode(200)
+			.log().all();
+			System.out.println("******Clock-in Functionality Verified************");
+
+	}
+	*/
+	@Test(priority=6)
+	public void ValidateAddTaskFunctionalityAfterClockOut() throws InterruptedException, IOException, ParseException
+	{
+		Utility.showTooltip("Step 1 :-> Launching Timesheet Application using Automation Script ");
+
+		launchUrl();
 
 		Thread.sleep(2000);
 
@@ -225,142 +261,111 @@ public void ValidateBreakOut() throws InterruptedException, IOException
 		lp.ClickonLoginBtn();
 
 		String ActualProfileName=lp.GetProfileName();
-		String ExpectedProfileName ="Welcome, AutomationTesting";
+		String ExpectedProfileName ="Welcome, AutomationTesting!";
 
 		sf.assertEquals(ActualProfileName, ExpectedProfileName);
-/*		
+		
+		Utility.showTooltip("User Profile Name Validated using AutomationScript.");
 
-//		atp.ClickonAddNewTimesheet();
+	    String inputDate = clockInDate;
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy");
 
-		while(!isSuccessful)
-		{
+        Date date = inputFormat.parse(inputDate);
+        String formattedDate = outputFormat.format(date);
+        Thread.sleep(2000);
+//	att.SendDateFilter(formattedDate);
+//	Thread.sleep(2000);
+	driverR.findElement(By.xpath("//button[normalize-space()='Clear']")).click();
+        
 
-//			clockInDate = att.generateRandomDate(); // Generate a date in February
-//			String clockOutDate = clockInDate; // Ensure both dates are the same
-//			att.SendClockinDate(clockInDate);
-			 String inputDate = clockInDate;
-		        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-		        SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy");
+	List<WebElement> timesheetRows = driverR.findElements(By.xpath("//*[@class='shadow table table-light table-sm table-striped table-bordered table-hover']//tbody//tr"));
 
-		        Date date = inputFormat.parse(inputDate);
-		        String formattedDate = outputFormat.format(date);
+	
+	boolean entryFound = false;
 
-		        System.out.println("Formatted Date: " + formattedDate);
-		        Thread.sleep(3000);
-			 att.SendClockinDate(formattedDate);
-			 
-			 att.ClickonSearchDate();
+	for (WebElement row : timesheetRows) {
+	    try {
+	        // 1. Get the 3rd column (assuming that's where date lives)
+	        WebElement dateTimeColumn = row.findElement(By.xpath(".//td[3]"));
+	        String rowDateTime = dateTimeColumn.getText().trim();
+	        
+	        System.out.println("Checking row with date: " + rowDateTime);
+
+	        // 2. Match the date
+	        if (rowDateTime.startsWith(formattedDate)) {
+	            System.out.println("✅ Matching Entry Found: " + rowDateTime);
+
+	            // 3. Try to find "ADD TASK" inside this same row
+	            List<WebElement> addTaskButtons = row.findElements(By.xpath(".//*[contains(translate(text(), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 'ADD TASK')]"));
+	            
+	            if (!addTaskButtons.isEmpty()) {
+	                WebElement addTaskButton = addTaskButtons.get(0);
+
+	                Utility.ExplicitWait(addTaskButton);
+	                JavascriptExecutor js = (JavascriptExecutor)driverR;
+	                js.executeScript("arguments[0].scrollIntoView(true);", addTaskButton);
+
+	                Thread.sleep(1000);
+	                addTaskButton.click();
+
+	                System.out.println("🟢 Clicked 'ADD TASK' for date: " + formattedDate);
+	                entryFound = true;
+	                break;
+	            } else {
+	                System.out.println("⚠️ 'ADD TASK' button not found in matched row.");
+	            }
+	        }
+
+	    } catch (NoSuchElementException e) {
+	        System.out.println("❌ Error in row: Element not found - " + e.getMessage());
+	    }
+	}
+
+	if (!entryFound) {
+	    System.out.println("❌ No matching entry found with 'ADD TASK' for date: " + formattedDate);
+	}
+
+//			att.SelectCoreProcess();
+
+			att.SelectSubProcess();
+
+			att.ClickonActivity();
+
+			att.SendTaskDescription();
+
+			att.SendTaskDuration();
+
+			att.ClickonTaskSubmit();
+
+			String ActualSuccessfulMsg = att.GetTaskSuccessfulNotification();
+
+			String ExpectSuccessfulMsg = "Task created successfully!";
+
+			sf.assertEquals(ActualSuccessfulMsg, ExpectSuccessfulMsg);
 			
-//			att.SendClockinTime();
+			Utility.showTooltip("Task created successfully!");
 
-	//		att.SendClockoutDate(clockOutDate);
+			Utility.waitForSeconds(2);
 
-	//		atp.SendClockoutTime();
-			Thread.sleep(2000);
-			atp.SelectClockOutDate(clockInDate);
-			Thread.sleep(2000);
-			atp.SelectBreakDuration();
-			Thread.sleep(2000);
-			atp.ClickonSubmit();
-
-			 FinalAlert = atp.GetTaskAlert();
-			
-			if (FinalAlert.equals("Timesheet created successfully!")) {
-				isSuccessful = true;  // Exit the loop if successful
-			} else {
-				// Optionally, you can add a delay or retry logic here
-				Thread.sleep(1000); // Example: wait for 1 second before retrying
-			}
-		}	
-		
-		String ActMsg = FinalAlert;
-		String ExpMsg ="Timesheet created successfully!";
-		sf.assertEquals(ActMsg, ExpMsg);
-*/
-		    String inputDate = clockInDate;
-	        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-	        SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy");
-
-	        Date date = inputFormat.parse(inputDate);
-	        String formattedDate = outputFormat.format(date);
-
-//		String enteredTimesheetDate = clockInDate ; // Example input date
-//		String formattedDate = att.convertDateFormat(enteredTimesheetDate);
-		
-		att.SendDateFilter(formattedDate);
-		Thread.sleep(2000);
-		
-
-		List<WebElement> timesheetRows = driverR.findElements(By.xpath("//*[@class='shadow table table-light table-sm table-striped table-bordered table-hover']//tbody//tr"));
-
-		
-		boolean entryFound = false;
-
-		for (WebElement row : timesheetRows) {
-		    try {
-		        // 1. Get the 3rd column (assuming that's where date lives)
-		        WebElement dateTimeColumn = row.findElement(By.xpath(".//td[3]"));
-		        String rowDateTime = dateTimeColumn.getText().trim();
-		        
-		        System.out.println("Checking row with date: " + rowDateTime);
-
-		        // 2. Match the date
-		        if (rowDateTime.startsWith(formattedDate)) {
-		            System.out.println("✅ Matching Entry Found: " + rowDateTime);
-
-		            // 3. Try to find "ADD TASK" inside this same row
-		            List<WebElement> addTaskButtons = row.findElements(By.xpath(".//*[contains(translate(text(), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 'ADD TASK')]"));
-		            
-		            if (!addTaskButtons.isEmpty()) {
-		                WebElement addTaskButton = addTaskButtons.get(0);
-
-		                Utility.ExplicitWait(addTaskButton);
-		                JavascriptExecutor js = (JavascriptExecutor)driverR;
-		                js.executeScript("arguments[0].scrollIntoView(true);", addTaskButton);
-
-		                Thread.sleep(1000);
-		                addTaskButton.click();
-
-		                System.out.println("🟢 Clicked 'ADD TASK' for date: " + formattedDate);
-		                entryFound = true;
-		                break;
-		            } else {
-		                System.out.println("⚠️ 'ADD TASK' button not found in matched row.");
-		            }
-		        }
-
-		    } catch (NoSuchElementException e) {
-		        System.out.println("❌ Error in row: Element not found - " + e.getMessage());
-		    }
+			sf.assertAll();
 		}
+		//		att.ClickonAddTask();
 
-		if (!entryFound) {
-		    System.out.println("❌ No matching entry found with 'ADD TASK' for date: " + formattedDate);
-		}
 
-//				att.SelectCoreProcess();
+	public void DeleteAutomationTestUserRecords(String token) {
+	    given()
+	        .contentType("application/json")
+	        .header("Authorization", "Token " + token)
+//	        .body(data)
+	        .when()
+	        .post("https://timesheet.ndtatlas.com/api/utils/remove-automation-test-data/")
+	        .then()
+	        .statusCode(200)
+	        .log().all();
+	}
 
-				att.SelectSubProcess();
 
-				att.ClickonActivity();
-
-				att.SendTaskDescription();
-
-				att.SendTaskDuration();
-
-				att.ClickonTaskSubmit();
-
-				String ActualSuccessfulMsg = att.GetTaskSuccessfulNotification();
-
-				String ExpectSuccessfulMsg = "Task created successfully!";
-
-				sf.assertEquals(ActualSuccessfulMsg, ExpectSuccessfulMsg);
-
-				Thread.sleep(2000);
-
-				sf.assertAll();
-			}
-		
 		//		att.ClickonAddTask();
 
 /*	@Test(priority=6,dependsOnMethods="ValidateBreakOut")

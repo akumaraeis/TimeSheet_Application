@@ -54,14 +54,14 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 	//	@BeforeMethod
 	public void LaunchUrl() throws IOException, InterruptedException
 	{
-		//		Thread.sleep(2000);
+
 		LaunchUrl();
 	}
 
 	@Test(priority=0)
 	public static  String getToken() {
-		RestAssured.baseURI = "http://192.168.1.10:8085";
 
+		RestAssured.baseURI = "https://tsbackend.ndtatlas.com";
 		Response response = given()
 				.header("Content-Type", "application/json")
 				.body("{ \"username\": \"AutomationTestUser\", \"password\": \"Test@123\" }")
@@ -71,19 +71,18 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 				.statusCode(200)
 				.extract().response();
 
-		// Extract token from response
 		JsonPath jsonPath = response.jsonPath();
 		String token = response.jsonPath().getString("data.token");  // Change key if API returns it with a different name
-
 		System.out.println("Token: " + token);
 		return token;
-
 	}
+
 	@Test(priority=1)
 	public void DeleteTestUserRecord() throws InterruptedException, IOException
 	{
 
 		RestAssured.baseURI = "http://192.168.1.10:8085";
+
 		Response loginResponse = RestAssured.given()
 				.header("Content-Type", "application/json")
 				.body("{ \"username\": \"AutomationTestUser\", \"password\": \"Test@123\" }")
@@ -96,13 +95,13 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 
 	}
 
-	@Test(priority=1)
+	@Test(priority=2)
 	public void ValidateClockIn() throws InterruptedException, IOException
 	{
 
 		System.out.println("Final Token "+ (getToken()));
 		clockInDate = att.generateRandomDate(); // Generate a date in February
-		//		clockInTime = att.timestamp();
+
 		clockInTime = "05:00:00";
 		Timein = clockInDate+"T"+clockInTime +"Z";
 		System.out.println("Final Time-In given :->"+Timein);
@@ -116,13 +115,15 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 		.body(data)
 
 		.when()
-		.post("http://192.168.1.10:8085/api/attendance-test/clockin/")
 
+		.post("https://tsbackend.ndtatlas.com/api/attendance-test/clockin/")
 		.then()
 		.statusCode(201)
 		.log().all();
 		System.out.println("******Clock-in Functionality Verified************");
 	}	
+
+
 
 	@Test(priority=2,dependsOnMethods="ValidateClockIn")
 	public void ValidateBreakIn() throws InterruptedException, IOException
@@ -146,7 +147,6 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 
 		.when()
 		.patch("http://192.168.1.10:8085/api/attendance-test/breakin/")
-
 		.then()
 		.statusCode(201)
 		.log().all();
@@ -173,10 +173,8 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 		.contentType("application/json")
 		.headers("Authorization",("Token "+getToken()))
 		.body(data)
-
 		.when()
-		.patch("http://192.168.1.10:8085/api/attendance-test/breakout/")
-
+		.patch("https://tsbackend.ndtatlas.com/api/attendance-test/breakout/")
 		.then()
 		.statusCode(201)
 		.log().all();
@@ -205,7 +203,9 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 		.body(data)
 
 		.when()
-		.patch("http://192.168.1.10:8085/api/attendance-test/clockout/")
+
+		.patch("https://tsbackend.ndtatlas.com/api/attendance-test/clockout/")
+
 
 		.then()
 		.statusCode(201)
@@ -216,6 +216,11 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 	@Test(priority =5 ,dependsOnMethods="ValidateClockIn")
 	public void ValidateAddedTimesheetEntry() throws InterruptedException, IOException, ParseException
 	{
+
+
+		launchUrl();
+
+
         Utility.showTooltip("Now Launching Timesheet Application to validate on UI for Clock-in/Out & Break-in/Out logged using API ");
         sf = new SoftAssert();
 		launchLocalUrl();
@@ -281,6 +286,9 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 	}
 
 
+
+
+
 	public void DeleteAutomationTestUserRecords(String token) {
    		given()
 		.contentType("application/json")
@@ -288,6 +296,7 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 		//        .body(data)
 		.when()
 		.post("http://192.168.1.10:8085/api/utils/remove-automation-test-data/")
+
 		.then()
 		.statusCode(200)
 		.log().all();
@@ -304,6 +313,7 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 	{
 		teardown();
 	}
+
 
 }
 

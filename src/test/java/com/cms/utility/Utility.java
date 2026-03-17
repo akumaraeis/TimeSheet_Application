@@ -53,43 +53,32 @@ public class Utility extends BaseTest {
 	    }
 	
 
-	
-//	  public static String captureScreenshot(String methodName, String status) throws IOException {
-//	        TakesScreenshot ts = (TakesScreenshot) Base.driverR; // or pass WebDriver as parameter
-//	        File src = ts.getScreenshotAs(OutputType.FILE);
-//
-//	        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-//	        String screenshotDir = System.getProperty("user.dir") + "/Screenshots/" + status + "/";
-//	        new File(screenshotDir).mkdirs(); // Create directory if it doesn't exist
-//
-//	        String filePath = screenshotDir + methodName + "_" + timestamp + ".png";
-//	        File dest = new File(filePath);
-//	        FileUtils.copyFile(src, dest);
-//	        return filePath;
-//	    }
-//	
-    public static String getToken() {
-       String token ="Bearer "+"Z4uzBKvHpTJlh5QCf9SDzQyHJoKQJpb6";
-//         String token ="Bearer "+"07DphO7pAhaC7jcUkQBsiVaK4aZv8h3f";
+ public static String getToken() {
+    String token ="Bearer "+"Z4uzBKvHpTJlh5QCf9SDzQyHJoKQJpb6";
+//      String token ="Bearer "+"07DphO7pAhaC7jcUkQBsiVaK4aZv8h3f";
 		return token ;
-    }
+
+ }
+ 
+ 
+ // Method to wait for visibility of WebElement
+ public static WebElement ExplicitWait(WebElement element) {
+ 	WebDriverWait wait = new WebDriverWait(driverR,Duration.ofSeconds(300));
+     return wait.until(ExpectedConditions.visibilityOf(element));
+ }
+ 
+ public static WebElement ExplicitClickWait(WebElement element) {
+ 	WebDriverWait wait = new WebDriverWait(driverR,Duration.ofSeconds(300));
+     return wait.until(ExpectedConditions.elementToBeClickable(element));
+ }
+ 
+ public static void switchToTab(int index) {
+     ArrayList<String> tabs = new ArrayList<>(driverR.getWindowHandles());
+     driverR.switchTo().window(tabs.get(index));
+ }
+
     
-    
-    // Method to wait for visibility of WebElement
-    public static WebElement ExplicitWait(WebElement element) {
-    	WebDriverWait wait = new WebDriverWait(driverR,Duration.ofSeconds(300));
-        return wait.until(ExpectedConditions.visibilityOf(element));
-    }
-    
-    public static WebElement ExplicitClickWait(WebElement element) {
-    	WebDriverWait wait = new WebDriverWait(driverR,Duration.ofSeconds(300));
-        return wait.until(ExpectedConditions.elementToBeClickable(element));
-    }
-    
-    public static void switchToTab(int index) {
-        ArrayList<String> tabs = new ArrayList<>(driverR.getWindowHandles());
-        driverR.switchTo().window(tabs.get(index));
-    }
+
 
 	 public static void showTooltip(String message) {
 		 String script = "var tooltip = document.createElement('div');" +
@@ -108,8 +97,9 @@ public class Utility extends BaseTest {
 				    "tooltip.style.transform = 'translateX(-50%)';" +
 				    "tooltip.style.fontFamily = 'Arial, sans-serif';" +
 				    "document.body.appendChild(tooltip);" +
-				    "setTimeout(function() { document.body.removeChild(tooltip); }, 2000);";
-	        ((JavascriptExecutor) driverR).executeScript(script);
+
+				    "setTimeout(function() { document.body.removeChild(tooltip); }, 10000);";
+        	        ((JavascriptExecutor) driverR).executeScript(script);
 	    }
 	 
 	 public static void showTooltipWithElementPoint(String message ,WebElement element) {
@@ -203,7 +193,11 @@ public class Utility extends BaseTest {
 		     "callout.innerHTML = '" + message + "';" +
 		     "callout.style.position = 'absolute';" +
 		     "callout.style.left = '" + calloutX + "px';" +
+
+		     "callout.style.top = '" +  calloutY + "px';" +
+
 		     "callout.style.top = '" + calloutY + "px';" +
+
 		     "callout.style.padding = '12px 20px';" +
 		     "callout.style.backgroundColor = 'green';" + 
 		     "callout.style.color = 'white';" + 
@@ -228,8 +222,8 @@ public class Utility extends BaseTest {
 		     "callout.appendChild(arrow);" +
 
 		     "document.body.appendChild(callout);" +
-		     "setTimeout(function() { document.body.removeChild(callout); }, 1000);"; // 5 sec
 
+		     "setTimeout(function() { document.body.removeChild(callout); }, 1000);"; // 1 sec
 		 ((JavascriptExecutor) driverR).executeScript(script2);
 	    }
 	
@@ -260,25 +254,25 @@ public class Utility extends BaseTest {
 		}
 
 public static WebElement ExpectTimesheetSuccesful(WebDriver driver, By locator, int timeoutSeconds) {
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
-    return wait.until(ExpectedConditions.elementToBeClickable(locator));
+ WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+ return wait.until(ExpectedConditions.elementToBeClickable(locator));
 }
 
 public static WebElement waitForElementToBeClickable(WebDriver driver, By locator, int timeoutSeconds) {
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
-    return wait.until(ExpectedConditions.elementToBeClickable(locator));
+ WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+ return wait.until(ExpectedConditions.elementToBeClickable(locator));
 }
 
 public static void scrollIntoView(WebDriver driver, JavascriptExecutor js, WebElement element) {
-    js.executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});", element);
+ js.executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});", element);
 }
 
 public static void waitForSeconds(double seconds) {
-    try {
-        Thread.sleep((long) (seconds * 1000));
-    } catch (InterruptedException e) {
-        Thread.currentThread().interrupt();
-    }
+ try {
+     Thread.sleep((long) (seconds * 1000));
+ } catch (InterruptedException e) {
+     Thread.currentThread().interrupt();
+ }
 }
 
 public static void highlightElement(WebElement Element)
@@ -289,5 +283,6 @@ public static void highlightElement(WebElement Element)
 }
 
 }
+
 
 
