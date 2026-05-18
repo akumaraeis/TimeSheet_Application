@@ -7,9 +7,11 @@ import java.io.IOException;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -88,113 +90,109 @@ public class RegularizationTest extends BaseTest {
 		System.out.println("🔐 Token fetched: " + token);
 		DeleteAutomationTestUserRecords(token);
 	}
-
 	@Test(priority=2)
-	public void ValidateRegularizationFunctionality() throws InterruptedException, IOException
+	public void ValidateTimesheetSubmissionFunctionality() throws InterruptedException, IOException
 	{
-
 		sf = new SoftAssert();
-		Utility.showTooltip("Executing Automation Script to Validate Regularization Send by User.");
-		
+		Utility.showTooltip("Executing Automation Script to Check Timesheet Submission by User and Approval Functionality by Line Manager.");
+
+		Utility.waitForSeconds(5);
+
 		launchUrl();
-		
+		Log.info("Url is launched");
+
+		Utility.showTooltip("Step 1:->After Launching Timesheet Application, Login as User to submit Weekly Timesheet using Automation Script");
+
 		Utility.waitForSeconds(2);
-		
+
 		lp.SendUserName();
-        Log.info("Input User Name");
-        
+		Log.info("input user name");
+
 		lp.SendPassword();
-		Log.info("Input User Password");
-		
+		Log.info("input user Password");
+
 		lp.ClickonLoginBtn();
-		Log.info("login submitted with  user credential ");
-		
-		Utility.waitForSeconds(2);
-		Utility.showTooltip("User Login Successfully");
+		Log.info("Click on Login Button");
 
-		
-	   String ActualProfileName=lp.GetProfileName();
-	   String ExpectedProfileName ="Welcome, AutomationTesting!";
-	   
-	   sf.assertEquals(ActualProfileName, ExpectedProfileName);
+		tsp.ClickonTimesheetSubmission();
 
-	   
-//       trp.ClickonRegularizationsBtn();
+		LocalDate today = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//		LocalDate currentweekMonday = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+//		LocalDate previousMonday = currentweekMonday.minusWeeks(1);
+//		LocalDate previousFriday = previousMonday.plusDays(4);
+//
+//		String formattedMonday = previousMonday.format(formatter);
+//		System.out.println("Loop start formatted Monday :->"+formattedMonday);
+//		String formattedFriday = previousFriday.format(formatter);
+//		System.out.println("Loop end formatted friday :->"+formattedFriday);
+		String baseTime = "11:45:00";
+//		LocalDate date = previousMonday; 
 
-	   Log.info("Profile Name is verified.");
-	   
-       trp.ClickonRegularizationsBtn();
-       Log.info("User Navigate to Regularization page.");
-       trp.ActionOnRegularizationBtn();   
-	   trp.SendRegularizationReason();
-	   trp.SendClockIn();
-	   trp.SendBreakIn();
-	   trp.SendBreakBreakOut();
-	   trp.SendClockOut();
-	   trp.ClickonSubmitBtn();
-	   
-	   String ActualMsg = trp.GetSuccessfulMsg();
-	   String ExpectMsg ="Regularization updated successfully!";
-	   sf.assertEquals(ActualMsg, ExpectMsg);
+			String date2 = today.format(formatter);
+			System.out.println("Date Stamp entry for timestamp for send Attendance Method "+date2);
+			System.out.println("🗓️ Submitting entries for:->" + date2);
+			sendAttendanceData(token,"CLOCK_IN", date2, baseTime);
+			sendAttendanceData(token,"BREAK_IN", date2,addHours(baseTime, 1));
+			sendAttendanceData(token,"BREAK_OUT", date2,addHours(baseTime, 2));
+			sendAttendanceData(token,"CLOCK_OUT", date2,addHours(baseTime, 4));
+			Utility.waitForSeconds(2);
+			Log.info("Timesheet entry Created Successfully for date :->"+date2);
+			
+		       trp.ClickonRegularizationsBtn();
+		       Log.info("User Navigate to Regularization page.");
+		       trp.ActionOnRegularizationBtn();   
+			   trp.SendRegularizationReason();
+			   trp.SendClockIn();
+			   trp.SendBreakIn();
+			   trp.SendBreakBreakOut();
+			   trp.SendClockOut();
+			   trp.ClickonSubmitBtn();
+		}
+	
+		public String addHours(String baseTime, int hoursToAdd) {
 
-	   Log.info("Regularization Request Sent successfully by User.");
-	   Utility.showTooltip("Regularization Request Sent successfully by User.");
-	   
-/*
-       List<WebElement> table = driverR.findElements(By.xpath("//table[@class=\"shadow table table-light table-sm table-bordered table-hover\"]//tbody//tr"));
-       int tablesize = table.size();
-       
-       for(int i=2 ;i<=tablesize ;i++)
-       {
-           String ActionStatusText = driverR.findElement(By.xpath("(//table[@class=\"shadow table table-light table-sm table-bordered table-hover\"]//tbody//tr)["+i+"]//td[14]//button")).getText();
-           boolean ActionButtonStatus = driverR.findElement(By.xpath("(//table[@class=\"shadow table table-light table-sm table-bordered table-hover\"]//tbody//tr)["+i+"]//td[14]//button")).isEnabled();
-           System.out.println("status Text found on Action Button :->"+ActionStatusText);
-           System.out.println("Boolean Status found on Action Button :->"+ActionButtonStatus);
-           String RegularizeDate = driverR.findElement(By.xpath("(//table[@class=\"shadow table table-light table-sm table-bordered table-hover\"]//tbody//tr)["+i+"]//td[2]")).getText();
-           System.out.println("Selected Regularize Date :->"+RegularizeDate);
+			DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+			LocalTime time = LocalTime.parse(baseTime, timeFormatter);
+			return time.plusHours(hoursToAdd).format(timeFormatter);
+		}
 
-           Utility.showTooltip("New Regularization Request details Submitted using AutomationScript.");
+		public void sendAttendanceData(String token,String action, String timestamp, String time) {
+			HashMap<String, String> data = new HashMap<>();
+			data.put("action", action);
+			data.put("action_date", timestamp);
+			data.put("action_time", time);
 
-           if((ActionStatusText.equalsIgnoreCase("Regularize"))&& (ActionButtonStatus == true) )      	   
-           {
-        	   WebElement ActionButton = driverR.findElement(By.xpath("(//table[@class=\"shadow table table-light table-sm table-bordered table-hover\"]//tbody//tr)["+i+"]//td[14]//button"));
-        	   js =(JavascriptExecutor)driverR;
-        	   Utility.safeClick(driverR, js, ActionButton);
-        	   Thread.sleep(2000);
-        	   trp.SendRegularizationReason();
-        	   trp.SendClockIn();
-        	   trp.SendBreakIn();
-        	   trp.SendBreakBreakOut();
-        	   trp.SendClockOut();
-        	   trp.ClickonSubmitBtn();
-        	   
-        	   String ActualMsg = trp.GetSuccessfulMsg();
-        	   String ExpectMsg ="Regularization updated successfully!";
-        	   sf.assertEquals(ActualMsg, ExpectMsg);
+			System.out.println("→ Sending to " + ": " + timestamp);
 
-        	   Log.info("Regularization Request Sent successfully by User.");
-        	   Utility.showTooltip("Regularization Request Sent successfully by User.");
-        	   
+			given()
+			.contentType("application/json")
+			.header("Authorization", "Token " + token)
+			.body(data)
+			.when()
+			.post("https://timesheet.ndtatlas.com/api/clock-entries/action-test/")
+			.then()
+			.statusCode(200)
+			.log().all();
+		}
+		public void sendAttendanceData2(String token,String action, String timestamp, String time) {
+			HashMap<String, String> data = new HashMap<>();
+			data.put("action", action);
+			data.put("action_date", timestamp);
+			data.put("action_time", time);
 
-        	    if(ActualMsg.equalsIgnoreCase("Regularization updated successfully!"))
-        	    {
-        	    	System.out.println("Loop Breaks");
-        	    	break;
-        	    }
-        	    else
-        	    {
-        	    	System.out.println("Otherwise Loop Continues");
-        	    }
-           }
-           else
-           {
-        	 System.out.println("Either Regularize or Action Button is not enabled");  
-           }
-           
-           }
-           */
-    	   sf.assertAll();
-       }
+			System.out.println("→ Sending to " + ": " + timestamp);
+
+			given()
+			.contentType("application/json")
+			.header("Authorization", "Token " + token)
+			.body(data)
+			.when()
+			.post("https://timesheet.ndtatlas.com/api/clock-entries/action/")
+			.then()
+			.statusCode(200)
+			.log().all();
+		}
 
 	public void DeleteAutomationTestUserRecords(String token) {
 		given()
@@ -208,10 +206,6 @@ public class RegularizationTest extends BaseTest {
 		.log().all();
 	}
 
-
-	   
-	   
-		
 	
 	//	@AfterMethod
 	public void closeURL()

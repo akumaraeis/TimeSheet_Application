@@ -258,99 +258,36 @@ public class AddTaskTest extends BaseTest {
 
 		lp.ClickonLoginBtn();
 
-		String ActualProfileName=lp.GetProfileName();
-		String ExpectedProfileName ="Welcome, AutomationTesting!";
+		att.ClickonMyTimesheet();
 
-		sf.assertEquals(ActualProfileName, ExpectedProfileName);
-		
-		Utility.showTooltip("User Profile Name Validated using AutomationScript.");
+		att.ClickonResetBtn();
 
-	    String inputDate = clockInDate;
-        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy");
+		Utility.waitForSeconds(2);
 
-        Date date = inputFormat.parse(inputDate);
-        String formattedDate = outputFormat.format(date);
-        Thread.sleep(2000);
-//	att.SendDateFilter(formattedDate);
-//	Thread.sleep(2000);
-	driverR.findElement(By.xpath("//button[normalize-space()='Clear']")).click();
-        
+		att.ClickonAddTask();
 
-	List<WebElement> timesheetRows = driverR.findElements(By.xpath("//*[@class='shadow table table-light table-sm table-striped table-bordered table-hover']//tbody//tr"));
+		att.SelectSubProcess();
 
-	
-	boolean entryFound = false;
+		att.ClickonActivity();
 
-	for (WebElement row : timesheetRows) {
-	    try {
-	        // 1. Get the 3rd column (assuming that's where date lives)
-	        WebElement dateTimeColumn = row.findElement(By.xpath(".//td[3]"));
-	        String rowDateTime = dateTimeColumn.getText().trim();
-	        
-	        System.out.println("Checking row with date: " + rowDateTime);
+		att.SendTaskDescription();
 
-	        // 2. Match the date
-	        if (rowDateTime.startsWith(formattedDate)) {
-	            System.out.println("✅ Matching Entry Found: " + rowDateTime);
+		att.SendTaskDuration();
 
-	            // 3. Try to find "ADD TASK" inside this same row
-	            List<WebElement> addTaskButtons = row.findElements(By.xpath(".//*[contains(translate(text(), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 'ADD TASK')]"));
-	            
-	            if (!addTaskButtons.isEmpty()) {
-	                WebElement addTaskButton = addTaskButtons.get(0);
+		att.ClickonTaskSubmit();
 
-	                Utility.ExplicitWait(addTaskButton);
-	                JavascriptExecutor js = (JavascriptExecutor)driverR;
-	                js.executeScript("arguments[0].scrollIntoView(true);", addTaskButton);
+		String ActualSuccessfulMsg = att.GetTaskSuccessfulNotification();
 
-	                Thread.sleep(1000);
-	                addTaskButton.click();
+		String ExpectSuccessfulMsg = "Task created successfully!";
 
-	                System.out.println("🟢 Clicked 'ADD TASK' for date: " + formattedDate);
-	                entryFound = true;
-	                break;
-	            } else {
-	                System.out.println("⚠️ 'ADD TASK' button not found in matched row.");
-	            }
-	        }
+		sf.assertEquals(ActualSuccessfulMsg, ExpectSuccessfulMsg);
 
-	    } catch (NoSuchElementException e) {
-	        System.out.println("❌ Error in row: Element not found - " + e.getMessage());
-	    }
+		Utility.showTooltip("Task created successfully!");
+
+		Utility.waitForSeconds(2);
+
+		sf.assertAll();
 	}
-
-	if (!entryFound) {
-	    System.out.println("❌ No matching entry found with 'ADD TASK' for date: " + formattedDate);
-	}
-
-//			att.SelectCoreProcess();
-
-			att.SelectSubProcess();
-
-			att.ClickonActivity();
-
-			att.SendTaskDescription();
-
-			att.SendTaskDuration();
-
-			att.ClickonTaskSubmit();
-
-			String ActualSuccessfulMsg = att.GetTaskSuccessfulNotification();
-
-			String ExpectSuccessfulMsg = "Task created successfully!";
-
-			sf.assertEquals(ActualSuccessfulMsg, ExpectSuccessfulMsg);
-			
-			Utility.showTooltip("Task created successfully!");
-
-			Utility.waitForSeconds(2);
-
-			sf.assertAll();
-		}
-		//		att.ClickonAddTask();
-
-
 	public void DeleteAutomationTestUserRecords(String token) {
 	    given()
 	        .contentType("application/json")

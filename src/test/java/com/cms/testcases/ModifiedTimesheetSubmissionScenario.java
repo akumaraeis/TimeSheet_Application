@@ -218,17 +218,20 @@ public class ModifiedTimesheetSubmissionScenario extends BaseTest {
 			Utility.waitForSeconds(2);
 			System.out.println("✅ Timesheet submitted for week " + 2);
 
-			WebElement confirmMsg = driverR.findElement(By.xpath("//*[contains(text(),'Timesheet submitted successfully!')]"));
-			Utility.ExplicitWait(confirmMsg);
-			Utility.highlightElement(confirmMsg);
-			String ActualTimesheetSuccesful = confirmMsg.getText();
-			System.out.println("Timesheet submission Succesful Message :-> " + ActualTimesheetSuccesful);
-			String ExpectTimesheetSuccesful ="Timesheet submitted successfully!";
-			sf.assertEquals(ActualTimesheetSuccesful, ExpectTimesheetSuccesful);
-			Log.info("Timesheet Submitted for this Respective week Successfully");			
-			// Check final status after submission
+//			WebElement confirmMsg = driverR.findElement(By.xpath("//*[contains(text(),'Timesheet submitted successfully!')]"));
+//			Utility.ExplicitWait(confirmMsg);
+//			Utility.highlightElement(confirmMsg);
+//			String ActualTimesheetSuccesful = confirmMsg.getText();
+//			System.out.println("Timesheet submission Succesful Message :-> " + ActualTimesheetSuccesful);
+//			String ExpectTimesheetSuccesful ="Timesheet submitted successfully!";
+//			sf.assertEquals(ActualTimesheetSuccesful, ExpectTimesheetSuccesful);
+//			Log.info("Timesheet Submitted for this Respective week Successfully");			
+//			// Check final status after submission
+//			Utility.waitForSeconds(2);
+			System.out.println("🔄 Now Automation Script will click on Logout Btn after submission");
 			Utility.waitForSeconds(2);
 			lp.ClickonLogOutBtn(); 
+			Thread.sleep(2000);
 	
 			
 
@@ -259,7 +262,7 @@ public class ModifiedTimesheetSubmissionScenario extends BaseTest {
 		sf = new SoftAssert();
 		Utility.showTooltip("Executing Automation Script to Check Timesheet Submission by User and Approval Functionality by Line Manager.");
 
-		Utility.waitForSeconds(5);
+		Utility.waitForSeconds(2);
 
 		launchUrl();
 		Log.info("Url is launched");

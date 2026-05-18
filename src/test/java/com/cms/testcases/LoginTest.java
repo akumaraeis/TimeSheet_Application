@@ -32,47 +32,31 @@ public class LoginTest extends BaseTest {
 		sf = new SoftAssert();
 	}
 
-	//	@BeforeMethod
-	public void LaunchUrl() throws IOException, InterruptedException
-	{
-		//		Thread.sleep(2000);
-		LaunchUrl();
-	}
-
 	@Test(priority=1)
 	public void ValidateLoginFunctionality() throws InterruptedException, IOException
 	{
-		while(true)
-		{
-			launchUrl();
+		launchUrl();
 
-			Thread.sleep(2000);
+		Thread.sleep(2000);
 
-			lp.SendUserName();
+		lp.SendUserName();
 
-			lp.SendPassword();
+		lp.SendPassword();
 
-			lp.ClickonLoginBtn();
+		lp.ClickonLoginBtn();
 
-			Thread.sleep(2000);
+		Thread.sleep(2000);
 
-//			System.out.println("Log4j2 Config Location: " + 
-//					System.getProperty("log4j.configurationFile"));
-//			System.out.println("Log File Name: " + 
-//					System.getProperty("logFilename"));
+		String ActualProfileName=lp.GetProfileName();
+		String ExpectedProfileName ="Welcome, AutomationTesting!";
 
+		sf.assertEquals(ActualProfileName, ExpectedProfileName);
 
-			String ActualProfileName=lp.GetProfileName();
-			String ExpectedProfileName ="Welcome, AutomationTesting!";
+		lp.ClickonLogoutBtn();
 
-			sf.assertEquals(ActualProfileName, ExpectedProfileName);
-
-			lp.ClickonLogoutBtn();
-
-			sf.assertAll();
-		}
-
+		sf.assertAll();
 	}
+
 	//	@AfterMethod
 	public void closeURL()
 	{

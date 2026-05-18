@@ -57,9 +57,9 @@ function toggleAllBoxes() {
 <tr>
 <td>Tests passed/Failed/Skipped:</td><td>0/1/0</td>
 </tr><tr>
-<td>Started on:</td><td>Fri Jan 23 18:21:53 IST 2026</td>
+<td>Started on:</td><td>Fri Mar 20 11:36:15 IST 2026</td>
 </tr>
-<tr><td>Total time:</td><td>524 seconds (524292 ms)</td>
+<tr><td>Total time:</td><td>3121 seconds (3121467 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -80,7 +80,7 @@ function toggleAllBoxes() {
 	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
 	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:230)
 	at com.cms.utility.Utility.ExplicitWait(Utility.java:67)
-	at com.cms.pageObjects.LoginPage.GetProfileName(LoginPage.java:207)
+	at com.cms.pageObjects.LoginPage.GetProfileName(LoginPage.java:241)
 	at com.cms.testcases.LoginTest.ValidateLoginFunctionality(LoginTest.java:65)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
 Caused by: org.openqa.selenium.NoSuchElementException: Unable to locate element: //span[@class=&apos;fw-bold&apos;]
@@ -88,9 +88,9 @@ For documentation on this error, please visit: https://www.selenium.dev/document
 Build info: version: &apos;4.11.0&apos;, revision: &apos;040bc5406b&apos;
 System info: os.name: &apos;Windows 11&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;21.0.2&apos;
 Driver info: org.openqa.selenium.firefox.FirefoxDriver
-Command: [08a5b7e9-ad05-4305-9cff-1177b37f4343, findElement {using=xpath, value=//span[@class=&apos;fw-bold&apos;]}]
-Capabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 144.0.2, moz:accessibilityChecks: false, moz:buildID: 20251027123126, moz:geckodriverVersion: 0.36.0, moz:headless: false, moz:platformVersion: 10.0, moz:processID: 30208, moz:profile: C:\Users\ATLAS-~1\AppData\L..., moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, userAgent: Mozilla/5.0 (Windows NT 10....}
-Session ID: 08a5b7e9-ad05-4305-9cff-1177b37f4343
+Command: [bc2d9078-52cd-44f3-b5e0-e9aedd7df6a4, findElement {using=xpath, value=//span[@class=&apos;fw-bold&apos;]}]
+Capabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 148.0.2, moz:accessibilityChecks: false, moz:buildID: 20260309125808, moz:geckodriverVersion: 0.36.0, moz:headless: false, moz:platformVersion: 10.0, moz:processID: 45360, moz:profile: C:\Users\ATLAS-~1\AppData\L..., moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, userAgent: Mozilla/5.0 (Windows NT 10....}
+Session ID: bc2d9078-52cd-44f3-b5e0-e9aedd7df6a4
 	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:200)
 	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:133)
 	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:52)
@@ -111,12 +111,12 @@ Session ID: 08a5b7e9-ad05-4305-9cff-1177b37f4343
 	at org.openqa.selenium.support.ui.ExpectedConditions$10.apply(ExpectedConditions.java:287)
 	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:205)
 	... 29 more
-... Removed 28 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1167627805", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace1167627805'><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of Proxy element for: DefaultElementLocator &apos;By.xpath: //span[@class=&apos;fw-bold&apos;]&apos; (tried for 300 second(s) with 500 milliseconds interval)
+... Removed 28 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1615304881", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1615304881'><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of Proxy element for: DefaultElementLocator &apos;By.xpath: //span[@class=&apos;fw-bold&apos;]&apos; (tried for 300 second(s) with 500 milliseconds interval)
 	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
 	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:230)
 	at com.cms.utility.Utility.ExplicitWait(Utility.java:67)
-	at com.cms.pageObjects.LoginPage.GetProfileName(LoginPage.java:207)
+	at com.cms.pageObjects.LoginPage.GetProfileName(LoginPage.java:241)
 	at com.cms.testcases.LoginTest.ValidateLoginFunctionality(LoginTest.java:65)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
@@ -149,9 +149,9 @@ For documentation on this error, please visit: https://www.selenium.dev/document
 Build info: version: &apos;4.11.0&apos;, revision: &apos;040bc5406b&apos;
 System info: os.name: &apos;Windows 11&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;21.0.2&apos;
 Driver info: org.openqa.selenium.firefox.FirefoxDriver
-Command: [08a5b7e9-ad05-4305-9cff-1177b37f4343, findElement {using=xpath, value=//span[@class=&apos;fw-bold&apos;]}]
-Capabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 144.0.2, moz:accessibilityChecks: false, moz:buildID: 20251027123126, moz:geckodriverVersion: 0.36.0, moz:headless: false, moz:platformVersion: 10.0, moz:processID: 30208, moz:profile: C:\Users\ATLAS-~1\AppData\L..., moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, userAgent: Mozilla/5.0 (Windows NT 10....}
-Session ID: 08a5b7e9-ad05-4305-9cff-1177b37f4343
+Command: [bc2d9078-52cd-44f3-b5e0-e9aedd7df6a4, findElement {using=xpath, value=//span[@class=&apos;fw-bold&apos;]}]
+Capabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 148.0.2, moz:accessibilityChecks: false, moz:buildID: 20260309125808, moz:geckodriverVersion: 0.36.0, moz:headless: false, moz:platformVersion: 10.0, moz:processID: 45360, moz:profile: C:\Users\ATLAS-~1\AppData\L..., moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, userAgent: Mozilla/5.0 (Windows NT 10....}
+Session ID: bc2d9078-52cd-44f3-b5e0-e9aedd7df6a4
 	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
 	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
 	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
@@ -176,8 +176,8 @@ Session ID: 08a5b7e9-ad05-4305-9cff-1177b37f4343
 	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:205)
 	... 29 more
 </pre></div></td>
-<td>501</td>
-<td>com.cms.testcases.LoginTest@fa4c865</td></tr>
+<td>3084</td>
+<td>com.cms.testcases.LoginTest@8297b3a</td></tr>
 </table><p>
 </body>
 </html>

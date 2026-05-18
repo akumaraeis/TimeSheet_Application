@@ -43,6 +43,7 @@ import com.cms.pageObjects.Gross_TaskHourValidationPage;
 import com.cms.pageObjects.InValid_TimesheetEntryValidationPage;
 import com.cms.pageObjects.LoginPage;
 import com.cms.pageObjects.MultipleClockInScenarioPage;
+import com.cms.pageObjects.MyTicketPage;
 import com.cms.pageObjects.PreviousEntryClockOutScenarioPage;
 import com.cms.pageObjects.RegularizationPage;
 import com.cms.pageObjects.TimeOverlappingScenarioPage;
@@ -76,7 +77,7 @@ public class BaseTest{
 	public static DashboardPage tdp;
 
 	public static RegularizationPage trp;
-
+	public static MyTicketPage mtp;
 
 	public static ChangePasswordPage tcp;
 
@@ -136,8 +137,7 @@ public class BaseTest{
 		driverR.manage().window().maximize();
 //		driverR.get("https://timesheet.ndtatlas.com/login");
 		driverR.get("https://www.timesheet.ndtatlas.com/members/");
-		
-			Thread.sleep(1000);	
+		Thread.sleep(2000);	
 
 	}
 
@@ -201,7 +201,7 @@ public class BaseTest{
 		 tdp = new DashboardPage(driverR);
 
 		 trp = new RegularizationPage(driverR);
-
+		 mtp   =new MyTicketPage(driverR);
 
 		 tcp = new ChangePasswordPage(driverR);
 		
