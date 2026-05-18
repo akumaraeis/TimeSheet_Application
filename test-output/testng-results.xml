@@ -2,12 +2,16 @@
 <testng-results ignored="0" total="2" passed="2" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2026-03-17T17:30:56 IST" name="Suite" finished-at="2026-03-17T17:31:37 IST" duration-ms="40822">
+  <suite started-at="2026-05-08T12:56:17 IST" name="Suite" finished-at="2026-05-08T12:56:52 IST" duration-ms="35000">
     <groups>
     </groups>
-    <test started-at="2026-03-17T17:30:56 IST" name="Test" finished-at="2026-03-17T17:31:37 IST" duration-ms="40822">
-      <class name="com.cms.testcases.RegularizationTest">
-        <test-method is-config="true" signature="openUrl(java.lang.String)[pri:0, instance:com.cms.testcases.RegularizationTest@31190526]" started-at="2026-03-17T17:30:56 IST" name="openUrl" finished-at="2026-03-17T17:31:02 IST" duration-ms="5792" status="PASS">
+    <test started-at="2026-05-08T12:56:17 IST" name="Test" finished-at="2026-05-08T12:56:52 IST" duration-ms="35000">
+      <class name="com.cms.testcases.ApplyLeaveTest">
+        <test-method is-config="true" signature="setupLogging()[pri:0, instance:com.cms.testcases.ApplyLeaveTest@6f03482]" started-at="2026-05-08T12:56:17 IST" name="setupLogging" finished-at="2026-05-08T12:56:17 IST" duration-ms="11" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setupLogging -->
+        <test-method is-config="true" signature="openUrl(java.lang.String)[pri:0, instance:com.cms.testcases.ApplyLeaveTest@6f03482]" started-at="2026-05-08T12:56:18 IST" name="openUrl" finished-at="2026-05-08T12:56:23 IST" duration-ms="5466" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -18,19 +22,19 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- openUrl -->
-        <test-method signature="DeleteTestUserRecord()[pri:1, instance:com.cms.testcases.RegularizationTest@31190526]" started-at="2026-03-17T17:31:02 IST" name="DeleteTestUserRecord" finished-at="2026-03-17T17:31:05 IST" duration-ms="3193" status="PASS">
+        <test-method signature="DeleteTestUserRecord()[pri:1, instance:com.cms.testcases.ApplyLeaveTest@6f03482]" started-at="2026-05-08T12:56:23 IST" name="DeleteTestUserRecord" finished-at="2026-05-08T12:56:27 IST" duration-ms="3599" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- DeleteTestUserRecord -->
-        <test-method signature="ValidateRegularizationFunctionality()[pri:2, instance:com.cms.testcases.RegularizationTest@31190526]" started-at="2026-03-17T17:31:05 IST" name="ValidateRegularizationFunctionality" finished-at="2026-03-17T17:31:36 IST" duration-ms="30035" status="PASS">
+        <test-method signature="ValidateapplyLeaveFunctionality()[pri:2, instance:com.cms.testcases.ApplyLeaveTest@6f03482]" started-at="2026-05-08T12:56:27 IST" name="ValidateapplyLeaveFunctionality" finished-at="2026-05-08T12:56:50 IST" duration-ms="23599" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- ValidateRegularizationFunctionality -->
-        <test-method is-config="true" signature="closebrowser()[pri:0, instance:com.cms.testcases.RegularizationTest@31190526]" started-at="2026-03-17T17:31:36 IST" name="closebrowser" finished-at="2026-03-17T17:31:37 IST" duration-ms="813" status="PASS">
+        </test-method> <!-- ValidateapplyLeaveFunctionality -->
+        <test-method is-config="true" signature="closebrowser()[pri:0, instance:com.cms.testcases.ApplyLeaveTest@6f03482]" started-at="2026-05-08T12:56:51 IST" name="closebrowser" finished-at="2026-05-08T12:56:52 IST" duration-ms="1345" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- closebrowser -->
-      </class> <!-- com.cms.testcases.RegularizationTest -->
+      </class> <!-- com.cms.testcases.ApplyLeaveTest -->
     </test> <!-- Test -->
   </suite> <!-- Suite -->
 </testng-results>

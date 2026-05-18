@@ -43,19 +43,19 @@ public class LoginPage extends BaseTest{
 //	@FindBy(xpath="//*[contains(text(),'Username')]")
 //	private WebElement UserName ;
 
-	@FindBy(xpath="//input[@placeholder='Enter Username']")
+	@FindBy(xpath="//input[@placeholder='Enter username']")
 	private WebElement UserName ;
 	
 	@FindBy(xpath="//input[@placeholder='Enter password']")
 	private WebElement Password ;
 
-	@FindBy(xpath="//button[@type='submit']")
+	@FindBy(xpath="//button[normalize-space()='Sign In']")
 	private WebElement Login ;
 	
 	@FindBy(xpath="//span[@class='fw-bold']")
 	private WebElement ProfileName ;
 	
-	@FindBy(xpath="//span[@class='ms-2']")
+	@FindBy(xpath="//button[normalize-space()='Logout']")
 	private WebElement LogOut ;
 	
 	// *********Construction Declaration to initialize Data Member********	
@@ -99,6 +99,27 @@ public class LoginPage extends BaseTest{
 		Thread.sleep(2000);
 	}
 	
+	public void SendUserNameWithInvalidCredential(String Username2) throws InterruptedException {
+		Utility.ExplicitWait(UserName);
+
+		Utility.showCallout("Sending user Name", UserName);
+
+		js = (JavascriptExecutor) driver2;
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')", UserName);
+		UserName.sendKeys(Username2);
+		Thread.sleep(2000);
+	}
+	
+	public void SendUserNameWithInvalidPassword(String invalidPd) throws InterruptedException {
+		Utility.ExplicitWait(Password);
+
+		Utility.showCallout("Sending user Name", Password);
+
+		js = (JavascriptExecutor) driver2;
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')", Password);
+		Password.sendKeys(invalidPd);
+		Thread.sleep(2000);
+	}
 	public void SendUserName2() throws InterruptedException
 	{
 		Utility.ExplicitWait(UserName);
@@ -110,6 +131,8 @@ public class LoginPage extends BaseTest{
 		UserName.sendKeys("tmptest@test.com");
 		Thread.sleep(2000);
 	}
+	
+	
 	
 	public void SendInvalidUserName() throws InterruptedException
 	{
@@ -232,7 +255,9 @@ public class LoginPage extends BaseTest{
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",LogOut );
 		LogOut.click();
 	}
-}
+	
+	}
+
 
 
 

@@ -149,7 +149,7 @@ public class TimesheetSubmissionScenario2 extends BaseTest {
 		        LocalDate endDate = LocalDate.parse(endText, inputFormatter2);
 		        System.out.println("Parsed Start Date: " + startDate + " | End Date: " + endDate);
 
-	        DateTimeFormatter outputFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	            DateTimeFormatter outputFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		            String baseTime = "04:30:00";
 		            LocalDate date = startDate.plusDays(2);
 		            String dateStr = date.format(outputFormatter2);
@@ -330,7 +330,7 @@ public class TimesheetSubmissionScenario2 extends BaseTest {
 
 
 
-	//	@AfterMethod
+		@AfterMethod
 	public void closeURL()
 	{
 		driverR.navigate().to("about:blank");

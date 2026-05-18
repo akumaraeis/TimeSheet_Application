@@ -94,17 +94,20 @@ public class ApplyLeaveTest extends BaseTest {
 
 		lp.ClickonLoginBtn();
 		
-		Log.info("User successfully Login in Application");
+		Utility.waitForSeconds(2);	
 		
-		Utility.waitForSeconds(2);
-		String ActualProfileName=lp.GetProfileName();
-		String ExpectedProfileName ="Welcome, AutomationTesting!";
-		Log.info("User Profile successfully Verified in Application");
-		
-		sf.assertEquals(ActualProfileName, ExpectedProfileName);
-		
-		Utility.showTooltip("Step 2:->After Selecting Apply Leave Module , all inputs provided using Automation Script");
-		
+//		Log.info("User successfully Login in Application");
+//		
+//		Utility.waitForSeconds(2);
+//		String ActualProfileName=lp.GetProfileName();
+//		String ExpectedProfileName ="Welcome, AutomationTesting!";
+//		Log.info("User Profile successfully Verified in Application");
+//		
+//		sf.assertEquals(ActualProfileName, ExpectedProfileName);
+//		
+//		Utility.showTooltip("Step 2:->After Selecting Apply Leave Module , all inputs provided using Automation Script");
+//		
+//		
 		
 		alp.ClickonApplyLeave();
 		

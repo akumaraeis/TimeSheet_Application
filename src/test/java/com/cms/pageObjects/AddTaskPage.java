@@ -177,8 +177,18 @@ public class AddTaskPage extends BaseTest{
 	@FindBy(xpath="//button[normalize-space()='Confirm']")
 	private WebElement ConfirmationBtn ;
 	
-	@FindBy(xpath="///button[normalize-space()='Clear']")
+	@FindBy(xpath="//button[normalize-space()='Clear']")
 	private WebElement ClearBtn ;
+	
+	@FindBy(xpath="//button[normalize-space()='Reset']")
+	private WebElement ResetBtn ;
+	
+	@FindBy(xpath="	//*[contains(text(),'Add Task')]")
+	private WebElement AddTaskBtn ;
+	
+	@FindBy(xpath="	//span[contains(text(),'My Timesheet')]")
+	private WebElement MyTimesheet ;
+	
 	// *********Construction Declaration to initialize Data Member********	
 	public AddTaskPage(WebDriver driverR)
 	{
@@ -336,11 +346,11 @@ public class AddTaskPage extends BaseTest{
 
 	public void ClickonAddTask() throws InterruptedException
 	{
-		Utility.ExplicitWait(AddTask);
-		Utility.showCallout("Adding Task using AutomationScript", AddTask);
+		Utility.ExplicitWait(AddTaskBtn);
+		Utility.showCallout("Adding Task using AutomationScript", AddTaskBtn);
 		js = (JavascriptExecutor)driver2;
-		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",AddTask );
-		AddTask.click();
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",AddTaskBtn );
+		AddTaskBtn.click();
 	    Thread.sleep(2000);
 	}
 	
@@ -393,6 +403,15 @@ public class AddTaskPage extends BaseTest{
 	    Thread.sleep(2000);
 	}
 	
+	public void ClickonMyTimesheet() throws InterruptedException
+	{
+		Utility.ExplicitWait(MyTimesheet);
+		Utility.showCallout2("Selecting Activity using AutomationScript", MyTimesheet);
+		js = (JavascriptExecutor)driver2;
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",MyTimesheet );
+		MyTimesheet.click();
+		Thread.sleep(2000);
+	}
 	public void SendTaskDescription() throws InterruptedException
 	{
 		Utility.ExplicitWait(TaskDescription);
@@ -525,6 +544,13 @@ public class AddTaskPage extends BaseTest{
 	    Lastweek.click();;
 	}
 	
+	public void ClickonResetBtn() throws InterruptedException
+	{
+		Utility.ExplicitWait(ResetBtn);
+		Utility.safeClick(driver2, js, ResetBtn);
+		ResetBtn.click();
+	}
+	
 	public void ClickonAttendance() throws InterruptedException
 	{
 //		js = (JavascriptExecutor)driver2;
@@ -570,6 +596,13 @@ public class AddTaskPage extends BaseTest{
 	}
 	
 	public void ClickonClearBtn() throws InterruptedException
+	{
+		js = (JavascriptExecutor)driver2;
+		Utility.safeClick(driver2, js, ClearBtn);
+		
+//		TimeOut.click();
+	}
+	public void ClickonAddTaskBtn() throws InterruptedException
 	{
 		js = (JavascriptExecutor)driver2;
 		Utility.safeClick(driver2, js, ClearBtn);

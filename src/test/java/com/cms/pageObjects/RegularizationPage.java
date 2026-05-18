@@ -67,7 +67,7 @@ public class RegularizationPage extends BaseTest{
 	@FindBy(xpath="//a[normalize-space()='Regularization Requests']")
 	private WebElement RegularizationRequest ;
 	
-	@FindBy(xpath="//textarea[@placeholder='Enter reason']")
+	@FindBy(xpath="//textarea[@placeholder='Enter reason for regularization...']")
 	private WebElement RegularizationReason ;
 	
 	@FindBy(xpath="//select[@name='action_status']")

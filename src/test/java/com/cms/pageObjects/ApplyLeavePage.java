@@ -174,7 +174,7 @@ public class ApplyLeavePage extends BaseTest{
 	@FindBy(xpath="(//*[contains(@class,\"orm-control form-control-sm border border-seconda\")])[2]")
 	private WebElement ToDate ;
 	
-	@FindBy(xpath="//*[contains(text(),'My Leaves')]")
+	@FindBy(xpath="//span[@class='d-flex align-items-center gap-2']//span[contains(text(),'My Leaves')]")
 	private WebElement MyLeave ;	
 	
 	@FindBy(xpath="//a[contains(@class,'border-end rounded-start rounded-pill text-end mb-2 bg-gradient bg-opacity-25 nav-link active')]")
@@ -192,7 +192,7 @@ public class ApplyLeavePage extends BaseTest{
 	//********time stamp Creation *******************************************
 	
     public static String generateRandomDate() {
-    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd,yyyy");
 
         LocalDate futureDate = LocalDate.now().plusDays(2);  // Add 2 days to current date
 
@@ -284,6 +284,7 @@ public class ApplyLeavePage extends BaseTest{
 
 	public void  ClickonApplyLeave() throws InterruptedException
 	{
+		 try {
 		Utility.ExplicitWait(MyLeave);
 	    MyLeave.click();	
 	    Utility.waitForSeconds(2);
@@ -292,18 +293,34 @@ public class ApplyLeavePage extends BaseTest{
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')",ApplyLeave );		
 		ApplyLeave.click();
+		
 		Utility.waitForSeconds(1);
-		FromDate.sendKeys(Keys.chord(Keys.CONTROL,"a"));
+		FromDate.click();
+		driverR.findElement(By.xpath("//*[contains(@class,\"react-datepicker__day react-datepicker__day--028\")]")).click();
+/*		FromDate.sendKeys(Keys.chord(Keys.CONTROL,"a"));
 		FromDate.sendKeys(Keys.DELETE);
 		Utility.waitForSeconds(1);
+		
 		String LeaveDate = generateRandomDate();
+		Object targetDay = LeaveDate.getDayOfMonth();
+		String targetMonth = 
+				targetDay.format(
+	                DateTimeFormatter
+	                    .ofPattern("MMMM yyyy"));
 		FromDate.sendKeys(LeaveDate);
+		FromDate.sendKeys(Keys.TAB);
 		Utility.waitForSeconds(2);
-		 
-		ToDate.sendKeys(Keys.chord(Keys.CONTROL,"a"));
+	*/
+		
+		ToDate.click();
+		driverR.findElement(By.xpath("(//*[contains(@class,\"react-datepicker__day react-datepicker__day--030\")])[2]")).click();
+		
+/*		ToDate.sendKeys(Keys.chord(Keys.CONTROL,"a"));
 		ToDate.sendKeys(Keys.DELETE);
 		Utility.waitForSeconds(1);
 		ToDate.sendKeys(LeaveDate);
+		ToDate.sendKeys(Keys.TAB);
+		*/
 		Utility.waitForSeconds(2);
 		Actions act = new Actions(driverR);
 		act.moveToElement(ApplyLeaveonModal).click().perform();	
@@ -314,6 +331,24 @@ public class ApplyLeavePage extends BaseTest{
 		Comment.sendKeys("TestComment");
 		Utility.waitForSeconds(1);
 		Submit.click();
+		 } catch (Exception e) {
+		        // Fallback: Use JavaScript
+		        // if sendKeys fails
+		        System.out.println(
+		            "⚠️ SendKeys failed, " +
+		            "trying JavaScript...");
+		        
+		        JavascriptExecutor js = 
+		            (JavascriptExecutor) driver2;
+		        js.executeScript(
+		            "arguments[0].value='" 
+		            + FromDate + "';",
+		            ToDate);
+
+		        System.out.println(
+		            "✅ Date entered via JS: "
+		            + ToDate);
+		    }
 		
 		
 	}

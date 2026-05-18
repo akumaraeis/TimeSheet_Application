@@ -52,8 +52,9 @@
 <dependency>
     <groupId>io.github.bonigarcia</groupId>
     <artifactId>webdrivermanager</artifactId>
-    <version>5.5.0</version>
+    <version>5.6.3</version>
 </dependency>
+
 <!-- https://mvnrepository.com/artifact/org.testng/testng -->
 <dependency>
     <groupId>org.testng</groupId>
@@ -174,21 +175,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.0.0-M4</version>
+				<version>3.1.2</version>
 				<configuration>
 					<suiteXmlFiles>
-						<suiteXmlFile>src/test/resources/RegressionSuiteFor_LoginTest.xml</suiteXmlFile>
-						<suiteXmlFile>src/test/resources/RegressionSuiteFor_AddTimesheet.xml</suiteXmlFile>
-						<suiteXmlFile>src/test/resources/RegressionSuiteFor_EditTimesheet.xml</suiteXmlFile>
-						<suiteXmlFile>src/test/resources/RegressionSuiteFor_InvalidTimesheetEntryValidationTest.xml</suiteXmlFile>
-						<suiteXmlFile>src/test/resources/RegressionSuiteFor_TwentyFourhourValidation.xml</suiteXmlFile>
-						<suiteXmlFile>src/test/resources/RegressionSuiteFor_MultipleClockInValidation.xml</suiteXmlFile>
-						<suiteXmlFile>src/test/resources/RegressionSuiteFor_addTaskScenarioafterClockout.xml</suiteXmlFile>
-						<suiteXmlFile>src/test/resources/RegressionSuiteFor_AddTaskScenarioBeforeClockOut.xml</suiteXmlFile>
-						<suiteXmlFile>src/test/resources/RegressionSuiteFor_ValidateTimeOverlappingScenario.xml</suiteXmlFile>
-						<suiteXmlFile>src/test/resources/RegressionSuitFor_GrossTaskHourValidation.xml</suiteXmlFile>
-						<suiteXmlFile>src/test/resources/RegressionSuiteFor_TimesheetSlotMinimumValidationTest.xml</suiteXmlFile>
-						<suiteXmlFile>src/test/resources/RegressionSuiteFor_PreviousEntryClockOutScenario.xml</suiteXmlFile>					
+						<suiteXmlFile>src/test/resources/RegressionSuiteForRegularization.xml</suiteXmlFile>				
                    </suiteXmlFiles>
 					<systemPropertyVariables>
 						<appURL>${url}</appURL>
