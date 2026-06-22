@@ -2,23 +2,17 @@ package com.cms.utility;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.imageio.ImageIO;
 
-import org.apache.logging.log4j.core.util.FileUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -28,28 +22,27 @@ public class Utility extends BaseTest {
 	
 	
 	 public static String captureScreenshot(String testName, String status) {
-	        TakesScreenshot ts = (TakesScreenshot) driverR;
-	        File source = ts.getScreenshotAs(OutputType.FILE);
-	        
-	        // Dynamic path for screenshot storage
-	        String baseDir = System.getProperty("user.dir") + "\\AEIS-CMS-Screenshots\\";
-	        File dir = new File(baseDir);
-	        if (!dir.exists()) {
-	            dir.mkdirs(); // Ensure the directory exists
-	        }
-	        
-	        String destination = baseDir + "ContactCenter_" + testName + "_" + status + ".jpg";
-	        File finalDestination = new File(destination);
-	        
+	        if (driverR == null) return null;
 	        try {
-	            // Convert and save as JPG if necessary
+	            TakesScreenshot ts = (TakesScreenshot) driverR;
+	            File source = ts.getScreenshotAs(OutputType.FILE);
+
+	            String baseDir = System.getProperty("user.dir") + "\\AEIS-CMS-Screenshots\\";
+	            File dir = new File(baseDir);
+	            if (!dir.exists()) {
+	                dir.mkdirs();
+	            }
+
+	            String destination = baseDir + "ContactCenter_" + testName + "_" + status + ".jpg";
+	            File finalDestination = new File(destination);
+
 	            BufferedImage img = ImageIO.read(source);
 	            ImageIO.write(img, "jpg", finalDestination);
-	        } catch (IOException e) {
-	            e.printStackTrace(); // Log exception or handle it as needed
+	            return destination;
+	        } catch (Exception e) {
+	            Log.warn("Screenshot capture skipped — browser may be unavailable: " + e.getMessage());
+	            return null;
 	        }
-	        
-	        return destination; // Return path for reporting
 	    }
 	
 
@@ -239,15 +232,15 @@ public class Utility extends BaseTest {
 
 		        // ✅ Try normal Selenium click first
 		        element.click();
-		        System.out.println("✅ safeClick: Element clicked successfully");
+		        Log.info("✅ safeClick: Element clicked successfully");
 		    } catch (Exception e1) {
-		        System.out.println("⚠️ safeClick failed with normal click: " + e1.getMessage());
+		        Log.info("⚠️ safeClick failed with normal click: " + e1.getMessage());
 		        try {
 		            // ✅ Fallback: JS Click
 		            js.executeScript("arguments[0].click();", element);
-		            System.out.println("✅ safeClick: Element clicked using JS executor");
+		            Log.info("✅ safeClick: Element clicked using JS executor");
 		        } catch (Exception e2) {
-		            System.out.println("❌ safeClick failed completely: " + e2.getMessage());
+		            Log.info("❌ safeClick failed completely: " + e2.getMessage());
 		            throw e2; // rethrow if nothing worked
 		        }
 		    }

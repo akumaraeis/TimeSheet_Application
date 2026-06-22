@@ -1,4 +1,5 @@
 package com.cms.testcases;
+import com.cms.utility.Log;
 
 import java.io.IOException;
 
@@ -69,7 +70,7 @@ public class MultipleClockInTest extends BaseTest {
 		{			
 			 isSuccessful = false; 
 			mcp.ClickonTimesheet();
-			System.out.println("Times after clicking on Timesheet :=>"+i);
+			Log.info("Times after clicking on Timesheet :=>"+i);
 		while(!isSuccessful)
 		{
 			
@@ -95,7 +96,7 @@ public class MultipleClockInTest extends BaseTest {
 				// Exit the loop if successful
 			}
 		     else if (FinalAlert.equals("You have reached the maximum of 3 slots for today.")) {
-	//	            System.out.println("Validation message appeared correctly after 3 timesheets: " + FinalAlert);
+	//	            Log.info("Validation message appeared correctly after 3 timesheets: " + FinalAlert);
 	//	            sf.assertEquals(FinalAlert, "You have reached the maximum of 3 slots for today.");
 		            break; // Stop the loop
 		        } else {

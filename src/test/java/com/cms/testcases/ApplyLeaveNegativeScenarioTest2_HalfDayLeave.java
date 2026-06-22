@@ -1,4 +1,5 @@
 package com.cms.testcases;
+import com.cms.utility.Log;
 
 import static io.restassured.RestAssured.given;
 
@@ -83,7 +84,7 @@ public class ApplyLeaveNegativeScenarioTest2_HalfDayLeave extends BaseTest {
                 .then().statusCode(200)
                 .extract().response();
          token = loginResponse.jsonPath().getString("data.token");
-        System.out.println("🔐 Token fetched: " + token);
+        Log.info("🔐 Token fetched: " + token);
 //        Utility.waitForSeconds(2);
         DeleteAutomationTestUserRecords(token);
 //        Utility.waitForSeconds(1);
@@ -110,7 +111,7 @@ public class ApplyLeaveNegativeScenarioTest2_HalfDayLeave extends BaseTest {
 	    DateTimeFormatter leavePageFormatter = DateTimeFormatter.ofPattern("MMM dd, yyyy", Locale.ENGLISH);
 
 	    List<WebElement> allWeeks = driverR.findElements(By.xpath("//div[contains(@class,'p-1 shadow mb-2 bg-gradient border-2')]"));
-	    System.out.println("Total week blocks found: " + allWeeks.size());
+	    Log.info("Total week blocks found: " + allWeeks.size());
 
 	    String weekXPath = "(//div[contains(@class,'p-1 shadow mb-2 bg-gradient border-2')])[2]";
 	    WebElement weekElement = driverR.findElement(By.xpath(weekXPath));
@@ -121,7 +122,7 @@ public class ApplyLeaveNegativeScenarioTest2_HalfDayLeave extends BaseTest {
 	    WebDriverWait wait = new WebDriverWait(driverR, Duration.ofSeconds(10));
 	    WebElement statusElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[contains(@class,'px-3 py-1')])[2]")));
 	    String status = statusElement.getText().trim();
-	    System.out.println("Week Status: '" + status + "'");
+	    Log.info("Week Status: '" + status + "'");
 
 	    if (status.equalsIgnoreCase("Not_Submitted")) {
 	        String startText = driverR.findElement(By.xpath("(" + weekXPath + "/div/div/span)[1]")).getText().trim();
@@ -129,7 +130,7 @@ public class ApplyLeaveNegativeScenarioTest2_HalfDayLeave extends BaseTest {
 
 	        LocalDate endDate = LocalDate.parse(endText, inputFormatter2);
 	        String dateStr = endDate.format(apiFormatter);
-	        System.out.println("🗓️ Submitting entries for: " + dateStr);
+	        Log.info("🗓️ Submitting entries for: " + dateStr);
 
 	        String baseTime = "04:30:00";
 	        sendAttendanceData(token, dateStr + "T" + baseTime + "Z", "clockin");
@@ -148,28 +149,28 @@ public class ApplyLeaveNegativeScenarioTest2_HalfDayLeave extends BaseTest {
 	        List<WebElement> applyLeaveButtons = driverR.findElements(By.xpath("//button[@class=\"text-uppercase btn btn-warning btn-sm\"]"));
 	                                           
 	        int size=leaveDates.size();
-	        System.out.println("Apply Leave Size :->"+ size);
+	        Log.info("Apply Leave Size :->"+ size);
 
 	        LocalDate apiDate = LocalDate.parse(dateStr, apiFormatter);
 	        String formattedDate = apiDate.format(leavePageFormatter);
 
-	        System.out.println("Formatted API Date for Comparison: " + formattedDate);
+	        Log.info("Formatted API Date for Comparison: " + formattedDate);
 
 	        boolean leaveMatched = false;
 
 	        for (int i = 1; i < leaveDates.size(); i++) {
 	            String leaveDateText = driverR.findElement(By.xpath("(//*[@class='p-5 card-body']//span[@class='ms-2 fs-6 fw-bold'])["+i+"]")).getText().trim();
-	            System.out.println("Checking Leave Date:-> " + leaveDateText);
-	            System.out.println("Formatted date Checking:->"+formattedDate);
+	            Log.info("Checking Leave Date:-> " + leaveDateText);
+	            Log.info("Formatted date Checking:->"+formattedDate);
 
 	            if (leaveDateText.equalsIgnoreCase(formattedDate)) {
 	     //           WebElement applyBtn = applyLeaveButtons.get(i);
 	            	WebElement applyBtn =driverR.findElement(By.xpath("(//button[@class=\"text-uppercase btn btn-warning btn-sm\"])["+i+"]"));
 	                String applybtnText = applyBtn.getText();
-	                System.out.println("On Apply Leave Button detail page ,text present"+applybtnText);
+	                Log.info("On Apply Leave Button detail page ,text present"+applybtnText);
 	                Utility.ExplicitWait(applyBtn);
 	                String leaveBtnText = applyBtn.getText().trim();
-	                System.out.println("on Leave Detail page ,checking text of leave button"+ leaveBtnText);
+	                Log.info("on Leave Detail page ,checking text of leave button"+ leaveBtnText);
 
 	                sf.assertEquals(leaveBtnText, "APPLY LEAVE");
 
@@ -183,9 +184,9 @@ public class ApplyLeaveNegativeScenarioTest2_HalfDayLeave extends BaseTest {
 	                    Thread.sleep(4000);
 
 	                    WebElement toaster = driverR.findElement(By.xpath("//*[contains(@class,'Toastify__toast Toastify')]"));
-	                    System.out.println("Apply Leave Toaster Message: " + toaster.getText());
+	                    Log.info("Apply Leave Toaster Message: " + toaster.getText());
 
-	                    System.out.println("✔ Leave matched and applied. Breaking loop.");
+	                    Log.info("✔ Leave matched and applied. Breaking loop.");
 	                    leaveMatched = true;
 	                    break;
 	                }
@@ -193,7 +194,7 @@ public class ApplyLeaveNegativeScenarioTest2_HalfDayLeave extends BaseTest {
 	        }
 
 	        if (!leaveMatched) {
-	            System.out.println("❌ No matching leave date found for " + formattedDate);
+	            Log.info("❌ No matching leave date found for " + formattedDate);
 	        }
 
 	        sf.assertAll();
@@ -216,7 +217,7 @@ public class ApplyLeaveNegativeScenarioTest2_HalfDayLeave extends BaseTest {
 		    HashMap<String, String> data = new HashMap<>();
 		    data.put("test_timestamp", timestamp);
 
-		    System.out.println("→ Sending to " + endpoint + ": " + timestamp);
+		    Log.info("→ Sending to " + endpoint + ": " + timestamp);
 
 		    given()
 		        .contentType("application/json")
@@ -232,7 +233,7 @@ public class ApplyLeaveNegativeScenarioTest2_HalfDayLeave extends BaseTest {
 		    HashMap<String, String> data = new HashMap<>();
 		    data.put("test_timestamp", timestamp);
 
-		    System.out.println("→ Sending to " + endpoint + ": " + timestamp);
+		    Log.info("→ Sending to " + endpoint + ": " + timestamp);
 
 		    given()
 		        .contentType("application/json")
@@ -249,7 +250,7 @@ public class ApplyLeaveNegativeScenarioTest2_HalfDayLeave extends BaseTest {
 //		    HashMap<String, String> data = new HashMap<>();
 //		    data.put("test_timestamp", timestamp);
 
-//		    System.out.println("→ Sending to " + endpoint + ": " + timestamp);
+//		    Log.info("→ Sending to " + endpoint + ": " + timestamp);
 
 		    given()
 		        .contentType("application/json")

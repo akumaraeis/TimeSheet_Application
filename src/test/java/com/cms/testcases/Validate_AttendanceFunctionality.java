@@ -73,7 +73,7 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 
 		JsonPath jsonPath = response.jsonPath();
 		String token = response.jsonPath().getString("data.token");  // Change key if API returns it with a different name
-		System.out.println("Token: " + token);
+		Log.info("Token: " + token);
 		return token;
 	}
 
@@ -90,7 +90,7 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 				.then().statusCode(200)
 				.extract().response();
 		String token = loginResponse.jsonPath().getString("data.token");
-		System.out.println("🔐 Token fetched: " + token);
+		Log.info("🔐 Token fetched: " + token);
 		DeleteAutomationTestUserRecords(token);
 
 	}
@@ -99,16 +99,16 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 	public void ValidateClockIn() throws InterruptedException, IOException
 	{
 
-		System.out.println("Final Token "+ (getToken()));
+		Log.info("Final Token "+ (getToken()));
 		clockInDate = att.generateRandomDate(); // Generate a date in February
 
 		clockInTime = "05:00:00";
 		Timein = clockInDate+"T"+clockInTime +"Z";
-		System.out.println("Final Time-In given :->"+Timein);
+		Log.info("Final Time-In given :->"+Timein);
 
 		HashMap data = new HashMap();
 		data.put("test_timestamp", Timein );
-		System.out.println("found accountId detail for delete functions : "+Timein);
+		Log.info("found accountId detail for delete functions : "+Timein);
 		given()
 		.contentType("application/json")
 		.headers("Authorization",("Token "+getToken()))
@@ -120,7 +120,7 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 		.then()
 		.statusCode(201)
 		.log().all();
-		System.out.println("******Clock-in Functionality Verified************");
+		Log.info("******Clock-in Functionality Verified************");
 	}	
 
 
@@ -129,17 +129,17 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 	public void ValidateBreakIn() throws InterruptedException, IOException
 	{
 
-		System.out.println("Final Token "+ (getToken()));
+		Log.info("Final Token "+ (getToken()));
 		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 		LocalTime originalTime = LocalTime.parse(clockInTime, timeFormatter);
 		LocalTime updatedTime = originalTime.plusHours(1);
 		updatedTimeStr = updatedTime.format(timeFormatter);
 		Timein  = clockInDate+"T"+updatedTimeStr +"Z";
-		System.out.println("Final Time-In given :->"+updatedTimeStr);
+		Log.info("Final Time-In given :->"+updatedTimeStr);
 
 		HashMap data = new HashMap();
 		data.put("test_timestamp", Timein );
-		System.out.println("found accountId detail for delete functions : "+Timein);
+		Log.info("found accountId detail for delete functions : "+Timein);
 		given()
 		.contentType("application/json")
 		.headers("Authorization",("Token "+getToken()))
@@ -150,25 +150,25 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 		.then()
 		.statusCode(201)
 		.log().all();
-		System.out.println("******BreakIn Functionality is  Verified************");
+		Log.info("******BreakIn Functionality is  Verified************");
 	}
 
 	@Test(priority=3,dependsOnMethods="ValidateBreakIn")
 	public void ValidateBreakOut() throws InterruptedException, IOException
 	{
 
-		System.out.println("Final Token "+ (getToken()));
+		Log.info("Final Token "+ (getToken()));
 		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 		LocalTime originalTime = LocalTime.parse(updatedTimeStr, timeFormatter);
 		LocalTime updatedTime2 = originalTime.plusHours(1);
 		String updatedTimeStr = updatedTime2.format(timeFormatter);
 
 		String Timein = clockInDate+"T"+updatedTimeStr +"Z";
-		System.out.println("Final Time-In given :->"+Timein);
+		Log.info("Final Time-In given :->"+Timein);
 
 		HashMap data = new HashMap();
 		data.put("test_timestamp", Timein );
-		System.out.println("found accountId detail for delete functions : "+Timein);
+		Log.info("found accountId detail for delete functions : "+Timein);
 		given()
 		.contentType("application/json")
 		.headers("Authorization",("Token "+getToken()))
@@ -178,25 +178,25 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 		.then()
 		.statusCode(201)
 		.log().all();
-		System.out.println("******BreakOut Functionality is Verified************");
+		Log.info("******BreakOut Functionality is Verified************");
 	}
 
 	@Test(priority=4,dependsOnMethods="ValidateBreakOut")
 	public void ValidateClockOut() throws InterruptedException, IOException
 	{
 
-		System.out.println("Final Token "+ (getToken()));
+		Log.info("Final Token "+ (getToken()));
 		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 		LocalTime originalTime2 = LocalTime.parse(updatedTimeStr, timeFormatter);
 		LocalTime updatedTime3 = originalTime2.plusHours(8);
 		String updatedTimeStr = updatedTime3.format(timeFormatter);
 
 		String Timein = clockInDate+"T"+updatedTime3 +"Z";
-		System.out.println("Final Time-In given :->"+Timein);
+		Log.info("Final Time-In given :->"+Timein);
 
 		HashMap data = new HashMap();
 		data.put("test_timestamp", Timein );
-		System.out.println("found accountId detail for delete functions : "+Timein);
+		Log.info("found accountId detail for delete functions : "+Timein);
 		given()
 		.contentType("application/json")
 		.headers("Authorization",("Token "+getToken()))
@@ -210,7 +210,7 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 		.then()
 		.statusCode(201)
 		.log().all();
-		System.out.println("******Clock-Out Functionality is Verified************");
+		Log.info("******Clock-Out Functionality is Verified************");
 	}
 
 	@Test(priority =5 ,dependsOnMethods="ValidateClockIn")
@@ -245,7 +245,7 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 
 		Date date = inputFormat.parse(inputDate);
 		String formattedDate = outputFormat.format(date);
-		System.out.println("Formatted date after apply condition :->"+formattedDate);
+		Log.info("Formatted date after apply condition :->"+formattedDate);
 		att.SendDateFilter(formattedDate);
 		Thread.sleep(2000);
 
@@ -261,24 +261,24 @@ public class Validate_AttendanceFunctionality extends BaseTest {
 				WebElement dateTimeColumn = row.findElement(By.xpath(".//td[3]"));
 				String rowDateTime = dateTimeColumn.getText().trim();
 				String ActualClockinDate = rowDateTime.substring(0, 10);
-				System.out.println("Actual Date found after trim"+ActualClockinDate);
-				System.out.println("Checking row with date: " + rowDateTime);
+				Log.info("Actual Date found after trim"+ActualClockinDate);
+				Log.info("Checking row with date: " + rowDateTime);
 				String ExpectClockinDate = formattedDate;
 				sf.assertEquals(ActualClockinDate, ExpectClockinDate);
 
 				// 2. Match the date
 				if (rowDateTime.startsWith(formattedDate)) {
-					System.out.println("✅ Matching Entry Found: " + rowDateTime);
+					Log.info("✅ Matching Entry Found: " + rowDateTime);
 				}
 				else
 				{
-					System.out.println("✅ Matching Entry Not Found: " + rowDateTime);
+					Log.info("✅ Matching Entry Not Found: " + rowDateTime);
 				}
 			}
 
 			catch(Exception e)
 			{
-				System.out.println("Exception detail"+ e.getMessage());
+				Log.info("Exception detail"+ e.getMessage());
 
 			}
 		} 

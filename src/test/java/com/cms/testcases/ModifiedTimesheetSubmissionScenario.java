@@ -90,7 +90,7 @@ public class ModifiedTimesheetSubmissionScenario extends BaseTest {
 				.then().statusCode(200)
 				.extract().response();
 		token = loginResponse.jsonPath().getString("data.token");
-		System.out.println("🔐 Token fetched: " + token);
+		Log.info("🔐 Token fetched: " + token);
 		DeleteAutomationTestUserRecords(token);
 	}
 
@@ -128,15 +128,15 @@ public class ModifiedTimesheetSubmissionScenario extends BaseTest {
 		LocalDate previousFriday = previousMonday.plusDays(4);
 
 		String formattedMonday = previousMonday.format(formatter);
-		System.out.println("Loop start formatted Monday :->"+formattedMonday);
+		Log.info("Loop start formatted Monday :->"+formattedMonday);
 		String formattedFriday = previousFriday.format(formatter);
-		System.out.println("Loop end formatted friday :->"+formattedFriday);
+		Log.info("Loop end formatted friday :->"+formattedFriday);
 		String baseTime = "10:30:00";
 		for (LocalDate date = previousMonday; !date.isAfter(previousFriday); date = date.plusDays(1)) {
 
 			String date2 = date.format(formatter);
-			System.out.println("Date Stamp entry for timestamp for send Attendance Method "+date2);
-			System.out.println("🗓️ Submitting entries for:->" + date2);
+			Log.info("Date Stamp entry for timestamp for send Attendance Method "+date2);
+			Log.info("🗓️ Submitting entries for:->" + date2);
 			sendAttendanceData(token,"CLOCK_IN", date2, baseTime);
 			sendAttendanceData(token,"BREAK_IN", date2,addHours(baseTime, 1));
 			sendAttendanceData(token,"BREAK_OUT", date2,addHours(baseTime, 2));
@@ -156,7 +156,7 @@ public class ModifiedTimesheetSubmissionScenario extends BaseTest {
 		//
 
 		List<WebElement> taskButtons = driverR.findElements(By.xpath("//*[contains(text(),'Add New Task')]"));
-		System.out.println("Total Add Task buttons: " + taskButtons.size());
+		Log.info("Total Add Task buttons: " + taskButtons.size());
 
 		//				Utility.showTooltip("Step 4:-> After Creating weekly TimesheetEntry,Now adding task to all entry using Automation Script");
 		//				WebElement MinimizeBtn = driverR.findElement(By.xpath("(//*[contains(@class,'d-flex justify-content-end col-sm-1')])[1]"));
@@ -193,7 +193,7 @@ public class ModifiedTimesheetSubmissionScenario extends BaseTest {
 				//						MinimizeBtn3.click();
 				//						Utility.waitForSeconds(2);
 			} catch (ElementClickInterceptedException e) {
-				System.out.println("Add Task Click Intercepted: Retrying via JS click.");
+				Log.info("Add Task Click Intercepted: Retrying via JS click.");
 				js.executeScript("arguments[0].click();", driverR.findElement(By.xpath("(//*[contains(text(),'Add Task')])[1]")));
 			}
 		}
@@ -216,19 +216,19 @@ public class ModifiedTimesheetSubmissionScenario extends BaseTest {
 			Utility.highlightElement(confirmSubmit);
 			Utility.safeClick(driverR, js, confirmSubmit);
 			Utility.waitForSeconds(2);
-			System.out.println("✅ Timesheet submitted for week " + 2);
+			Log.info("✅ Timesheet submitted for week " + 2);
 
 //			WebElement confirmMsg = driverR.findElement(By.xpath("//*[contains(text(),'Timesheet submitted successfully!')]"));
 //			Utility.ExplicitWait(confirmMsg);
 //			Utility.highlightElement(confirmMsg);
 //			String ActualTimesheetSuccesful = confirmMsg.getText();
-//			System.out.println("Timesheet submission Succesful Message :-> " + ActualTimesheetSuccesful);
+//			Log.info("Timesheet submission Succesful Message :-> " + ActualTimesheetSuccesful);
 //			String ExpectTimesheetSuccesful ="Timesheet submitted successfully!";
 //			sf.assertEquals(ActualTimesheetSuccesful, ExpectTimesheetSuccesful);
 //			Log.info("Timesheet Submitted for this Respective week Successfully");			
 //			// Check final status after submission
 //			Utility.waitForSeconds(2);
-			System.out.println("🔄 Now Automation Script will click on Logout Btn after submission");
+			Log.info("🔄 Now Automation Script will click on Logout Btn after submission");
 			Utility.waitForSeconds(2);
 			lp.ClickonLogOutBtn(); 
 			Thread.sleep(2000);
@@ -240,15 +240,15 @@ public class ModifiedTimesheetSubmissionScenario extends BaseTest {
 			//					Utility.safeClick(driverR, js, finalWeek);
 			//					WebElement finalStatus = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(@class,'bg-warning rounded text-black')]")));
 			//					String newStatus = finalStatus.getText().replace("\u00A0", " ").trim();
-			//					System.out.println("🟢 Post-Submission Status: '" + newStatus + "'");
+			//					Log.info("🟢 Post-Submission Status: '" + newStatus + "'");
 			//
 			//					if (newStat us.equalsIgnoreCase("SUBMITTED")) {
-			//						System.out.println("✅ Submission confirmed. Stopping further processing.");
+			//						Log.info("✅ Submission confirmed. Stopping further processing.");
 			//						// STOP the main loop
 			//					}
 
 		} catch (Exception e) {
-			System.out.println("⚠️ Error during final submission: " + e.getMessage());
+			Log.info("⚠️ Error during final submission: " + e.getMessage());
 
 		}
 		sf.assertAll();
@@ -286,7 +286,7 @@ public class ModifiedTimesheetSubmissionScenario extends BaseTest {
 //
 //		String str =  "Welcome, AutomationTesting";
 //		ActualUserName = str.replace("Welcome, ", "");
-//		System.out.println(ActualUserName);
+//		Log.info(ActualUserName);
 //
 //
 //		sf.assertEquals(ActualProfileName, ExpectedProfileName);
@@ -335,7 +335,7 @@ public class ModifiedTimesheetSubmissionScenario extends BaseTest {
 					Utility.ExplicitWait(confirmMsg);
 					Utility.highlightElement(confirmMsg);
 					String ActualTimesheetSuccesful = confirmMsg.getText();
-					System.out.println("Timesheet submission Succesful Message :-> " + ActualTimesheetSuccesful);
+					Log.info("Timesheet submission Succesful Message :-> " + ActualTimesheetSuccesful);
 					String ExpectTimesheetSuccesful ="Approved successfully!";
 					sf.assertEquals(ActualTimesheetSuccesful, ExpectTimesheetSuccesful);
 					Log.info("Timesheet Approved successfully! for this Respective week");
@@ -369,7 +369,7 @@ public class ModifiedTimesheetSubmissionScenario extends BaseTest {
 		data.put("action_date", timestamp);
 		data.put("action_time", time);
 
-		System.out.println("→ Sending to " + ": " + timestamp);
+		Log.info("→ Sending to " + ": " + timestamp);
 
 		given()
 		.contentType("application/json")
@@ -387,7 +387,7 @@ public class ModifiedTimesheetSubmissionScenario extends BaseTest {
 		data.put("action_date", timestamp);
 		data.put("action_time", time);
 
-		System.out.println("→ Sending to " + ": " + timestamp);
+		Log.info("→ Sending to " + ": " + timestamp);
 
 		given()
 		.contentType("application/json")
@@ -403,7 +403,7 @@ public class ModifiedTimesheetSubmissionScenario extends BaseTest {
 		//	    HashMap<String, String> data = new HashMap<>();
 		//	    data.put("test_timestamp", timestamp);
 
-		//	    System.out.println("→ Sending to " + endpoint + ": " + timestamp);
+		//	    Log.info("→ Sending to " + endpoint + ": " + timestamp);
 
 		given()
 		.contentType("application/json")

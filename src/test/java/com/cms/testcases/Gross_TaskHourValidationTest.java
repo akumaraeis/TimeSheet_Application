@@ -1,4 +1,5 @@
 package com.cms.testcases;
+import com.cms.utility.Log;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -93,7 +94,7 @@ public class Gross_TaskHourValidationTest extends BaseTest {
 			 if (FinalAlert != null && FinalAlert.trim().contains("Timesheet created successfully")) {
 				    isSuccessful = true;
 				    finalSuccessfulDate = clockInDate;
-				    System.out.println("Timesheet created. Breaking loop.");
+				    Log.info("Timesheet created. Breaking loop.");
 				    Thread.sleep(3000); // Give UI some time to settle before continuing
 				}
 			 else {
@@ -124,11 +125,11 @@ public class Gross_TaskHourValidationTest extends BaseTest {
 		        WebElement dateTimeColumn = row.findElement(By.xpath(".//td[3]"));
 		        String rowDateTime = dateTimeColumn.getText().trim();
 		        
-		        System.out.println("Checking row with date: " + rowDateTime);
+		        Log.info("Checking row with date: " + rowDateTime);
 
 		        // 2. Match the date
 		        if (rowDateTime.startsWith(formattedDate)) {
-		            System.out.println("✅ Matching Entry Found: " + rowDateTime);
+		            Log.info("✅ Matching Entry Found: " + rowDateTime);
 
 		            // 3. Try to find "ADD TASK" inside this same row
 		            List<WebElement> addTaskButtons = row.findElements(By.xpath(".//*[contains(translate(text(), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 'ADD TASK')]"));
@@ -143,21 +144,21 @@ public class Gross_TaskHourValidationTest extends BaseTest {
 		                Thread.sleep(1000);
 		                addTaskButton.click();
 
-		                System.out.println("🟢 Clicked 'ADD TASK' for date: " + formattedDate);
+		                Log.info("🟢 Clicked 'ADD TASK' for date: " + formattedDate);
 		                entryFound = true;
 		                break;
 		            } else {
-		                System.out.println("⚠️ 'ADD TASK' button not found in matched row.");
+		                Log.info("⚠️ 'ADD TASK' button not found in matched row.");
 		            }
 		        }
 
 		    } catch (NoSuchElementException e) {
-		        System.out.println("❌ Error in row: Element not found - " + e.getMessage());
+		        Log.info("❌ Error in row: Element not found - " + e.getMessage());
 		    }
 		}
 
 		if (!entryFound) {
-		    System.out.println("❌ No matching entry found with 'ADD TASK' for date: " + formattedDate);
+		    Log.info("❌ No matching entry found with 'ADD TASK' for date: " + formattedDate);
 		}
 
 //				atp2.SelectCoreProcess();

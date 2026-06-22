@@ -1,4 +1,5 @@
 package com.cms.testcases;
+import com.cms.utility.Log;
 
 import static io.restassured.RestAssured.given;
 
@@ -76,7 +77,7 @@ public class Validate_UserInterfaceAttendanceFunctionality extends BaseTest {
         JsonPath jsonPath = response.jsonPath();
         String token = response.jsonPath().getString("data.token");  // Change key if API returns it with a different name
 
-        System.out.println("Token: " + token);
+        Log.info("Token: " + token);
         return token;
         
     }
@@ -93,7 +94,7 @@ public class Validate_UserInterfaceAttendanceFunctionality extends BaseTest {
                 .then().statusCode(200)
                 .extract().response();
         String token = loginResponse.jsonPath().getString("data.token");
-        System.out.println("🔐 Token fetched: " + token);
+        Log.info("🔐 Token fetched: " + token);
 //        Utility.waitForSeconds(2);
         DeleteAutomationTestUserRecords(token);
 //        Utility.waitForSeconds(1);
@@ -130,7 +131,7 @@ public class Validate_UserInterfaceAttendanceFunctionality extends BaseTest {
 		att.ClickonConfirmationBtn();
 		Thread.sleep(2000);
 		String ActualSuccessfulMsg = driverR.findElement(By.xpath("//*[contains(text(),'Attendance updated successfully!')]")).getText();
-		System.out.println("ActualSuccesful Message found :->"+ActualSuccessfulMsg);
+		Log.info("ActualSuccesful Message found :->"+ActualSuccessfulMsg);
 		String ExpectSuccessfulMsg ="Attendance updated successfully!";
 		sf.assertEquals(ActualSuccessfulMsg, ExpectSuccessfulMsg);
 		Thread.sleep(60000);
@@ -141,7 +142,7 @@ public class Validate_UserInterfaceAttendanceFunctionality extends BaseTest {
 		Thread.sleep(2000);
 		String ActualSuccessfulMsg2 = driverR.findElement(By.xpath("//*[contains(text(),'Attendance updated successfully!')]")).getText();
 		String ExpectSuccessfulMsg2 ="Attendance updated successfully!";
-		System.out.println("ActualSuccesful Message found :->"+ActualSuccessfulMsg2);
+		Log.info("ActualSuccesful Message found :->"+ActualSuccessfulMsg2);
 		sf.assertEquals(ActualSuccessfulMsg2, ExpectSuccessfulMsg2);
 		Thread.sleep(60000);
 		
@@ -151,7 +152,7 @@ public class Validate_UserInterfaceAttendanceFunctionality extends BaseTest {
 		Thread.sleep(2000);
 		String ActualSuccessfulMsg3 = driverR.findElement(By.xpath("//*[contains(text(),'Attendance updated successfully!')]")).getText();
 		String ExpectSuccessfulMsg3 ="Attendance updated successfully!";
-		System.out.println("ActualSuccesful Message found :->"+ActualSuccessfulMsg3);
+		Log.info("ActualSuccesful Message found :->"+ActualSuccessfulMsg3);
 		sf.assertEquals(ActualSuccessfulMsg3, ExpectSuccessfulMsg3);
 		Thread.sleep(60000);
 		
@@ -161,20 +162,20 @@ public class Validate_UserInterfaceAttendanceFunctionality extends BaseTest {
 		Thread.sleep(2000);
 		String ActualSuccessfulMsg4 = driverR.findElement(By.xpath("//*[contains(text(),'Attendance updated successfully!')]")).getText();
 		String ExpectSuccessfulMsg4 ="Attendance updated successfully!";
-		System.out.println("ActualSuccesful Message found :->"+ActualSuccessfulMsg4);
+		Log.info("ActualSuccesful Message found :->"+ActualSuccessfulMsg4);
 		sf.assertEquals(ActualSuccessfulMsg4, ExpectSuccessfulMsg4);
         sf.assertAll();
 		
 		} 
 	catch (ElementNotInteractableException e) {
-	    System.out.println("TimeIn button not interactable: " + e.getMessage());
+	    Log.info("TimeIn button not interactable: " + e.getMessage());
 	}
 	}
 	public void DeleteAutomationTestUserRecords(String token) {
 //	    HashMap<String, String> data = new HashMap<>();
 //	    data.put("test_timestamp", timestamp);
 
-//	    System.out.println("→ Sending to " + endpoint + ": " + timestamp);
+//	    Log.info("→ Sending to " + endpoint + ": " + timestamp);
 
 	    given()
 	        .contentType("application/json")

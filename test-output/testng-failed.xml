@@ -4,17 +4,16 @@
   <listeners>
     <listener class-name="com.cms.listener.Listener"/>
   </listeners>
-  <test thread-count="5" name="ChromeTest(failed)">
+  <test thread-count="5" name="Test(failed)">
     <parameter name="browser" value="chrome"/>
     <classes>
-      <class name="com.cms.testcases.ModifiedTimesheetSubmissionScenario">
+      <class name="com.cms.testcases.LoginTest">
         <methods>
-          <include name="closebrowser"/>
-          <include name="ValidateApproveTimesheetReportFunctionality"/>
           <include name="openUrl"/>
-          <include name="closeURL"/>
+          <include name="closebrowser"/>
+          <include name="ValidateLoginFunctionality"/>
         </methods>
-      </class> <!-- com.cms.testcases.ModifiedTimesheetSubmissionScenario -->
+      </class> <!-- com.cms.testcases.LoginTest -->
     </classes>
-  </test> <!-- ChromeTest(failed) -->
+  </test> <!-- Test(failed) -->
 </suite> <!-- Failed suite [Suite] -->

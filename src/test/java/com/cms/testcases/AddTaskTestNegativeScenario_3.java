@@ -1,4 +1,5 @@
 package com.cms.testcases;
+import com.cms.utility.Log;
 
 import static io.restassured.RestAssured.given;
 
@@ -80,7 +81,7 @@ public class AddTaskTestNegativeScenario_3 extends BaseTest {
         JsonPath jsonPath = response.jsonPath();
         String token = response.jsonPath().getString("data.token");  // Change key if API returns it with a different name
 
-        System.out.println("Token: " + token);
+        Log.info("Token: " + token);
         return token;
         
     }
@@ -89,16 +90,16 @@ public class AddTaskTestNegativeScenario_3 extends BaseTest {
 public void ValidateClockIn() throws InterruptedException, IOException
 {
 
-       System.out.println("Final Token "+ (getToken()));
+       Log.info("Final Token "+ (getToken()));
 		clockInDate = att.generateRandomDate(); // Generate a date in February
         clockInTime = "05:00:00";
 //		clockInTime = att.timestamp();
 		Timein = clockInDate+"T"+clockInTime +"Z";
-		System.out.println("Final Time-In given :->"+Timein);
+		Log.info("Final Time-In given :->"+Timein);
 
 		HashMap data = new HashMap();
 		data.put("test_timestamp", Timein );
-		System.out.println("found accountId detail for delete functions : "+Timein);
+		Log.info("found accountId detail for delete functions : "+Timein);
 		given()
 		.contentType("application/json")
 		.headers("Authorization",("Token "+getToken()))
@@ -110,7 +111,7 @@ public void ValidateClockIn() throws InterruptedException, IOException
 		.then()
 		.statusCode(201)
 		.log().all();
-		System.out.println("******Clock-in Functionality Verified************");
+		Log.info("******Clock-in Functionality Verified************");
 
 		
 	}	
@@ -119,7 +120,7 @@ public void ValidateClockIn() throws InterruptedException, IOException
 public void ValidateBreakIn() throws InterruptedException, IOException
 {
 
-       System.out.println("Final Token "+ (getToken()));
+       Log.info("Final Token "+ (getToken()));
 //		clockInDate = att.generateRandomDate(); // Generate a date in February
 //		String clockInTime = att.timestamp();
        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -127,11 +128,11 @@ public void ValidateBreakIn() throws InterruptedException, IOException
        LocalTime updatedTime = originalTime.plusHours(1);
         updatedTimeStr = updatedTime.format(timeFormatter);
 		 Timein  = clockInDate+"T"+updatedTimeStr +"Z";
-		System.out.println("Final Time-In given :->"+updatedTimeStr);
+		Log.info("Final Time-In given :->"+updatedTimeStr);
 
 		HashMap data = new HashMap();
 		data.put("test_timestamp", Timein );
-		System.out.println("found accountId detail for delete functions : "+Timein);
+		Log.info("found accountId detail for delete functions : "+Timein);
 		given()
 		.contentType("application/json")
 		.headers("Authorization",("Token "+getToken()))
@@ -143,14 +144,14 @@ public void ValidateBreakIn() throws InterruptedException, IOException
 		.then()
 		.statusCode(201)
 		.log().all();
-		System.out.println("******BreakIn Functionality is  Verified************");
+		Log.info("******BreakIn Functionality is  Verified************");
 }
 
 @Test(priority=3,dependsOnMethods="ValidateBreakIn")
 public void ValidateBreakOut() throws InterruptedException, IOException
 {
 
-       System.out.println("Final Token "+ (getToken()));
+       Log.info("Final Token "+ (getToken()));
 //		clockInDate = att.generateRandomDate(); // Generate a date in February
 //		String clockInTime = att.timestamp();
            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -159,11 +160,11 @@ public void ValidateBreakOut() throws InterruptedException, IOException
            String updatedTimeStr = updatedTime2.format(timeFormatter);
 
 		String Timein = clockInDate+"T"+updatedTimeStr +"Z";
-		System.out.println("Final Time-In given :->"+Timein);
+		Log.info("Final Time-In given :->"+Timein);
 
 		HashMap data = new HashMap();
 		data.put("test_timestamp", Timein );
-		System.out.println("found accountId detail for delete functions : "+Timein);
+		Log.info("found accountId detail for delete functions : "+Timein);
 		given()
 		.contentType("application/json")
 		.headers("Authorization",("Token "+getToken()))
@@ -175,14 +176,14 @@ public void ValidateBreakOut() throws InterruptedException, IOException
 		.then()
 		.statusCode(201)
 		.log().all();
-		System.out.println("******BreakOut Functionality is Verified************");
+		Log.info("******BreakOut Functionality is Verified************");
 }
 
 @Test(priority=4,dependsOnMethods="ValidateBreakOut")
 public void ValidateClockOut() throws InterruptedException, IOException
 {
 
-       System.out.println("Final Token "+ (getToken()));
+       Log.info("Final Token "+ (getToken()));
 //		clockInDate = att.generateRandomDate(); // Generate a date in February
 //		String clockInTime = att.timestamp();
            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -191,11 +192,11 @@ public void ValidateClockOut() throws InterruptedException, IOException
            String updatedTimeStr = updatedTime3.format(timeFormatter);
 
 		String Timein = clockInDate+"T"+updatedTime3 +"Z";
-		System.out.println("Final Time-In given :->"+Timein);
+		Log.info("Final Time-In given :->"+Timein);
 
 		HashMap data = new HashMap();
 		data.put("test_timestamp", Timein );
-		System.out.println("found accountId detail for delete functions : "+Timein);
+		Log.info("found accountId detail for delete functions : "+Timein);
 		given()
 		.contentType("application/json")
 		.headers("Authorization",("Token "+getToken()))
@@ -207,7 +208,7 @@ public void ValidateClockOut() throws InterruptedException, IOException
 		.then()
 		.statusCode(201)
 		.log().all();
-		System.out.println("******Clock-Out Functionality is Verified************");
+		Log.info("******Clock-Out Functionality is Verified************");
 }
 	@Test(priority=5)
 	public void ValidateAddTaskFunctionalityAfterClockOut() throws InterruptedException, IOException, ParseException
@@ -244,7 +245,7 @@ public void ValidateClockOut() throws InterruptedException, IOException
 		        Date date = inputFormat.parse(inputDate);
 		        String formattedDate = outputFormat.format(date);
 
-		        System.out.println("Formatted Date: " + formattedDate);
+		        Log.info("Formatted Date: " + formattedDate);
 		        Thread.sleep(3000);
 			 att.SendClockinDate(formattedDate);
 			 
@@ -301,11 +302,11 @@ public void ValidateClockOut() throws InterruptedException, IOException
 		        WebElement dateTimeColumn = row.findElement(By.xpath(".//td[3]"));
 		        String rowDateTime = dateTimeColumn.getText().trim();
 		        
-		        System.out.println("Checking row with date: " + rowDateTime);
+		        Log.info("Checking row with date: " + rowDateTime);
 
 		        // 2. Match the date
 		        if (rowDateTime.startsWith(formattedDate)) {
-		            System.out.println("✅ Matching Entry Found: " + rowDateTime);
+		            Log.info("✅ Matching Entry Found: " + rowDateTime);
 
 		            // 3. Try to find "ADD TASK" inside this same row
 		            List<WebElement> addTaskButtons = row.findElements(By.xpath(".//*[contains(translate(text(), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 'ADD TASK')]"));
@@ -320,21 +321,21 @@ public void ValidateClockOut() throws InterruptedException, IOException
 		                Thread.sleep(1000);
 		                addTaskButton.click();
 
-		                System.out.println("🟢 Clicked 'ADD TASK' for date: " + formattedDate);
+		                Log.info("🟢 Clicked 'ADD TASK' for date: " + formattedDate);
 		                entryFound = true;
 		                break;
 		            } else {
-		                System.out.println("⚠️ 'ADD TASK' button not found in matched row.");
+		                Log.info("⚠️ 'ADD TASK' button not found in matched row.");
 		            }
 		        }
 
 		    } catch (NoSuchElementException e) {
-		        System.out.println("❌ Error in row: Element not found - " + e.getMessage());
+		        Log.info("❌ Error in row: Element not found - " + e.getMessage());
 		    }
 		}
 
 		if (!entryFound) {
-		    System.out.println("❌ No matching entry found with 'ADD TASK' for date: " + formattedDate);
+		    Log.info("❌ No matching entry found with 'ADD TASK' for date: " + formattedDate);
 		}
 
 //				att.SelectCoreProcess();

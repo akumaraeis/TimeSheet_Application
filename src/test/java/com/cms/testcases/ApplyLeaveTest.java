@@ -74,7 +74,7 @@ public class ApplyLeaveTest extends BaseTest {
 					.then().statusCode(200)
 					.extract().response();
 			token = loginResponse.jsonPath().getString("data.token");
-			System.out.println("🔐 Token fetched: " + token);
+			Log.info("🔐 Token fetched: " + token);
 			DeleteAutomationTestUserRecords(token);
 		}
 		
@@ -120,7 +120,7 @@ public class ApplyLeaveTest extends BaseTest {
 		Utility.ExplicitWait(Toaster);
 		String ActToaster_Msg = Toaster.getText();
 		String ExpToaster_Msg = "Leave applied successfully!";
-		System.out.println("Message Received on Submitting Apply Leave:->"+ActToaster_Msg);
+		Log.info("Message Received on Submitting Apply Leave:->"+ActToaster_Msg);
 		sf.assertEquals(ActToaster_Msg, ExpToaster_Msg);
 		Log.info("Leave Applied Successfully");
 //		alp.ClickonUserList();

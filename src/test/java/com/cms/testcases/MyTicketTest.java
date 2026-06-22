@@ -103,11 +103,14 @@ public class MyTicketTest extends BaseTest {
 		mtp.SelectCategory();
 		Log.info("Category selected");
 
+		mtp.SelectSubCategory();
+		Log.info("SubCategory selected");
+
 		mtp.SelectPriority();
 		Log.info("Priority selected");
 
-		mtp.SelectTicketType();
-		Log.info("Ticket type selected (if present)");
+		// mtp.SelectTicketType();
+		// Log.info("Ticket type selected (if present)");
 
 		mtp.EnterSubject();
 		Log.info("Subject entered");
@@ -115,8 +118,8 @@ public class MyTicketTest extends BaseTest {
 		mtp.EnterDescription();
 		Log.info("Description entered");
 
-		mtp.EnterComment();
-		Log.info("Comment entered (if present)");
+		// mtp.EnterComment();
+		// Log.info("Comment entered (if present)");
 
 		Utility.showTooltip("Step 4 → All input fields filled for the new ticket");
 		Utility.waitForSeconds(1);
@@ -132,7 +135,7 @@ public class MyTicketTest extends BaseTest {
 				By.xpath("//*[contains(text(),'successfully') or contains(text(),'Successfully')]"));
 		Utility.ExplicitWait(Toaster);
 		String ActToaster_Msg = Toaster.getText();
-		System.out.println("Message Received on Submitting Ticket: " + ActToaster_Msg);
+		Log.info("Message Received on Submitting Ticket: " + ActToaster_Msg);
 		Log.info("Ticket Created Successfully — Message: " + ActToaster_Msg);
 
 		sf.assertTrue(ActToaster_Msg != null && !ActToaster_Msg.isEmpty(),

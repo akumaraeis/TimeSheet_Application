@@ -1,4 +1,5 @@
 package com.cms.testcases;
+import com.cms.utility.Log;
 
 import static io.restassured.RestAssured.given;
 
@@ -81,7 +82,7 @@ public class TimesheetSubmissionScenario5 extends BaseTest {
                 .then().statusCode(200)
                 .extract().response();
          token = loginResponse.jsonPath().getString("data.token");
-        System.out.println("🔐 Token fetched: " + token);
+        Log.info("🔐 Token fetched: " + token);
 //        Utility.waitForSeconds(2);
         DeleteAutomationTestUserRecords(token);
 //        Utility.waitForSeconds(1);
@@ -116,7 +117,7 @@ public class TimesheetSubmissionScenario5 extends BaseTest {
 
 
 		List<WebElement> allWeeks = driverR.findElements(By.xpath("//div[contains(@class,'p-1 shadow mb-2 bg-gradient border-2')]"));
-		System.out.println("Total week blocks found: " + allWeeks.size());
+		Log.info("Total week blocks found: " + allWeeks.size());
 		totalWeeks = allWeeks.size();
         // API login
 		
@@ -131,7 +132,7 @@ public class TimesheetSubmissionScenario5 extends BaseTest {
 		    WebDriverWait wait = new WebDriverWait(driverR, Duration.ofSeconds(10));
 		    WebElement statusElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[contains(@class,'px-3 py-1')])[2]")));
 		    String status = statusElement.getText().replace("\u00A0", " ").trim();
-		    System.out.println("Week " + index + " Status: '" + status + "'");
+		    Log.info("Week " + index + " Status: '" + status + "'");
 
 		    if (status.equalsIgnoreCase("NOT SUBMITTED")) {
 		        String startText = driverR.findElement(By.xpath("(" + weekXPath + "/div/div/span)[1]")).getText().trim();
@@ -140,14 +141,14 @@ public class TimesheetSubmissionScenario5 extends BaseTest {
 		        DateTimeFormatter inputFormatter2 = DateTimeFormatter.ofPattern("MMM dd, yyyy", Locale.ENGLISH);
 		        LocalDate startDate = LocalDate.parse(startText, inputFormatter2);
 		        LocalDate endDate = LocalDate.parse(endText, inputFormatter2);
-		        System.out.println("Parsed Start Date: " + startDate + " | End Date: " + endDate);
+		        Log.info("Parsed Start Date: " + startDate + " | End Date: " + endDate);
 
 	        DateTimeFormatter outputFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		            String baseTime = "04:30:00";
 		        
 		        for (LocalDate date2 = startDate.plusDays(2); !date2.isAfter(endDate); date2 = date2.plusDays(1)) {
 		            String dateStr2 = date2.format(outputFormatter2);
-		            System.out.println("🗓️ Submitting entries for: " + dateStr2);
+		            Log.info("🗓️ Submitting entries for: " + dateStr2);
 		            sendAttendanceData(token,  dateStr2 + "T" + baseTime + "Z", "clockin");
 		            sendAttendanceData2(token, dateStr2 + "T" + addHours(baseTime, 1) + "Z", "breakin");
 		            sendAttendanceData2(token, dateStr2 + "T" + addHours(baseTime, 2) + "Z", "breakout");
@@ -163,7 +164,7 @@ public class TimesheetSubmissionScenario5 extends BaseTest {
 		        Utility.safeClick(driverR, js, refreshedWeek);
 
 		        List<WebElement> taskButtons = driverR.findElements(By.xpath("//*[contains(text(),'Add Task')]"));
-		        System.out.println("Total Add Task buttons: " + taskButtons.size());
+		        Log.info("Total Add Task buttons: " + taskButtons.size());
 
 		        for (int i = 1; i < taskButtons.size(); i++) {
 		            try {
@@ -194,7 +195,7 @@ public class TimesheetSubmissionScenario5 extends BaseTest {
 		                MinimizeBtn2.click();
 		                Utility.waitForSeconds(2);
 		            } catch (ElementClickInterceptedException e) {
-		                System.out.println("Add Task Click Intercepted: Retrying via JS click.");
+		                Log.info("Add Task Click Intercepted: Retrying via JS click.");
 		                js.executeScript("arguments[0].click();", driverR.findElement(By.xpath("(//*[contains(text(),'Add Task')])[1]")));
 		            }
 		        }
@@ -227,7 +228,7 @@ public class TimesheetSubmissionScenario5 extends BaseTest {
 		                MinimizeBtn2.click();
 		                Utility.waitForSeconds(2);
 		            } catch (ElementClickInterceptedException e) {
-		                System.out.println("Add Task Click Intercepted: Retrying via JS click.");
+		                Log.info("Add Task Click Intercepted: Retrying via JS click.");
 		                js.executeScript("arguments[0].click();", driverR.findElement(By.xpath("(//*[contains(text(),'Add Task')])[1]")));
 		            }
 		        }
@@ -251,11 +252,11 @@ public class TimesheetSubmissionScenario5 extends BaseTest {
 		            Utility.highlightElement(confirmSubmit);
 		            Utility.safeClick(driverR, js, confirmSubmit);
 		            Utility.waitForSeconds(2);
-		            System.out.println("✅ Timesheet submitted for week " + index);
+		            Log.info("✅ Timesheet submitted for week " + index);
 		            
 		            WebElement confirmMsg = driverR.findElement(By.xpath("//*[contains(text(),'Task hours per timesheet must be within 15 minutes of effective working hours.')]"));
 		            String ActualTimesheetSuccesful = confirmMsg.getText();
-		            System.out.println("Timesheet submission Succesful Message :-> " + ActualTimesheetSuccesful);
+		            Log.info("Timesheet submission Succesful Message :-> " + ActualTimesheetSuccesful);
 		            String ExpectTimesheetSuccesful ="Task hours per timesheet must be within 15 minutes of effective working hours.";
 		            sf.assertEquals(ActualTimesheetSuccesful, ExpectTimesheetSuccesful);
 		            // Check final status after submission
@@ -269,15 +270,15 @@ public class TimesheetSubmissionScenario5 extends BaseTest {
 
 //		            WebElement finalStatus = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(@class,'bg-warning rounded text-black')]")));
 //		            String newStatus = finalStatus.getText().replace("\u00A0", " ").trim();
-//		            System.out.println("🟢 Post-Submission Status: '" + newStatus + "'");
+//		            Log.info("🟢 Post-Submission Status: '" + newStatus + "'");
 
 		            if (ActualTimesheetSuccesful.equalsIgnoreCase("Task hours per timesheet must be within 15 minutes of effective working hours.")) {
-		                System.out.println("Task hours per timesheet must be within 15 minutes of effective working hours.so loop Breaks");
+		                Log.info("Task hours per timesheet must be within 15 minutes of effective working hours.so loop Breaks");
 		                break; // STOP the main loop
 		            }
 
 		        } catch (Exception e) {
-		            System.out.println("⚠️ Error during final submission: " + e.getMessage());
+		            Log.info("⚠️ Error during final submission: " + e.getMessage());
 		        }
 		    }
 		}
@@ -295,7 +296,7 @@ public class TimesheetSubmissionScenario5 extends BaseTest {
 		    HashMap<String, String> data = new HashMap<>();
 		    data.put("test_timestamp", timestamp);
 
-		    System.out.println("→ Sending to " + endpoint + ": " + timestamp);
+		    Log.info("→ Sending to " + endpoint + ": " + timestamp);
 
 		    given()
 		        .contentType("application/json")
@@ -311,7 +312,7 @@ public class TimesheetSubmissionScenario5 extends BaseTest {
 		    HashMap<String, String> data = new HashMap<>();
 		    data.put("test_timestamp", timestamp);
 
-		    System.out.println("→ Sending to " + endpoint + ": " + timestamp);
+		    Log.info("→ Sending to " + endpoint + ": " + timestamp);
 
 		    given()
 		        .contentType("application/json")
@@ -327,7 +328,7 @@ public class TimesheetSubmissionScenario5 extends BaseTest {
 		public void DeleteAutomationTestUserRecords(String token) {
 //		    HashMap<String, String> data = new HashMap<>();
 //		    data.put("test_timestamp", timestamp);
-//		    System.out.println("→ Sending to " + endpoint + ": " + timestamp);
+//		    Log.info("→ Sending to " + endpoint + ": " + timestamp);
 
 		    given()
 		        .contentType("application/json")

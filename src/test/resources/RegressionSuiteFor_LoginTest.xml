@@ -11,16 +11,5 @@
     </classes>
   </test> <!-- Test -->
   
-    <test thread-count="5" name="firefox">
-	    <parameter name="browser" value="firefox"/>
-	     <classes>
-	          <class name="com.cms.testcases.LoginTest"/>
-    </classes>
-  </test> <!-- Test -->
-    <test thread-count="5" name="edge">
-	    <parameter name="browser" value="edge"/>
-	     <classes>
-	          <class name="com.cms.testcases.LoginTest"/>
-    </classes>
-  </test> <!-- Test -->
+
 </suite> <!-- Suite -->

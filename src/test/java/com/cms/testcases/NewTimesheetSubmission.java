@@ -1,4 +1,5 @@
 package com.cms.testcases;
+import com.cms.utility.Log;
 
 import static io.restassured.RestAssured.given;
 
@@ -102,7 +103,7 @@ public class NewTimesheetSubmission extends BaseTest {
 
 
 		List<WebElement> allWeeks = driverR.findElements(By.xpath("//div[contains(@class,'p-1 shadow mb-2 bg-gradient border-2')]"));
-		System.out.println("Total week blocks found: " + allWeeks.size());
+		Log.info("Total week blocks found: " + allWeeks.size());
 		totalWeeks = allWeeks.size();
        for (int index = 2; index <= totalWeeks; index++) {
 	        try {
@@ -120,7 +121,7 @@ public class NewTimesheetSubmission extends BaseTest {
 			    WebDriverWait wait = new WebDriverWait(driverR, Duration.ofSeconds(10));
 			    WebElement statusElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[contains(@class,'px-3 py-1')])[2]")));
 			    String status = statusElement.getText().replace("\u00A0", " ").trim();
-			    System.out.println("Week " + index + " Status: '" + status + "'");
+			    Log.info("Week " + index + " Status: '" + status + "'");
 
 	            if (!status.equalsIgnoreCase("Not_Submitted")) {
 	                continue; // skip non-editable weeks
@@ -134,7 +135,7 @@ public class NewTimesheetSubmission extends BaseTest {
 	            boolean noRecordFound = !driverR.findElements(By.xpath("//*[contains(text(),'Record not found')]")).isEmpty();
 
 	            if (noRecordFound) {
-	                System.out.println("🟡 No timesheet found. Creating entries...");
+	                Log.info("🟡 No timesheet found. Creating entries...");
 	                createTimesheetEntriesMonToFri();
 	                Thread.sleep(2000);
 	            }
@@ -151,14 +152,14 @@ public class NewTimesheetSubmission extends BaseTest {
 	                    // Check for Edit Task
 	                    List<WebElement> editTask = dayCard.findElements(By.xpath(".//*[text()='Edit Task']"));
 	                    if (!editTask.isEmpty()) {
-	                        System.out.println("✔️ Day " + day + ": Task already exists. Skipping...");
+	                        Log.info("✔️ Day " + day + ": Task already exists. Skipping...");
 	                        continue;
 	                    }
 
 	                    // Check for Add Task
 	                    List<WebElement> addTask = dayCard.findElements(By.xpath(".//*[text()='Add Task']"));
 	                    if (!addTask.isEmpty()) {
-	                        System.out.println("🟢 Day " + day + ": No task. Adding task...");
+	                        Log.info("🟢 Day " + day + ": No task. Adding task...");
 	                        WebElement addBtn = addTask.get(0);
 	                        js.executeScript("arguments[0].scrollIntoView(true);", addBtn);
 	                        wait.until(ExpectedConditions.elementToBeClickable(addBtn)).click();
@@ -174,12 +175,12 @@ public class NewTimesheetSubmission extends BaseTest {
 	                    }
 
 	                } catch (Exception innerEx) {
-	                    System.out.println("⚠️ Error processing day " + day + ": " + innerEx.getMessage());
+	                    Log.info("⚠️ Error processing day " + day + ": " + innerEx.getMessage());
 	                }
 	            }
 
 	        } catch (Exception e) {
-	            System.out.println("❌ Exception at week index " + index + ": " + e.getMessage());
+	            Log.info("❌ Exception at week index " + index + ": " + e.getMessage());
 	        }
 	    }
 	}
@@ -195,7 +196,7 @@ public class NewTimesheetSubmission extends BaseTest {
         DateTimeFormatter inputFormatter2 = DateTimeFormatter.ofPattern("MMM dd, yyyy", Locale.ENGLISH);
         LocalDate startDate = LocalDate.parse(startText, inputFormatter2);
         LocalDate endDate = LocalDate.parse(endText, inputFormatter2);
-        System.out.println("Parsed Start Date: " + startDate + " | End Date: " + endDate);
+        Log.info("Parsed Start Date: " + startDate + " | End Date: " + endDate);
 
 		RestAssured.baseURI = "https://tsbackend.ndtatlas.com";
         Response loginResponse = RestAssured.given()
@@ -205,14 +206,14 @@ public class NewTimesheetSubmission extends BaseTest {
                 .then().statusCode(200)
                 .extract().response();
         String token = loginResponse.jsonPath().getString("data.token");
-        System.out.println("🔐 Token fetched: " + token);
+        Log.info("🔐 Token fetched: " + token);
 
         // Submit attendance (from 3rd day onwards)
         DateTimeFormatter outputFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String baseTime = "04:30:00";
         for (LocalDate date = startDate.plusDays(2); !date.isAfter(endDate); date = date.plusDays(1)) {
             String dateStr = date.format(outputFormatter2);
-            System.out.println("🗓️ Submitting entries for: " + dateStr);
+            Log.info("🗓️ Submitting entries for: " + dateStr);
             sendAttendanceData(token, dateStr + "T" + baseTime + "Z", "clockin");
             sendAttendanceData2(token, dateStr + "T" + addHours(baseTime, 1) + "Z", "breakin");
             sendAttendanceData2(token, dateStr + "T" + addHours(baseTime, 2) + "Z", "breakout");
@@ -220,7 +221,7 @@ public class NewTimesheetSubmission extends BaseTest {
             Thread.sleep(2000);
         }
 	
-		System.out.println("📌 Creating timesheet entries (Mon–Fri)");
+		Log.info("📌 Creating timesheet entries (Mon–Fri)");
 	    // Dummy code structure – you must fill in your real logic
 	}
 	
@@ -234,7 +235,7 @@ public class NewTimesheetSubmission extends BaseTest {
 	    HashMap<String, String> data = new HashMap<>();
 	    data.put("test_timestamp", timestamp);
 
-	    System.out.println("→ Sending to " + endpoint + ": " + timestamp);
+	    Log.info("→ Sending to " + endpoint + ": " + timestamp);
 
 	    given()
 	        .contentType("application/json")
@@ -250,7 +251,7 @@ public class NewTimesheetSubmission extends BaseTest {
 	    HashMap<String, String> data = new HashMap<>();
 	    data.put("test_timestamp", timestamp);
 
-	    System.out.println("→ Sending to " + endpoint + ": " + timestamp);
+	    Log.info("→ Sending to " + endpoint + ": " + timestamp);
 
 	    given()
 	        .contentType("application/json")
@@ -269,7 +270,7 @@ public class NewTimesheetSubmission extends BaseTest {
 	  
 	// driverR.findElement(By.xpath("//button[text()='Save']")).click();
 		  List<WebElement> taskButtons = driverR.findElements(By.xpath("//*[contains(text(),'Add Task')]"));
-	        System.out.println("Total Add Task buttons: " + taskButtons.size());
+	        Log.info("Total Add Task buttons: " + taskButtons.size());
 
 	        for (int i = 1; i <= taskButtons.size(); i++) {
 		try
@@ -296,11 +297,11 @@ public class NewTimesheetSubmission extends BaseTest {
         Utility.waitForSeconds(2);
 		
     } catch (ElementClickInterceptedException e) {
-        System.out.println("Add Task Click Intercepted: Retrying via JS click.");
+        Log.info("Add Task Click Intercepted: Retrying via JS click.");
         js.executeScript("arguments[0].click();", driverR.findElement(By.xpath("(//*[contains(text(),'Add Task')])[1]")));
     }
 	        
-	    System.out.println("📋 Filling and submitting task form");
+	    Log.info("📋 Filling and submitting task form");
 	}
 	}
 	

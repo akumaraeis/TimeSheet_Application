@@ -1,4 +1,5 @@
 package com.cms.pageObjects;
+import com.cms.utility.Log;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -35,12 +36,12 @@ public class MyTicketPage extends BaseTest {
 	@FindBy(xpath = "//span[@class='d-flex align-items-center gap-2']//span[contains(text(),'My Leaves')]")
 	private WebElement MyLeaves;
 
-	@FindBy(xpath = "//span[@class='d-flex align-items-center gap-2']//span[contains(text(),'My Ticket')]")
+	@FindBy(xpath = "//span[@class='d-flex align-items-center gap-2']//span[contains(text(),'Ticket')]")
 	private WebElement MyTicketNav;
 
 	// ─── My Ticket Page Controls ──────────────────────────────────────────────
 
-	@FindBy(xpath = "//button[normalize-space()='New Ticket']")
+	@FindBy(xpath = "//button[normalize-space()='+ New Ticket']")
 	private WebElement NewTicketBtn;
 
 	@FindBy(xpath = "//a[contains(normalize-space(),'New Ticket')]")
@@ -48,30 +49,33 @@ public class MyTicketPage extends BaseTest {
 
 	// ─── Ticket Form Fields ───────────────────────────────────────────────────
 
-	@FindBy(xpath = "//select[@aria-label='Select Category']")
+	@FindBy(xpath = "//select[@id='create-category']")
 	private WebElement Category;
 
-	@FindBy(xpath = "//select[@aria-label='Select Priority']")
+	@FindBy(xpath = "//select[@id='create-subcategory']")
+	private WebElement SubCategory;
+
+	@FindBy(xpath = "//select[@id='create-priority']")
 	private WebElement Priority;
 
 	@FindBy(xpath = "//select[@aria-label='Select Type']")
 	private WebElement TicketType;
 
-	@FindBy(xpath = "//input[@placeholder='Enter Subject']")
+	@FindBy(xpath = "//input[@id='create-subject']")
 	private WebElement Subject;
 
-	@FindBy(xpath = "//textarea[@placeholder='Enter Description']")
+	@FindBy(xpath = "//textarea[@id='create-description']")
 	private WebElement Description;
 
 	@FindBy(xpath = "//textarea[@placeholder='Enter comment']")
 	private WebElement Comment;
 
-	@FindBy(xpath = "//button[normalize-space()='Submit']")
+	@FindBy(xpath = "//button[normalize-space()='Submit Ticket']")
 	private WebElement SubmitBtn;
 
 	// ─── Success / Validation ─────────────────────────────────────────────────
 
-	@FindBy(xpath = "//div[contains(text(),'Ticket created successfully')]")
+	@FindBy(xpath = "//div[contains(text(),'Ticket created successfully.')]")
 	private WebElement TicketSuccessMsg;
 
 	@FindBy(xpath = "//div[contains(text(),'successfully')]")
@@ -122,7 +126,7 @@ public class MyTicketPage extends BaseTest {
 			js.executeScript("arguments[0].setAttribute('style','background:yellow;border:4px solid green;')", NewTicketBtn);
 			NewTicketBtn.click();
 		} catch (Exception e) {
-			System.out.println("Button not found, trying link: " + e.getMessage());
+			Log.info("Button not found, trying link: " + e.getMessage());
 			Utility.ExplicitWait(NewTicketLink);
 			NewTicketLink.click();
 		}
@@ -137,10 +141,18 @@ public class MyTicketPage extends BaseTest {
 		js = (JavascriptExecutor) driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')", Category);
 		Select s = new Select(Category);
-		s.selectByIndex(1);
+		s.selectByIndex(2);
 		Utility.waitForSeconds(1);
 	}
-
+public void SelectSubCategory() throws InterruptedException {
+		Utility.ExplicitWait(SubCategory);
+		Utility.showCallout("Selecting Ticket Category", Category);
+		js = (JavascriptExecutor) driver2;
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')", Category);
+		Select s = new Select(SubCategory);
+		s.selectByIndex(3);
+		Utility.waitForSeconds(1);
+	}
 	public void SelectPriority() throws InterruptedException {
 		Utility.ExplicitWait(Priority);
 		Utility.showCallout("Selecting Ticket Priority", Priority);
@@ -161,7 +173,7 @@ public class MyTicketPage extends BaseTest {
 			s.selectByIndex(1);
 			Utility.waitForSeconds(1);
 		} catch (Exception e) {
-			System.out.println("Ticket Type dropdown not present, skipping: " + e.getMessage());
+			Log.info("Ticket Type dropdown not present, skipping: " + e.getMessage());
 		}
 	}
 
@@ -193,7 +205,7 @@ public class MyTicketPage extends BaseTest {
 			Comment.sendKeys("Automation Test Comment");
 			Utility.waitForSeconds(1);
 		} catch (Exception e) {
-			System.out.println("Comment field not present, skipping: " + e.getMessage());
+			Log.info("Comment field not present, skipping: " + e.getMessage());
 		}
 	}
 
@@ -212,7 +224,7 @@ public class MyTicketPage extends BaseTest {
 		try {
 			Utility.ExplicitWait(TicketSuccessMsg);
 			String msg = TicketSuccessMsg.getText();
-			System.out.println("Ticket Success Message: " + msg);
+			Log.info("Ticket Success Message: " + msg);
 			return msg;
 		} catch (Exception e) {
 			WebElement fallback = driver2.findElement(By.xpath("//div[contains(@class,'alert') and contains(text(),'success')]"));
@@ -224,7 +236,7 @@ public class MyTicketPage extends BaseTest {
 	public String GetGenericSuccessMessage() throws InterruptedException {
 		Utility.ExplicitWait(GenericSuccessMsg);
 		String msg = GenericSuccessMsg.getText();
-		System.out.println("Success Message: " + msg);
+		Log.info("Success Message: " + msg);
 		return msg;
 	}
 }

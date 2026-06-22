@@ -1,4 +1,5 @@
 package com.cms.testcases;
+import com.cms.utility.Log;
 
 import static io.restassured.RestAssured.given;
 
@@ -83,7 +84,7 @@ public class ApplyLeaveNegativeScenarioTest extends BaseTest {
                 .then().statusCode(200)
                 .extract().response();
          token = loginResponse.jsonPath().getString("data.token");
-        System.out.println("🔐 Token fetched: " + token);
+        Log.info("🔐 Token fetched: " + token);
 //        Utility.waitForSeconds(2);
         DeleteAutomationTestUserRecords(token);
 //        Utility.waitForSeconds(1);
@@ -118,7 +119,7 @@ public class ApplyLeaveNegativeScenarioTest extends BaseTest {
 		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
 		List<WebElement> allWeeks = driverR.findElements(By.xpath("//div[contains(@class,'p-1 shadow mb-2 bg-gradient border-2')]"));
-		System.out.println("Total week blocks found: " + allWeeks.size());
+		Log.info("Total week blocks found: " + allWeeks.size());
 		totalWeeks = allWeeks.size();
         // API login
 		
@@ -132,7 +133,7 @@ public class ApplyLeaveNegativeScenarioTest extends BaseTest {
 		    WebDriverWait wait = new WebDriverWait(driverR, Duration.ofSeconds(10));
 		    WebElement statusElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[contains(@class,'px-3 py-1')])[2]")));
 		    String status = statusElement.getText().replace("\u00A0", " ").trim();
-		    System.out.println("Week " + 2 + " Status: '" + status + "'");
+		    Log.info("Week " + 2 + " Status: '" + status + "'");
 
 		    if (status.equalsIgnoreCase("Not_Submitted")) {
 		        String startText = driverR.findElement(By.xpath("(" + weekXPath + "/div/div/span)[1]")).getText().trim();
@@ -141,7 +142,7 @@ public class ApplyLeaveNegativeScenarioTest extends BaseTest {
 		        DateTimeFormatter inputFormatter2 = DateTimeFormatter.ofPattern("MMM dd, yyyy", Locale.ENGLISH);
 		        LocalDate startDate = LocalDate.parse(startText, inputFormatter2);
 		        LocalDate endDate = LocalDate.parse(endText, inputFormatter2);
-		        System.out.println("Parsed Start Date: " + startDate + " | End Date: " + endDate);
+		        Log.info("Parsed Start Date: " + startDate + " | End Date: " + endDate);
 /*
 		        // API login
 		        RestAssured.baseURI = "https://tsbackend.ndtatlas.com";
@@ -152,7 +153,7 @@ public class ApplyLeaveNegativeScenarioTest extends BaseTest {
 		                .then().statusCode(200)
 		                .extract().response();
 		        String token = loginResponse.jsonPath().getString("data.token");
-		        System.out.println("🔐 Token fetched: " + token);
+		        Log.info("🔐 Token fetched: " + token);
 //		        Utility.waitForSeconds(2);
 		        DeleteAutomationTestUserRecords(token);
 		        Utility.waitForSeconds(1);
@@ -164,7 +165,7 @@ public class ApplyLeaveNegativeScenarioTest extends BaseTest {
 		        String baseTime = "04:30:00";
 		      
 		            dateStr = endDate.format(outputFormatter2);
-		            System.out.println("🗓️ Submitting entries for: " + dateStr);
+		            Log.info("🗓️ Submitting entries for: " + dateStr);
 		            sendAttendanceData(token, dateStr + "T" + baseTime + "Z", "clockin");
 		            sendAttendanceData2(token, dateStr + "T" + addHours(baseTime, 1) + "Z", "breakin");
 		            sendAttendanceData2(token, dateStr + "T" + addHours(baseTime, 2) + "Z", "breakout");
@@ -199,26 +200,26 @@ public class ApplyLeaveNegativeScenarioTest extends BaseTest {
 			        LocalDate date = LocalDate.parse(dateStr, inputFormatter3);
 			        String formattedDate = date.format(outputFormatter3);
 
-			        System.out.println("Formatted Date: " + formattedDate);	    
-			        System.out.println("Date found after Leave detail page :->"+leaveDate);
+			        Log.info("Formatted Date: " + formattedDate);	    
+			        Log.info("Date found after Leave detail page :->"+leaveDate);
 					if(formattedDate.equals(leaveDate))
 					{
 						WebElement ApplyText = driverR.findElement(By.xpath("//*[contains(text(),'Not Applicable')]"));
 						String LeaveText = ApplyText.getText();
-						System.out.println("Leave text found after Leave "+LeaveText);
+						Log.info("Leave text found after Leave "+LeaveText);
 						
 						String ActualLeaveText = LeaveText ;
 						String ExpectLeaveText ="NOT APPLICABLE";
 						sf.assertEquals(ActualLeaveText, ExpectLeaveText);
 						if(LeaveText.equalsIgnoreCase("Not Applicable"))
 						{
-							System.out.println("Loop Breaks Since Timesheet entry date matches Leave date");
+							Log.info("Loop Breaks Since Timesheet entry date matches Leave date");
 						break;
 						}
 					}
 					else
 					{
-						System.out.println("Loop Continues Since Timesheet entry date do not matches Leave date");
+						Log.info("Loop Continues Since Timesheet entry date do not matches Leave date");
 					}
 					
 				}
@@ -240,7 +241,7 @@ public class ApplyLeaveNegativeScenarioTest extends BaseTest {
 		    HashMap<String, String> data = new HashMap<>();
 		    data.put("test_timestamp", timestamp);
 
-		    System.out.println("→ Sending to " + endpoint + ": " + timestamp);
+		    Log.info("→ Sending to " + endpoint + ": " + timestamp);
 
 		    given()
 		        .contentType("application/json")
@@ -256,7 +257,7 @@ public class ApplyLeaveNegativeScenarioTest extends BaseTest {
 		    HashMap<String, String> data = new HashMap<>();
 		    data.put("test_timestamp", timestamp);
 
-		    System.out.println("→ Sending to " + endpoint + ": " + timestamp);
+		    Log.info("→ Sending to " + endpoint + ": " + timestamp);
 
 		    given()
 		        .contentType("application/json")
@@ -273,7 +274,7 @@ public class ApplyLeaveNegativeScenarioTest extends BaseTest {
 //		    HashMap<String, String> data = new HashMap<>();
 //		    data.put("test_timestamp", timestamp);
 
-//		    System.out.println("→ Sending to " + endpoint + ": " + timestamp);
+//		    Log.info("→ Sending to " + endpoint + ": " + timestamp);
 
 		    given()
 		        .contentType("application/json")
