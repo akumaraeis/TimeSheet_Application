@@ -1,4 +1,5 @@
 package com.cms.testcases;
+import com.cms.utility.Log;
 
 import static io.restassured.RestAssured.given;
 
@@ -61,7 +62,7 @@ public class LeaveApprovalTest extends BaseTest {
                 .then().statusCode(200)
                 .extract().response();
         String token = loginResponse.jsonPath().getString("data.token");
-        System.out.println("🔐 Token fetched: " + token);
+        Log.info("🔐 Token fetched: " + token);
 //        Utility.waitForSeconds(2);
         DeleteAutomationTestUserRecords(token);
 //        Utility.waitForSeconds(1);
@@ -114,7 +115,7 @@ public class LeaveApprovalTest extends BaseTest {
 		Thread.sleep(3000);
 		WebElement Toaster = driverR.findElement(By.xpath("//*[contains(@class,'Toastify__toast Toastify')]"));
 		String Toaster_Msg = Toaster.getText();
-		System.out.println("Message Received on Submitting Apply Leave:->"+Toaster_Msg);
+		Log.info("Message Received on Submitting Apply Leave:->"+Toaster_Msg);
 		
 		alp.ClickonUserList();
 		
@@ -158,7 +159,7 @@ public class LeaveApprovalTest extends BaseTest {
 //	    HashMap<String, String> data = new HashMap<>();
 //	    data.put("test_timestamp", timestamp);
 
-//	    System.out.println("→ Sending to " + endpoint + ": " + timestamp);
+//	    Log.info("→ Sending to " + endpoint + ": " + timestamp);
 
 	    given()
 	        .contentType("application/json")

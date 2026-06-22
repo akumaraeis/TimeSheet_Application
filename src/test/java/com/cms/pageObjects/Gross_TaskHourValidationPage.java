@@ -1,4 +1,5 @@
 package com.cms.pageObjects;
+import com.cms.utility.Log;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -274,7 +275,7 @@ public class Gross_TaskHourValidationPage extends BaseTest{
 //		ClockinDate.click();
 		ClockinDate.sendKeys(getRandomDate);
 		
-//		System.out.println(getRandomDate());
+//		Log.info(getRandomDate());
 		
 	    Thread.sleep(1000);
 //	    return getRandomDate(02);
@@ -380,7 +381,7 @@ public class Gross_TaskHourValidationPage extends BaseTest{
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",UserName );
 
 		String ActualMsg = SuccessfulNotification.getText();
-		System.out.println("Successful Message received on Timesheet"+ActualMsg);
+		Log.info("Successful Message received on Timesheet"+ActualMsg);
 		Thread.sleep(2000);
 		return ActualMsg ;
 	}
@@ -391,7 +392,7 @@ public class Gross_TaskHourValidationPage extends BaseTest{
 		js = (JavascriptExecutor)driver2;
 		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid green;')",taskSuccessfulMsg );
 		String ActualMsg = taskSuccessfulMsg.getText();
-		System.out.println("Successful Message received on Timesheet"+ActualMsg);
+		Log.info("Successful Message received on Timesheet"+ActualMsg);
 		Thread.sleep(2000);
 		return ActualMsg ;
 	}
@@ -437,10 +438,10 @@ public class Gross_TaskHourValidationPage extends BaseTest{
 	            Thread.sleep(2000);
 	            break;
 	        } else {
-	            System.out.println("Added Task date not found");
+	            Log.info("Added Task date not found");
 	        }
 	    } catch (ParseException e) {
-	        e.printStackTrace(); // Handle invalid date parsing
+	        Log.error("Unexpected exception", e); // Handle invalid date parsing
 	    }
 	}
 	}
@@ -467,7 +468,7 @@ public class Gross_TaskHourValidationPage extends BaseTest{
 	{
 		Utility.ExplicitWait(TaskAlert);
 		String ActualMsg2 = TaskAlert.getText();
-		System.out.println(" Message received on Timesheet"+ActualMsg2);
+		Log.info(" Message received on Timesheet"+ActualMsg2);
 		Thread.sleep(2000);
 		return ActualMsg2 ;
 	}
@@ -477,7 +478,7 @@ public class Gross_TaskHourValidationPage extends BaseTest{
 	{
 		Utility.ExplicitWait(EditTimesheetAlert);
 		String ActualMsg3 = EditTimesheetAlert.getText();
-		System.out.println(" Message received on Timesheet"+ActualMsg3);
+		Log.info(" Message received on Timesheet"+ActualMsg3);
 		Thread.sleep(2000);
 		return ActualMsg3 ;
 	}

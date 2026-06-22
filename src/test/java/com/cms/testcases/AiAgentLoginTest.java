@@ -1,4 +1,5 @@
 package com.cms.testcases;
+import com.cms.utility.Log;
 
 import java.io.IOException;
 
@@ -62,9 +63,9 @@ public class AiAgentLoginTest extends BaseTest {
 			
 			sf.assertEquals(ActualProfileName, ExpectedProfileName);
 		    sf.assertAll();
-//			System.out.println("Log4j2 Config Location: " + 
+//			Log.info("Log4j2 Config Location: " + 
 //					System.getProperty("log4j.configurationFile"));
-//			System.out.println("Log File Name: " + 
+//			Log.info("Log File Name: " + 
 //					System.getProperty("logFilename"));
 		}
 	}

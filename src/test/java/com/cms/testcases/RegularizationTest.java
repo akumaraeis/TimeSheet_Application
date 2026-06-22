@@ -87,7 +87,7 @@ public class RegularizationTest extends BaseTest {
 				.then().statusCode(200)
 				.extract().response();
 		token = loginResponse.jsonPath().getString("data.token");
-		System.out.println("🔐 Token fetched: " + token);
+		Log.info("🔐 Token fetched: " + token);
 		DeleteAutomationTestUserRecords(token);
 	}
 	@Test(priority=2)
@@ -123,15 +123,15 @@ public class RegularizationTest extends BaseTest {
 //		LocalDate previousFriday = previousMonday.plusDays(4);
 //
 //		String formattedMonday = previousMonday.format(formatter);
-//		System.out.println("Loop start formatted Monday :->"+formattedMonday);
+//		Log.info("Loop start formatted Monday :->"+formattedMonday);
 //		String formattedFriday = previousFriday.format(formatter);
-//		System.out.println("Loop end formatted friday :->"+formattedFriday);
+//		Log.info("Loop end formatted friday :->"+formattedFriday);
 		String baseTime = "11:45:00";
 //		LocalDate date = previousMonday; 
 
 			String date2 = today.format(formatter);
-			System.out.println("Date Stamp entry for timestamp for send Attendance Method "+date2);
-			System.out.println("🗓️ Submitting entries for:->" + date2);
+			Log.info("Date Stamp entry for timestamp for send Attendance Method "+date2);
+			Log.info("🗓️ Submitting entries for:->" + date2);
 			sendAttendanceData(token,"CLOCK_IN", date2, baseTime);
 			sendAttendanceData(token,"BREAK_IN", date2,addHours(baseTime, 1));
 			sendAttendanceData(token,"BREAK_OUT", date2,addHours(baseTime, 2));
@@ -163,7 +163,7 @@ public class RegularizationTest extends BaseTest {
 			data.put("action_date", timestamp);
 			data.put("action_time", time);
 
-			System.out.println("→ Sending to " + ": " + timestamp);
+			Log.info("→ Sending to " + ": " + timestamp);
 
 			given()
 			.contentType("application/json")
@@ -181,7 +181,7 @@ public class RegularizationTest extends BaseTest {
 			data.put("action_date", timestamp);
 			data.put("action_time", time);
 
-			System.out.println("→ Sending to " + ": " + timestamp);
+			Log.info("→ Sending to " + ": " + timestamp);
 
 			given()
 			.contentType("application/json")

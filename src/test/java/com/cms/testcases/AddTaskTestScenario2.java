@@ -1,4 +1,5 @@
 package com.cms.testcases;
+import com.cms.utility.Log;
 
 import static io.restassured.RestAssured.given;
 
@@ -30,7 +31,6 @@ import com.cms.basetest.BaseTest;
 import com.cms.utility.Utility;
 
 import io.restassured.RestAssured;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 
@@ -67,7 +67,7 @@ public class AddTaskTestScenario2 extends BaseTest {
 
 	@Test(priority=0)
 	public static  String getToken() {
-		RestAssured.baseURI = "https://timesheet.ndtatlas.com/";
+		RestAssured.baseURI = APP_URL_API;
 
 		Response response = given()
 				.header("Content-Type", "application/json")
@@ -78,11 +78,8 @@ public class AddTaskTestScenario2 extends BaseTest {
 				.statusCode(200)
 				.extract().response();
 
-		// Extract token from response
-		JsonPath jsonPath = response.jsonPath();
-		String token = response.jsonPath().getString("data.token");  // Change key if API returns it with a different name
-
-		System.out.println("Token: " + token);
+		String token = response.jsonPath().getString("data.token");
+		Log.info("Token: " + token);
 		return token;
 
 	}
@@ -91,7 +88,7 @@ public class AddTaskTestScenario2 extends BaseTest {
 	public void DeleteTestUserRecord() throws InterruptedException, IOException
 	{
 
-		RestAssured.baseURI = "https://timesheet.ndtatlas.com/";
+		RestAssured.baseURI = APP_URL_API;
 		Response loginResponse = RestAssured.given()
 				.header("Content-Type", "application/json")
 				.body("{ \"username\": \"AutomationTestUser\", \"password\": \"Test@123\" }")
@@ -99,12 +96,8 @@ public class AddTaskTestScenario2 extends BaseTest {
 				.then().statusCode(200)
 				.extract().response();
 		String token = loginResponse.jsonPath().getString("data.token");
-		System.out.println("🔐 Token fetched: " + token);
-		//        Utility.waitForSeconds(2);
+		Log.info("🔐 Token fetched: " + token);
 		DeleteAutomationTestUserRecords(token);
-		//        Utility.waitForSeconds(1);
-		//        driverR.navigate().refresh();
-		//        Utility.waitForSeconds(1);		        
 
 	}
 
@@ -113,31 +106,31 @@ public class AddTaskTestScenario2 extends BaseTest {
 	public void ValidateClockIn() throws InterruptedException, IOException
 	{
 
-		System.out.println("Final Token "+ (getToken()));
+		Log.info("Final Token "+ (getToken()));
 		clockInDate = att.generateRandomDate(); // Generate a date in February
-		System.out.println("Generated Random Clock-In Date: " + clockInDate);
+		Log.info("Generated Random Clock-In Date: " + clockInDate);
 		clockInTime = "05:00:00";
 		//			clockInTime = att.timestamp();
 		Timein = clockInDate+"T"+clockInTime +"Z";
-		System.out.println("Final Time-In given :->"+Timein);
+		Log.info("Final Time-In given :->"+Timein);
 
 		HashMap data = new HashMap();
 		data.put("action", "CLOCK_IN" );
 		data.put("action_date", clockInDate );
 		data.put("action_time", clockInTime );
-		System.out.println("found accountId detail for delete functions : "+Timein);
+		Log.info("found accountId detail for delete functions : "+Timein);
 		given()
 		.contentType("application/json")
 		.headers("Authorization",("Token "+getToken()))
 		.body(data)
 
 		.when()
-		.post("https://timesheet.ndtatlas.com/api/clock-entries/action-test/")
+		.post("http://192.168.1.10:8085/api/clock-entries/action-test/")
 
 		.then()
 		.statusCode(200)
 		.log().all();
-		System.out.println("******Clock-in Functionality Verified************");
+		Log.info("******Clock-in Functionality Verified************");
 
 
 	}	
@@ -146,7 +139,7 @@ public class AddTaskTestScenario2 extends BaseTest {
 	public void ValidateBreakIn() throws InterruptedException, IOException
 	{
 
-		System.out.println("Final Token "+ (getToken()));
+		Log.info("Final Token "+ (getToken()));
 		//			clockInDate = att.generateRandomDate(); // Generate a date in February
 		//			String clockInTime = att.timestamp();
 		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -154,32 +147,32 @@ public class AddTaskTestScenario2 extends BaseTest {
 		LocalTime updatedTime = originalTime.plusHours(1);
 		updatedTimeStr = updatedTime.format(timeFormatter);
 		Timein  = clockInDate+"T"+updatedTimeStr +"Z";
-		System.out.println("Final Time-In given :->"+updatedTimeStr);
+		Log.info("Final Time-In given :->"+updatedTimeStr);
 
 		HashMap data = new HashMap();
 		data.put("action", "BREAK_IN" );
 		data.put("action_date", clockInDate );
 		data.put("action_time", updatedTimeStr );
-		System.out.println("found accountId detail for delete functions : "+Timein);
+		Log.info("found accountId detail for delete functions : "+Timein);
 		given()
 		.contentType("application/json")
 		.headers("Authorization",("Token "+getToken()))
 		.body(data)
 
 		.when()
-		.post("https://timesheet.ndtatlas.com/api/clock-entries/action-test/")
+		.post("http://192.168.1.10:8085/api/clock-entries/action-test/")
 
 		.then()
 		.statusCode(200)
 		.log().all();
-		System.out.println("******Clock-in Functionality Verified************");
+		Log.info("******Clock-in Functionality Verified************");
 	}
 
 	@Test(priority=4,dependsOnMethods="ValidateBreakIn")
 	public void ValidateBreakOut() throws InterruptedException, IOException
 	{
 
-		System.out.println("Final Token "+ (getToken()));
+		Log.info("Final Token "+ (getToken()));
 		//			clockInDate = att.generateRandomDate(); // Generate a date in February
 		//			String clockInTime = att.timestamp();
 		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -188,25 +181,25 @@ public class AddTaskTestScenario2 extends BaseTest {
 		String updatedTimeStr = updatedTime2.format(timeFormatter);
 
 		String Timein = clockInDate+"T"+updatedTimeStr +"Z";
-		System.out.println("Final Time-In given :->"+Timein);
+		Log.info("Final Time-In given :->"+Timein);
 
 		HashMap data = new HashMap();
 		data.put("action", "BREAK_OUT" );
 		data.put("action_date", clockInDate );
 		data.put("action_time", updatedTimeStr );
-		System.out.println("found accountId detail for delete functions : "+Timein);
+		Log.info("found accountId detail for delete functions : "+Timein);
 		given()
 		.contentType("application/json")
 		.headers("Authorization",("Token "+getToken()))
 		.body(data)
 
 		.when()
-		.post("https://timesheet.ndtatlas.com/api/clock-entries/action-test/")
+		.post("http://192.168.1.10:8085/api/clock-entries/action-test/")
 
 		.then()
 		.statusCode(200)
 		.log().all();
-		System.out.println("******Clock-in Functionality Verified************");
+		Log.info("******Clock-in Functionality Verified************");
 
 	}
 
@@ -215,7 +208,7 @@ public class AddTaskTestScenario2 extends BaseTest {
 	public void ValidateClockOut() throws InterruptedException, IOException
 	{
 
-	       System.out.println("Final Token "+ (getToken()));
+	       Log.info("Final Token "+ (getToken()));
 //			clockInDate = att.generateRandomDate(); // Generate a date in February
 //			String clockInTime = att.timestamp();
 	           DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -224,25 +217,25 @@ public class AddTaskTestScenario2 extends BaseTest {
 	           String updatedTimeStr = updatedTime3.format(timeFormatter);
 
 			String Timein = clockInDate+"T"+updatedTime3 +"Z";
-			System.out.println("Final Time-In given :->"+Timein);
+			Log.info("Final Time-In given :->"+Timein);
 
 			HashMap data = new HashMap();
 			data.put("action", "CLOCK_OUT" );
 			data.put("action_date", clockInDate );
 			data.put("action_time", updatedTimeStr );
-			System.out.println("found accountId detail for delete functions : "+Timein);
+			Log.info("found accountId detail for delete functions : "+Timein);
 			given()
 			.contentType("application/json")
 			.headers("Authorization",("Token "+getToken()))
 			.body(data)
 
 			.when()
-			.post("https://timesheet.ndtatlas.com/api/clock-entries/action-test/")
+			.post("http://192.168.1.10:8085/api/clock-entries/action-test/")
 
 			.then()
 			.statusCode(200)
 			.log().all();
-			System.out.println("******Clock-in Functionality Verified************");
+			Log.info("******Clock-in Functionality Verified************");
 
 	}
 	 */
@@ -252,9 +245,7 @@ public class AddTaskTestScenario2 extends BaseTest {
 		Utility.showTooltip("Step 1 :-> Launching Timesheet Application using Automation Script ");
 
 		launchUrl();
-
-		Thread.sleep(2000);
-
+		Utility.waitForSeconds(2);
 		lp.SendUserName();
 
 		lp.SendPassword();
@@ -300,7 +291,7 @@ public class AddTaskTestScenario2 extends BaseTest {
 		.header("Authorization", "Token " + token)
 		//	        .body(data)
 		.when()
-		.post("https://timesheet.ndtatlas.com/api/utils/remove-automation-test-data/")
+		.post(APP_URL_API + "/api/utils/remove-automation-test-data/")
 		.then()
 		.statusCode(200)
 		.log().all();
@@ -313,7 +304,7 @@ public class AddTaskTestScenario2 extends BaseTest {
 	public void ValidateClockOut() throws InterruptedException, IOException
 	{
 
-	       System.out.println("Final Token "+ (getToken()));
+	       Log.info("Final Token "+ (getToken()));
 //			clockInDate = att.generateRandomDate(); // Generate a date in February
 //			String clockInTime = att.timestamp();
 	           DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -322,11 +313,11 @@ public class AddTaskTestScenario2 extends BaseTest {
 	           String updatedTimeStr = updatedTime3.format(timeFormatter);
 
 			String Timein = clockInDate+"T"+updatedTime3 +"Z";
-			System.out.println("Final Time-In given :->"+Timein);
+			Log.info("Final Time-In given :->"+Timein);
 
 			HashMap data = new HashMap();
 			data.put("test_timestamp", Timein );
-			System.out.println("found accountId detail for delete functions : "+Timein);
+			Log.info("found accountId detail for delete functions : "+Timein);
 			given()
 			.contentType("application/json")
 			.headers("Authorization",("Token "+getToken()))
@@ -338,7 +329,7 @@ public class AddTaskTestScenario2 extends BaseTest {
 			.then()
 			.statusCode(201)
 			.log().all();
-			System.out.println("******Clock-Out Functionality is Verified************");
+			Log.info("******Clock-Out Functionality is Verified************");
 	}
 
 	 */

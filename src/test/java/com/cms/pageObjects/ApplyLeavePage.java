@@ -1,4 +1,5 @@
 package com.cms.pageObjects;
+import com.cms.utility.Log;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -313,7 +314,7 @@ public class ApplyLeavePage extends BaseTest{
 	*/
 		
 		ToDate.click();
-		driverR.findElement(By.xpath("(//*[contains(@class,\"react-datepicker__day react-datepicker__day--030\")])[2]")).click();
+		driverR.findElement(By.xpath("//*[contains(@class,\"react-datepicker__day react-datepicker__day--030\")]")).click();
 		
 /*		ToDate.sendKeys(Keys.chord(Keys.CONTROL,"a"));
 		ToDate.sendKeys(Keys.DELETE);
@@ -334,7 +335,7 @@ public class ApplyLeavePage extends BaseTest{
 		 } catch (Exception e) {
 		        // Fallback: Use JavaScript
 		        // if sendKeys fails
-		        System.out.println(
+		        Log.info(
 		            "⚠️ SendKeys failed, " +
 		            "trying JavaScript...");
 		        
@@ -345,7 +346,7 @@ public class ApplyLeavePage extends BaseTest{
 		            + FromDate + "';",
 		            ToDate);
 
-		        System.out.println(
+		        Log.info(
 		            "✅ Date entered via JS: "
 		            + ToDate);
 		    }
@@ -370,22 +371,22 @@ public class ApplyLeavePage extends BaseTest{
 		        // Check if button is displayed and enabled
 		        if (button.isDisplayed() && button.isEnabled()) {
 		            button.click();
-		            System.out.println("Clicked on Apply Leave button at index: " + index);
+		            Log.info("Clicked on Apply Leave button at index: " + index);
 		            clicked = true;
 		            break;
 		        } else {
-		            System.out.println("Button at index " + index + " is disabled, checking next...");
+		            Log.info("Button at index " + index + " is disabled, checking next...");
 		            index++;
 		        }
 
 		    } catch (NoSuchElementException e) {
-		        System.out.println("No more 'Apply Leave' buttons found after index " + index);
+		        Log.info("No more 'Apply Leave' buttons found after index " + index);
 		        break;
 		    }
 		}
 
 		if (!clicked) {
-		    System.out.println("No enabled 'Apply Leave' button found starting from index 6.");
+		    Log.info("No enabled 'Apply Leave' button found starting from index 6.");
 		}
 	}
 	
@@ -405,22 +406,22 @@ public class ApplyLeavePage extends BaseTest{
 		        // Check if button is displayed and enabled
 		        if (button.isDisplayed() && button.isEnabled()) {
 		            button.click();
-		            System.out.println("Clicked on Apply Leave button at index: " + index);
+		            Log.info("Clicked on Apply Leave button at index: " + index);
 		            clicked = true;
 		            break;
 		        } else {
-		            System.out.println("Button at index " + index + " is disabled, checking next...");
+		            Log.info("Button at index " + index + " is disabled, checking next...");
 		            index++;
 		        }
 
 		    } catch (NoSuchElementException e) {
-		        System.out.println("No more 'Apply Leave' buttons found after index " + index);
+		        Log.info("No more 'Apply Leave' buttons found after index " + index);
 		        break;
 		    }
 		}
 
 		if (!clicked) {
-		    System.out.println("No enabled 'Apply Leave' button found starting from index 6.");
+		    Log.info("No enabled 'Apply Leave' button found starting from index 6.");
 		}
 	}
 	
@@ -466,7 +467,7 @@ public class ApplyLeavePage extends BaseTest{
 	
 		ClockOutTime.click();
 		
-//		System.out.println(getRandomDate());
+//		Log.info(getRandomDate());
 		
 	    Thread.sleep(1000);
 //	    return getRandomDate(02);
@@ -494,7 +495,7 @@ public class ApplyLeavePage extends BaseTest{
 		    String text = option.getText().trim(); // remove extra spaces
 		    if (text.equals("Full Day - Casual Leave")) {
 		        s4.selectByVisibleText("Full Day - Casual Leave");
-		        System.out.println("Selected: Full Day - Casual Leave");
+		        Log.info("Selected: Full Day - Casual Leave");
 		        fullDayFound = true;
 		        break;
 		    } else if (text.equals("Half Day - Casual Leave")) {
@@ -505,9 +506,9 @@ public class ApplyLeavePage extends BaseTest{
 
 		if (!fullDayFound && halfDayFound) {
 		    s4.selectByVisibleText("Half Day - Casual Leave");
-		    System.out.println("Selected: Half Day - Casual Leave");
+		    Log.info("Selected: Half Day - Casual Leave");
 		} else if (!fullDayFound && !halfDayFound) {
-		    System.out.println("Neither 'Full Day - Casual Leave' nor 'Half Day - Casual Leave' found.");
+		    Log.info("Neither 'Full Day - Casual Leave' nor 'Half Day - Casual Leave' found.");
 		}
 	}
 	
@@ -526,7 +527,7 @@ public class ApplyLeavePage extends BaseTest{
 		    String text = option.getText().trim(); // remove extra spaces
 		    if (text.equals("Half Day - Casual Leave")) {
 		        s4.selectByVisibleText("Half Day - Casual Leave");
-		        System.out.println("Selected: Half Day - Casual Leave");
+		        Log.info("Selected: Half Day - Casual Leave");
 		        halfDayFound = true;
 		        break;
 		    } else if (text.equals("Full Day - Casual Leave")) {
@@ -537,9 +538,9 @@ public class ApplyLeavePage extends BaseTest{
 
 //		if (!fullDayFound && halfDayFound) {
 //		    s4.selectByVisibleText("Full Day - Casual Leave");
-//		    System.out.println("Selected: Half Day - Casual Leave");
+//		    Log.info("Selected: Half Day - Casual Leave");
 //		} else if (!fullDayFound && !halfDayFound) {
-//		    System.out.println("Neither 'Full Day - Casual Leave' nor 'Half Day - Casual Leave' found.");
+//		    Log.info("Neither 'Full Day - Casual Leave' nor 'Half Day - Casual Leave' found.");
 //		}
 	}
 	
@@ -574,7 +575,7 @@ public class ApplyLeavePage extends BaseTest{
 		Utility.ExplicitWait(TaskAlert);
 		Utility.showCallout2("Validation check applied on Alert Message", TaskAlert);
 		String ActualMsg2 = TaskAlert.getText();
-		System.out.println(" Message received on Timesheet"+ActualMsg2);
+		Log.info(" Message received on Timesheet"+ActualMsg2);
 		Thread.sleep(2000);
 		return ActualMsg2 ;
 	}

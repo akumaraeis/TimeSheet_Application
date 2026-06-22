@@ -60,7 +60,7 @@ public class ApprovalRegularizationTest extends BaseTest {
 	                .then().statusCode(200)
 	                .extract().response();
 	        token = loginResponse.jsonPath().getString("data.token");
-	        System.out.println("🔐 Token fetched: " + token);
+	        Log.info("🔐 Token fetched: " + token);
 //	        Utility.waitForSeconds(2);
 	        DeleteAutomationTestUserRecords(token);
 //	        Utility.waitForSeconds(1);
@@ -114,12 +114,12 @@ public class ApprovalRegularizationTest extends BaseTest {
        {
            String ActionStatusText = driverR.findElement(By.xpath("(//table[@class=\"shadow table table-light table-sm table-bordered table-hover\"]//tbody//tr)["+i+"]//td[14]//button")).getText();
            boolean ActionButtonStatus = driverR.findElement(By.xpath("(//table[@class=\"shadow table table-light table-sm table-bordered table-hover\"]//tbody//tr)["+i+"]//td[14]//button")).isEnabled();
-           System.out.println("status Text found on Action Button :->"+ActionStatusText);
-           System.out.println("Boolean Status found on Action Button :->"+ActionButtonStatus);
+           Log.info("status Text found on Action Button :->"+ActionStatusText);
+           Log.info("Boolean Status found on Action Button :->"+ActionButtonStatus);
            RegularizeDate = driverR.findElement(By.xpath("(//table[@class=\"shadow table table-light table-sm table-bordered table-hover\"]//tbody//tr)["+i+"]//td[2]")).getText();
-           System.out.println("Selected Regularize Date :->"+RegularizeDate);
+           Log.info("Selected Regularize Date :->"+RegularizeDate);
            trimRegularizeDate = RegularizeDate.replaceAll("\\s*\\(.*\\)", "");
-           System.out.println("Trim Regularize Date :->"+trimRegularizeDate);
+           Log.info("Trim Regularize Date :->"+trimRegularizeDate);
            
            if((ActionStatusText.equalsIgnoreCase("Regularize"))&& (ActionButtonStatus == true) )      	   
            {
@@ -142,17 +142,17 @@ public class ApprovalRegularizationTest extends BaseTest {
         	   Log.info("Regularization Request Sent successfully by User.");
         	    if(ActualMsg.equalsIgnoreCase("Regularization updated successfully!"))
         	    {
-        	    	System.out.println("Loop Breaks");
+        	    	Log.info("Loop Breaks");
         	    	break;
         	    }
         	    else
         	    {
-        	    	System.out.println("Otherwise Loop Continues");
+        	    	Log.info("Otherwise Loop Continues");
         	    }
            }
            else
            {
-        	 System.out.println("Either Regularize or Action Button is not enabled");  
+        	 Log.info("Either Regularize or Action Button is not enabled");  
            }
            
            }
@@ -212,7 +212,7 @@ public class ApprovalRegularizationTest extends BaseTest {
 //	    HashMap<String, String> data = new HashMap<>();
 //	    data.put("test_timestamp", timestamp);
 
-//	    System.out.println("→ Sending to " + endpoint + ": " + timestamp);
+//	    Log.info("→ Sending to " + endpoint + ": " + timestamp);
 
 	    given()
 	        .contentType("application/json")

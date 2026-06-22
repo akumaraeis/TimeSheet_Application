@@ -87,7 +87,7 @@ public class TimesheetSubmissionScenario extends BaseTest {
 				.then().statusCode(200)
 				.extract().response();
 		token = loginResponse.jsonPath().getString("data.token");
-		System.out.println("🔐 Token fetched: " + token);
+		Log.info("🔐 Token fetched: " + token);
 		DeleteAutomationTestUserRecords(token);
 	}
 
@@ -122,7 +122,7 @@ public class TimesheetSubmissionScenario extends BaseTest {
 		
 		String str =  "Welcome, AutomationTesting";
 		ActualUserName = str.replace("Welcome, ", "");
-		System.out.println(ActualUserName);
+		Log.info(ActualUserName);
 
 
 		sf.assertEquals(ActualProfileName, ExpectedProfileName);
@@ -136,9 +136,9 @@ public class TimesheetSubmissionScenario extends BaseTest {
 		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
 		List<WebElement> allWeeks = driverR.findElements(By.xpath("//div[contains(@class,'p-1 shadow mb-2 bg-gradient border-2')]"));
-		System.out.println("Total week blocks found: " + allWeeks.size());
+		Log.info("Total week blocks found: " + allWeeks.size());
 		totalWeeks = allWeeks.size();
-		System.out.println("Total week size so that required for Loop"+ totalWeeks);
+		Log.info("Total week size so that required for Loop"+ totalWeeks);
 		// API Login
 
 		Utility.showTooltip("Step 3 :->After Selecting Week,Timesheet Entry from (Mon-Fri) are creating in Background using API RestAssured ");
@@ -152,7 +152,7 @@ public class TimesheetSubmissionScenario extends BaseTest {
 			WebDriverWait wait = new WebDriverWait(driverR, Duration.ofSeconds(10));
 			WebElement statusElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[contains(@class,'px-3 py-2 mx-auto w-100 ')])")));
 			String status = statusElement.getText().replace("\u00A0", " ").trim();
-			System.out.println("Week " + index + " Status: '" + status + "'");
+			Log.info("Week " + index + " Status: '" + status + "'");
 
 			if (status.equalsIgnoreCase("NOT SUBMITTED")) {
 				String startText = driverR.findElement(By.xpath("(" + weekXPath + "/div/div/span)[1]")).getText().trim();
@@ -161,15 +161,15 @@ public class TimesheetSubmissionScenario extends BaseTest {
 				DateTimeFormatter inputFormatter2 = DateTimeFormatter.ofPattern("MMM dd, yyyy", Locale.ENGLISH);
 				LocalDate startDate = LocalDate.parse(startText, inputFormatter2);
 				LocalDate endDate = LocalDate.parse(endText, inputFormatter2);
-				System.out.println("Parsed Start Date: " + startDate + " | End Date: " + endDate);
+				Log.info("Parsed Start Date: " + startDate + " | End Date: " + endDate);
 
 
 				DateTimeFormatter outputFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 				String baseTime = "04:30:00";
 				for (LocalDate date = startDate.plusDays(2); !date.isAfter(endDate); date = date.plusDays(1)) {
 					dateStr = date.format(outputFormatter2);
-					System.out.println("Date Stamp entry for timestamp for send Attendance Method "+dateStr);
-					System.out.println("🗓️ Submitting entries for:->" + dateStr);
+					Log.info("Date Stamp entry for timestamp for send Attendance Method "+dateStr);
+					Log.info("🗓️ Submitting entries for:->" + dateStr);
 					sendAttendanceData(token,"CLOCK_IN", dateStr, baseTime);
 					sendAttendanceData2(token,"BREAK_IN", dateStr,addHours(baseTime, 1));
 					sendAttendanceData2(token,"BREAK_OUT", dateStr,addHours(baseTime, 2));
@@ -186,7 +186,7 @@ public class TimesheetSubmissionScenario extends BaseTest {
 
 
 				List<WebElement> taskButtons = driverR.findElements(By.xpath("//*[contains(text(),'Add Task')]"));
-				System.out.println("Total Add Task buttons: " + taskButtons.size());
+				Log.info("Total Add Task buttons: " + taskButtons.size());
 
 				Utility.showTooltip("Step 4:-> After Creating weekly TimesheetEntry,Now adding task to all entry using Automation Script");
 				WebElement MinimizeBtn = driverR.findElement(By.xpath("(//*[contains(@class,'accordion-button')])[1]"));
@@ -222,7 +222,7 @@ public class TimesheetSubmissionScenario extends BaseTest {
 						MinimizeBtn3.click();
 						Utility.waitForSeconds(2);
 					} catch (ElementClickInterceptedException e) {
-						System.out.println("Add Task Click Intercepted: Retrying via JS click.");
+						Log.info("Add Task Click Intercepted: Retrying via JS click.");
 						js.executeScript("arguments[0].click();", driverR.findElement(By.xpath("(//*[contains(text(),'Add Task')])[1]")));
 					}
 				}
@@ -253,13 +253,13 @@ public class TimesheetSubmissionScenario extends BaseTest {
 					Utility.highlightElement(confirmSubmit);
 					Utility.safeClick(driverR, js, confirmSubmit);
 					Utility.waitForSeconds(2);
-					System.out.println("✅ Timesheet submitted for week " + 2);
+					Log.info("✅ Timesheet submitted for week " + 2);
 
 					WebElement confirmMsg = driverR.findElement(By.xpath("//*[contains(text(),'Timesheet submitted successfully!')]"));
 					Utility.ExplicitWait(confirmMsg);
 					Utility.highlightElement(confirmMsg);
 					String ActualTimesheetSuccesful = confirmMsg.getText();
-					System.out.println("Timesheet submission Succesful Message :-> " + ActualTimesheetSuccesful);
+					Log.info("Timesheet submission Succesful Message :-> " + ActualTimesheetSuccesful);
 					String ExpectTimesheetSuccesful ="Timesheet submitted successfully!";
 					sf.assertEquals(ActualTimesheetSuccesful, ExpectTimesheetSuccesful);
 					Log.info("Timesheet Submitted for this Respective week Successfully");
@@ -272,15 +272,15 @@ public class TimesheetSubmissionScenario extends BaseTest {
 					Utility.safeClick(driverR, js, finalWeek);
 					WebElement finalStatus = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(@class,'bg-warning rounded text-black')]")));
 					String newStatus = finalStatus.getText().replace("\u00A0", " ").trim();
-					System.out.println("🟢 Post-Submission Status: '" + newStatus + "'");
+					Log.info("🟢 Post-Submission Status: '" + newStatus + "'");
 
 					if (newStatus.equalsIgnoreCase("SUBMITTED")) {
-						System.out.println("✅ Submission confirmed. Stopping further processing.");
+						Log.info("✅ Submission confirmed. Stopping further processing.");
 						break; // STOP the main loop
 					}
 
 				} catch (Exception e) {
-					System.out.println("⚠️ Error during final submission: " + e.getMessage());
+					Log.info("⚠️ Error during final submission: " + e.getMessage());
 
 				}
 
@@ -322,7 +322,7 @@ public class TimesheetSubmissionScenario extends BaseTest {
 	
 	String str =  "Welcome, AutomationTesting";
 	ActualUserName = str.replace("Welcome, ", "");
-	System.out.println(ActualUserName);
+	Log.info(ActualUserName);
 
 
 	sf.assertEquals(ActualProfileName, ExpectedProfileName);
@@ -336,9 +336,9 @@ public class TimesheetSubmissionScenario extends BaseTest {
 	DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
 	List<WebElement> allWeeks = driverR.findElements(By.xpath("//div[contains(@class,'p-1 shadow mb-2 bg-gradient border-2')]"));
-	System.out.println("Total week blocks found: " + allWeeks.size());
+	Log.info("Total week blocks found: " + allWeeks.size());
 	totalWeeks = allWeeks.size();
-	System.out.println("Total week size so that required for Loop"+ totalWeeks);
+	Log.info("Total week size so that required for Loop"+ totalWeeks);
 	// API Login
 
 	Utility.showTooltip("Step 3 :->After Selecting Week,Timesheet Entry from (Mon-Fri) are creating in Background using API RestAssured ");
@@ -352,7 +352,7 @@ public class TimesheetSubmissionScenario extends BaseTest {
 		WebDriverWait wait = new WebDriverWait(driverR, Duration.ofSeconds(10));
 		WebElement statusElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[contains(@class,'px-3 py-1')])[2]")));
 		String status = statusElement.getText().replace("\u00A0", " ").trim();
-		System.out.println("Week " + index + " Status: '" + status + "'");
+		Log.info("Week " + index + " Status: '" + status + "'");
 
 		if (status.equalsIgnoreCase("NOT SUBMITTED")) {
 			String startText = driverR.findElement(By.xpath("(" + weekXPath + "/div/div/span)[1]")).getText().trim();
@@ -361,15 +361,15 @@ public class TimesheetSubmissionScenario extends BaseTest {
 			DateTimeFormatter inputFormatter2 = DateTimeFormatter.ofPattern("MMM dd, yyyy", Locale.ENGLISH);
 			LocalDate startDate = LocalDate.parse(startText, inputFormatter2);
 			LocalDate endDate = LocalDate.parse(endText, inputFormatter2);
-			System.out.println("Parsed Start Date: " + startDate + " | End Date: " + endDate);
+			Log.info("Parsed Start Date: " + startDate + " | End Date: " + endDate);
 
 
 			DateTimeFormatter outputFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			String baseTime = "04:30:00";
 			for (LocalDate date = startDate.plusDays(2); !date.isAfter(endDate); date = date.plusDays(1)) {
 			    dateStr = date.format(outputFormatter2);
-				System.out.println("Date Stamp entry for timestamp for send Attendance Method "+dateStr);
-				System.out.println("🗓️ Submitting entries for:->" + dateStr);
+				Log.info("Date Stamp entry for timestamp for send Attendance Method "+dateStr);
+				Log.info("🗓️ Submitting entries for:->" + dateStr);
 				sendAttendanceData(token,"CLOCK_IN", dateStr, baseTime);
 				sendAttendanceData2(token,"BREAK_IN", dateStr,addHours(baseTime, 1));
 				sendAttendanceData2(token,"BREAK_OUT", dateStr,addHours(baseTime, 2));
@@ -386,7 +386,7 @@ public class TimesheetSubmissionScenario extends BaseTest {
 
 
 			List<WebElement> taskButtons = driverR.findElements(By.xpath("//*[contains(text(),'Add Task')]"));
-			System.out.println("Total Add Task buttons: " + taskButtons.size());
+			Log.info("Total Add Task buttons: " + taskButtons.size());
 
 			Utility.showTooltip("Step 4:-> After Creating weekly TimesheetEntry,Now adding task to all entry using Automation Script");
 			WebElement MinimizeBtn = driverR.findElement(By.xpath("(//*[contains(@class,'accordion-button')])[1]"));
@@ -424,7 +424,7 @@ public class TimesheetSubmissionScenario extends BaseTest {
 					MinimizeBtn3.click();
 					Utility.waitForSeconds(2);
 				} catch (ElementClickInterceptedException e) {
-					System.out.println("Add Task Click Intercepted: Retrying via JS click.");
+					Log.info("Add Task Click Intercepted: Retrying via JS click.");
 					js.executeScript("arguments[0].click();", driverR.findElement(By.xpath("(//*[contains(text(),'Add Task')])[1]")));
 				}
 			}
@@ -455,13 +455,13 @@ public class TimesheetSubmissionScenario extends BaseTest {
 				Utility.highlightElement(confirmSubmit);
 				Utility.safeClick(driverR, js, confirmSubmit);
 				Utility.waitForSeconds(2);
-				System.out.println("✅ Timesheet submitted for week " + 2);
+				Log.info("✅ Timesheet submitted for week " + 2);
 
 				WebElement confirmMsg = driverR.findElement(By.xpath("//*[contains(text(),'Timesheet submitted successfully!')]"));
 				Utility.ExplicitWait(confirmMsg);
 				Utility.highlightElement(confirmMsg);
 				String ActualTimesheetSuccesful = confirmMsg.getText();
-				System.out.println("Timesheet submission Succesful Message :-> " + ActualTimesheetSuccesful);
+				Log.info("Timesheet submission Succesful Message :-> " + ActualTimesheetSuccesful);
 				String ExpectTimesheetSuccesful ="Timesheet submitted successfully!";
 				sf.assertEquals(ActualTimesheetSuccesful, ExpectTimesheetSuccesful);
 				Log.info("Timesheet Submitted for this Respective week Successfully");
@@ -474,15 +474,15 @@ public class TimesheetSubmissionScenario extends BaseTest {
 				Utility.safeClick(driverR, js, finalWeek);
 				WebElement finalStatus = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(@class,'bg-warning rounded text-black')]")));
 				String newStatus = finalStatus.getText().replace("\u00A0", " ").trim();
-				System.out.println("🟢 Post-Submission Status: '" + newStatus + "'");
+				Log.info("🟢 Post-Submission Status: '" + newStatus + "'");
 
 				if (newStatus.equalsIgnoreCase("SUBMITTED")) {
-					System.out.println("✅ Submission confirmed. Stopping further processing.");
+					Log.info("✅ Submission confirmed. Stopping further processing.");
 					break; // STOP the main loop
 				}
 
 			} catch (Exception e) {
-				System.out.println("⚠️ Error during final submission: " + e.getMessage());
+				Log.info("⚠️ Error during final submission: " + e.getMessage());
 
 			}
 
@@ -509,7 +509,7 @@ public class TimesheetSubmissionScenario extends BaseTest {
 	    data.put("action_date", timestamp);
 	    data.put("action_time", time);
 
-	    System.out.println("→ Sending to " + ": " + timestamp);
+	    Log.info("→ Sending to " + ": " + timestamp);
 
 	    given()
 	        .contentType("application/json")
@@ -527,7 +527,7 @@ public class TimesheetSubmissionScenario extends BaseTest {
 	    data.put("action_date", timestamp);
 	    data.put("action_time", time);
 
-	    System.out.println("→ Sending to " + ": " + timestamp);
+	    Log.info("→ Sending to " + ": " + timestamp);
 
 	    given()
 	        .contentType("application/json")
@@ -543,7 +543,7 @@ public class TimesheetSubmissionScenario extends BaseTest {
 //	    HashMap<String, String> data = new HashMap<>();
 //	    data.put("test_timestamp", timestamp);
 
-//	    System.out.println("→ Sending to " + endpoint + ": " + timestamp);
+//	    Log.info("→ Sending to " + endpoint + ": " + timestamp);
 
 	    given()
 	        .contentType("application/json")

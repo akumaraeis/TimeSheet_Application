@@ -115,33 +115,42 @@ public class Listener implements ITestListener {
 	    @Override
 	    public void onTestSuccess(ITestResult result) {
 	        test.log(Status.PASS, "✅ Test Passed");
-
-	        String screenshotPath = Utility.captureScreenshot(result.getMethod().getMethodName(), "PASS");
-			if (screenshotPath != null) {
-			    test.addScreenCaptureFromPath(screenshotPath);
-			    Log.info("==== Test Passed: " + result.getName() + " ====");
-			}
+	        Log.info("==== Test Passed: " + result.getName() + " ====");
+	        try {
+	            String screenshotPath = Utility.captureScreenshot(result.getMethod().getMethodName(), "PASS");
+	            if (screenshotPath != null) {
+	                test.addScreenCaptureFromPath(screenshotPath);
+	            }
+	        } catch (Exception e) {
+	            Log.warn("Screenshot skipped — browser unavailable: " + e.getMessage());
+	        }
 	    }
 
 	    @Override
 	    public void onTestFailure(ITestResult result) {
 	        test.log(Status.FAIL, "❌ Test Failed: " + result.getThrowable());
-
-	        String screenshotPath = Utility.captureScreenshot(result.getMethod().getMethodName(), "FAIL");
-			if (screenshotPath != null) {
-			    test.addScreenCaptureFromPath(screenshotPath);
-			    Log.error("==== Test Failed: " + result.getName() + " ====");
-			}
+	        Log.error("==== Test Failed: " + result.getName() + " ====");
+	        try {
+	            String screenshotPath = Utility.captureScreenshot(result.getMethod().getMethodName(), "FAIL");
+	            if (screenshotPath != null) {
+	                test.addScreenCaptureFromPath(screenshotPath);
+	            }
+	        } catch (Exception e) {
+	            Log.warn("Screenshot skipped — browser unavailable: " + e.getMessage());
+	        }
 	    }
 
 	    @Override
 	    public void onTestSkipped(ITestResult result) {
 	        test.log(Status.SKIP, "⚠ Test Skipped: " + result.getThrowable());
-
-	        String screenshotPath = Utility.captureScreenshot(result.getMethod().getMethodName(), "SKIP");
-			if (screenshotPath != null) {
-			    test.addScreenCaptureFromPath(screenshotPath);
-			}
+	        try {
+	            String screenshotPath = Utility.captureScreenshot(result.getMethod().getMethodName(), "SKIP");
+	            if (screenshotPath != null) {
+	                test.addScreenCaptureFromPath(screenshotPath);
+	            }
+	        } catch (Exception e) {
+	            Log.warn("Screenshot skipped — browser unavailable: " + e.getMessage());
+	        }
 	    }
 
 	    @Override

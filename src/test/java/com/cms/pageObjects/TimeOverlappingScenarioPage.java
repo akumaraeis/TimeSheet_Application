@@ -1,4 +1,5 @@
 package com.cms.pageObjects;
+import com.cms.utility.Log;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -311,7 +312,7 @@ public class TimeOverlappingScenarioPage extends BaseTest{
 	
 		ClockOutTime.sendKeys("14:30");
 		
-//		System.out.println(getRandomDate());
+//		Log.info(getRandomDate());
 		
 	    Thread.sleep(1000);
 //	    return getRandomDate(02);
@@ -327,7 +328,7 @@ public class TimeOverlappingScenarioPage extends BaseTest{
 	
 		ClockOutTime.sendKeys("19:30");
 		
-//		System.out.println(getRandomDate());
+//		Log.info(getRandomDate());
 		
 	    Thread.sleep(1000);
 //	    return getRandomDate(02);
@@ -358,7 +359,7 @@ public class TimeOverlappingScenarioPage extends BaseTest{
 	{
 		Utility.ExplicitWait(TaskAlert);
 		String ActualMsg2 = TaskAlert.getText();
-		System.out.println(" Message received on Timesheet"+ActualMsg2);
+		Log.info(" Message received on Timesheet"+ActualMsg2);
 		Thread.sleep(2000);
 		return ActualMsg2 ;
 	}
